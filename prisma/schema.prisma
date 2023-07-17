@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// MODEL RELATIONSHIPS
+// 1 User : M ChordPages
+// 1 Chord : M ChordVoicings
+// M Chords : M pages
+
+model User{
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pages ChordPage[]
+}
+
+model Chord{
+  id Int @id @default(autoincrement())
+  name String
+  noteFormula Int[]
+  noteOptional Int[]
+  
+  voicings ChordVoicing[]
+  pages ChordPage[]
+}
+
+model ChordVoicing{
+  id Int @id @default(autoincrement())
+  name String
+  frets Int[]
+  fretTones String[]
+  rootString Int
+
+  isANoteOmitted Boolean
+  isMovable Boolean
+
+  chord Chord @relation(fields:[chordId],references:[id])
+  chordId Int
+}
+
+model ChordPage{
+  id Int @id @default(autoincrement())
+  
+  chords Chord[]
+  owner User @relation(fields:[ownerId], references:[id])
+  ownerId Int
+}
