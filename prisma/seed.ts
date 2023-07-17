@@ -196,7 +196,6 @@ async function seedDb(seedData) {
   //     { deleteUsers },
   //     { deletePages }
   //   )
-
   //   try {
   //     const chordQualities = await prisma.chordQuality.createMany({
   //       data: seedData.chordQualityBank,
@@ -205,7 +204,6 @@ async function seedDb(seedData) {
   //   } catch (error) {
   //     console.log(error)
   //   }
-
   //   try {
   //     const chordVoicings = await prisma.chordQualityVoicing.createMany({
   //       data: seedData.chordQualityVoicingBank,
@@ -214,7 +212,6 @@ async function seedDb(seedData) {
   //   } catch (error) {
   //     console.log(error)
   //   }
-
   //   try {
   //     const chords = await prisma.chord.createMany({
   //       data: seedData.chordBank,
@@ -223,7 +220,6 @@ async function seedDb(seedData) {
   //   } catch (error) {
   //     console.log(error)
   //   }
-
   //   try {
   //     const users = await prisma.user.createMany({
   //       data: seedData.userSeed,
@@ -232,12 +228,29 @@ async function seedDb(seedData) {
   //   } catch (error) {
   //     console.log(error)
   //   }
+  //   try {
+  //     const pages = await prisma.chordPage.createMany({
+  //       data: seedData.chordPageBank,
+  //     })
+  //     console.log({ pages })
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
 
+  // chord by note
   try {
-    const pages = await prisma.chordPage.createMany({
-      data: seedData.chordPageBank,
+    const updateChordPage = await prisma.chordPage.update({
+      where: { id: 4 },
+      data: {
+        chordsByNote: {
+          connect: [{ id: 1 }],
+        },
+      },
+      include: {
+        chordsByNote: true,
+      },
     })
-    console.log({ pages })
+    console.log(updateChordPage)
   } catch (error) {
     console.log(error)
   }

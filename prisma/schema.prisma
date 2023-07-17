@@ -47,6 +47,7 @@ model ChordQuality{
   isExtended Boolean
 
   baseChord Chord[] //can belong to many chords
+  pages ChordPage[] //can have many pages
   chordQualityVoicing ChordQualityVoicing[] //can have/belong to many voicings
 }
 
@@ -61,15 +62,14 @@ model ChordQualityVoicing{
 
   chordQuality ChordQuality @relation(fields:[chordQualityId],references:[id]) //belongs to one quality
   chordQualityId Int //belongs to one quality
-
-
 }
 
 model ChordPage{
   id Int @id @default(autoincrement())
   name String @default("my chord page")
 
-  chords Chord[]
+  chordsByNote Chord[]
+  chordsByQuality ChordQuality[]
   owner User @relation(fields:[ownerId], references:[id])
   ownerId Int
 }

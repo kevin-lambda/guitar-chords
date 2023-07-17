@@ -48,3 +48,20 @@ pages ChordPage[]
 // YES NEED define. by giving chordQualityId an Id
 chordQuality ChordQuality @relation(fields:[chordQualityId],references:[id])
 chordQualityId Int
+
+////////////////
+big brain time
+
+- okay theres create read(find) update delete. but these only are the top level actions. such as crud owner details. or crud pet details.
+
+- we know about include. which can return all the things an owner owns.
+
+// ???
+
+- but what about giving an owner an existing pet? >>>> connect, under an update query. data:{model:{connect ARRAYofOBJECTS}}
+- or what about creating an owner with new pets at the same time? >>>> create, under a create query. data:{model:{create ARRAYofOBJECTS}}.
+
+  - prisma should know to create ids automatically as defined. and
+  - prisma should know that the nested create will belong to that record...
+
+- probably for what we're trying to do here. it is best to create the model records separately, then connect. because we'd be trying to track down ids and stuff.
