@@ -2,8 +2,10 @@ import Image from "next/image"
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      main section
+    <main>
+      <section className="section">
+        <h2 className="title">main section</h2>
+      </section>
     </main>
   )
 }

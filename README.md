@@ -6,6 +6,34 @@
   - creating record with related records. include syntax
   - m:m records, make separately, then CONNECT. include syntax
 
+\*\*\* SEEDING & ID: dont seed data with ids. just let prisma take care of it all. otherwise there will be errors when trying to create later
+SEEDING: resets and schema syncs the db. REMOVES ALL RECORDS `npx prisma db push --force-reset`
+
+### API cheatsheet
+
+```tsx
+export async function PUT(request, { params }) {
+  const parseBody = await request.json()
+  const parseId = parseInt(params.id)
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: parseId,
+    },
+    data: parseBody,
+  })
+  return NextResponse.json(updatedUser)
+}
+```
+
+BACKEND
+
+- HTTP requests: need to be **await** & **json parsed**. `request.json()`
+- MODEL queries: need to be **await**.
+- DYNAMIC ROUTES params: need to be **parse int**.
+- HTTP RESPONSE: probably be **type json**. `NextResponse.json(data)`
+
+=================================================
+
 7/16/2023 300pm start
 7/17 930am start
 
