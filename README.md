@@ -9,6 +9,11 @@
 \*\*\* SEEDING & ID: dont seed data with ids. just let prisma take care of it all. otherwise there will be errors when trying to create later
 SEEDING: resets and schema syncs the db. REMOVES ALL RECORDS `npx prisma db push --force-reset`
 
+commit messages types:
+feat:
+fix:
+mile:
+
 ### API cheatsheet
 
 ```tsx
