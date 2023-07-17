@@ -37,6 +37,15 @@ BACKEND
 - DYNAMIC ROUTES params: need to be **parse int**.
 - HTTP RESPONSE: probably be **type json**. `NextResponse.json(data)`
 
+### front end fetch
+
+on event
+
+- prevent default
+- response = await fetch(url, {method: "", body: JSON.stringify( object )})
+- parseResponse = await response.json()
+- setstate as needed
+
 =================================================
 
 7/16/2023 300pm start
