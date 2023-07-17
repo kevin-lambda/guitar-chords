@@ -1,4 +1,13 @@
+//////////write up sections
+
+- prisma model basics
+- relations
+- seed data
+  - creating record with related records. include syntax
+  - m:m records, make separately, then CONNECT. include syntax
+
 7/16/2023 300pm start
+7/17 930am start
 
 - prisma model
   common types:
