@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Chord" ALTER COLUMN "noteFormula" SET DATA TYPE TEXT[],
+ALTER COLUMN "noteOptional" SET DATA TYPE TEXT[];

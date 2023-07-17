@@ -8,9 +8,10 @@ datasource db {
 }
 
 // MODEL RELATIONSHIPS
-// 1 User : M ChordPages
-// 1 Chord : M ChordVoicings
-// M Chords : M pages
+// 1 User : M ChordPages. One user can have many pages
+// 1 Chord : M ChordVoicings. One chord can have many voicings
+// 1 ChordQuality : M Chords. 1 chord quality can belong/have to many chords
+// M Chords : M pages. many chords are on many pages
 
 model User{
   id Int @id @default(autoincrement())
@@ -25,30 +26,49 @@ model User{
 model Chord{
   id Int @id @default(autoincrement())
   name String
-  noteFormula Int[]
-  noteOptional Int[]
-  
-  voicings ChordVoicing[]
-  pages ChordPage[]
+  noteFormula String[]
+  rootNote String
+  rootNoteStrings String[]
+
+  pages ChordPage[] //can have many pages
+  chordQuality ChordQuality @relation(fields:[chordQualityId],references:[id]) //has/belongs to one quality
+  chordQualityId Int //has/belongs to one quality
+  // eventually just store the actual BY CHORD (vs by quality) voicing data in here?
 }
 
-model ChordVoicing{
+model ChordQuality{
+  id Int @id @default(autoincrement())
+  qualityName String 
+  qualityFormula String[]
+  optionalNote String[]
+  primaryQuality String
+  isTriad Boolean 
+  isSeventh Boolean 
+  isExtended Boolean
+
+  baseChord Chord[] //can belong to many chords
+  chordQualityVoicing ChordQualityVoicing[] //can have/belong to many voicings
+}
+
+model ChordQualityVoicing{
   id Int @id @default(autoincrement())
   name String
-  frets Int[]
+  frets String[]
   fretTones String[]
   rootString Int
-
   isANoteOmitted Boolean
   isMovable Boolean
 
-  chord Chord @relation(fields:[chordId],references:[id])
-  chordId Int
+  chordQuality ChordQuality @relation(fields:[chordQualityId],references:[id]) //belongs to one quality
+  chordQualityId Int //belongs to one quality
+
+
 }
 
 model ChordPage{
   id Int @id @default(autoincrement())
-  
+  name String @default("my chord page")
+
   chords Chord[]
   owner User @relation(fields:[ownerId], references:[id])
   ownerId Int

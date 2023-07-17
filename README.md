@@ -32,9 +32,19 @@ owner User @relation(fields:[ownerId] , references:[id])
 ownerId Int
 
 RELATIONS:
-1:1 = User{Profile} ; Profile{User @relation(field:[], references:[])}
-1:m = User{Post[]} ; Post{User @relation(field:[], references:[])}
+1:1 = User{Profile} ; Profile{User @relation(fields:[], references:[])}
+1:m = User{Post[]} ; Post{User @relation(fields:[], references:[])}
 m:m = Post{Category[]} ; Category{Post[]}
 
-1 User : M pages
-M chords : M pages
+seed data:
+
+- when making seed data, model relations that can have many of a model don't need to define those things. it can have many.
+- when making an instance of a model with a field that must have one owner, it must be defined at that time.
+
+so...
+// NO NEED define
+pages ChordPage[]
+
+// YES NEED define. by giving chordQualityId an Id
+chordQuality ChordQuality @relation(fields:[chordQualityId],references:[id])
+chordQualityId Int
