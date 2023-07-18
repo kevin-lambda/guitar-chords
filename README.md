@@ -116,3 +116,35 @@ big brain time
   - prisma should know that the nested create will belong to that record...
 
 - probably for what we're trying to do here. it is best to create the model records separately, then connect. because we'd be trying to track down ids and stuff.
+
+//////////////////
+
+admin UI
+
+7/18
+needing to adjust schema after starting to implement things.
+
+- quality formula was array of strings, so it would be easier to work with later.
+  ["1", "3", "5"],
+  - but to create it via UI, would need to have a bunch of inputs for separate element. input 1 ; input 3 ; input 5
+  - ACTUALLY, can just input it as a string, but with spaces. 1 3 5. then parse it on the frontend into an array of strings, which would save into db.
+    !
+
+problem: SCALING
+desc: having a bunch of object properties to create. many inputs. dont want to make a setstate for each one. so trying to handle all inputs on one setstate
+handleing multiple inputs on one setstate
+
+- learning about spread operator object with setstate. started writing it out,
+
+- spread syntax. {...obj1, ...obj2} will spread out the properties of both objects, then combine to one object.
+  This can work with single properties too. { ...obj1, prop9: "value"}
+
+  // e.target.name is from the input, and MATCHES an existing property in the object. name must exactly match the obj property
+  // then as the onchange happens, we get a new value. e.target.value
+
+  // onchange we set a new state, this state is the previous state in spread syntax.
+  // BUT with a new property. In this case e.target.name matches an existing property and will overwrite the old prop value
+
+  // so we update just that state
+
+  // key things: name property in input, controlled input component with value prop, onChange handler with spread and additional syntax
