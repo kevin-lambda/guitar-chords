@@ -1,12 +1,19 @@
+sunday - api
+monday - admin crud pt1
+tuesday - admin crud finish
+wednesday - home page + chord page + page add chord quality
+thursday - render chord quality voicing on page
+friday - finish up for MVP of showing quality voicings on page
+
 API
-[] CRUD users
-[] CRUD chord quality
-[] CRUD chord quality voicing
-[] crud chord page
-[] crud chord
+[x] CRUD users
+[x] CRUD chord quality
+[x] CRUD chord quality voicing
+[x] crud chord page
+[x] crud chord
 
 admin UI
-[] CRUD users
+[x] CRUD users
 [] CRUD chord quality
 [] CRUD chord quality voicing
 [] crud chord page
