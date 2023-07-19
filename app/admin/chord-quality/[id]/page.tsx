@@ -169,6 +169,11 @@ export default function SingleChordQuality({ params }) {
       <p>is triad: {singleChordQuality.isTriad.toString()}</p>
       <p>is seventh: {singleChordQuality.isSeventh.toString()}</p>
       <p>is extended: {singleChordQuality.isExtended.toString()}</p>
+
+      <div>
+        <br></br>
+        <a href="/admin">back to admin page</a>
+      </div>
     </div>
   )
 }

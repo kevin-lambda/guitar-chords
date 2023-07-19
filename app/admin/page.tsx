@@ -21,6 +21,17 @@ export default function Admin() {
     isExtended: false,
   })
 
+  const [allChordQualityVoicing, setAllChordQualityVoicing] = useState([])
+  const [newChordQualityVoicing, setNewChordQualityVoicing] = useState({
+    name: "",
+    frets: [],
+    fretTones: [],
+    rootString: 0,
+    isANoteOmitted: false,
+    isMovable: false,
+    chordQualityId: 0,
+  })
+
   async function getAllUsers() {
     const res = await fetch("/api/user", {
       method: "GET",
@@ -145,13 +156,76 @@ export default function Admin() {
     return chordSize
   }
 
+  async function getAllChordQualityVoicing() {
+    const res = await fetch("/api/chord-quality-voicing")
+    const parseRes = await res.json()
+    setAllChordQualityVoicing(parseRes)
+  }
+
+  async function handleChordQualityVoicingDelete(e, id) {
+    e.preventDefault()
+    const res = await fetch(`/api/chord-quality-voicing/${id}`, {
+      method: "DELETE",
+    })
+    const parseRes = await res.json()
+    getAllChordQualityVoicing()
+  }
+
+  function handleInputNewChordQualityVoicing(e) {
+    console.log(e.target.value)
+    console.log(e.target.name)
+
+    let value = e.target.value
+    let name = e.target.name
+
+    if (name === "frets" || name === "fretTones") {
+      let valueAlt = e.target.value.split(",")
+      setNewChordQualityVoicing({ ...newChordQualityVoicing, [name]: valueAlt })
+    } else if (
+      e.target.name === "isMovable" ||
+      e.target.name === "isANoteOmitted"
+    ) {
+      value = e.target.checked
+      setNewChordQualityVoicing({ ...newChordQualityVoicing, [name]: value })
+    } else if (
+      e.target.name === "rootString" ||
+      e.target.name === "chordQualityId"
+    ) {
+      let parseValue = parseInt(e.target.value)
+
+      setNewChordQualityVoicing({
+        ...newChordQualityVoicing,
+        [name]: parseValue,
+      })
+    } else {
+      setNewChordQualityVoicing({ ...newChordQualityVoicing, [name]: value })
+    }
+  }
+
+  async function handleNewChordQualityVoicing(e) {
+    e.preventDefault()
+    console.log(newChordQualityVoicing)
+
+    const res = await fetch(`/api/chord-quality-voicing`, {
+      method: "POST",
+      body: JSON.stringify(newChordQualityVoicing),
+    })
+    const parseRes = await res.json()
+    getAllChordQualityVoicing()
+  }
+
   useEffect(() => {
     getAllUsers()
     getAllChordQuality()
+    getAllChordQualityVoicing()
   }, [])
 
   return (
     <div className="has-background-light">
+      <p>
+        <a href="/">back to home</a>
+      </p>
+
       <section className="section">
         <div className="has-background-grey-lighter">
           <h2 className="title">USERS</h2>
@@ -321,6 +395,115 @@ export default function Admin() {
               </form>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="has-background-grey-lighter">
+          <h2 className="is-size-2">Chord Quality Voicing</h2>
+          <div>
+            <h3>create chord quality voicings</h3>
+            <form onSubmit={handleNewChordQualityVoicing}>
+              <label>
+                name:
+                <input
+                  type="text"
+                  name="name"
+                  value={newChordQualityVoicing.name}
+                  onChange={handleInputNewChordQualityVoicing}
+                  placeholder="Major, 5th string, standard"
+                ></input>
+              </label>
+              <label>
+                frets:
+                <input
+                  type="text"
+                  name="frets"
+                  value={newChordQualityVoicing.frets}
+                  onChange={handleInputNewChordQualityVoicing}
+                  placeholder="1,3,3,2,1,1"
+                ></input>
+              </label>
+              <label>
+                fretTones:
+                <input
+                  type="text"
+                  name="fretTones"
+                  value={newChordQualityVoicing.fretTones}
+                  onChange={handleInputNewChordQualityVoicing}
+                  placeholder="1,5,1,3,5,1"
+                ></input>
+              </label>
+              <label>
+                rootString:
+                <input
+                  type="text"
+                  name="rootString"
+                  value={newChordQualityVoicing.rootString}
+                  onChange={handleInputNewChordQualityVoicing}
+                  placeholder="5"
+                ></input>
+              </label>
+
+              <label className="mx-5">
+                <input
+                  type="checkbox"
+                  name="isANoteOmitted"
+                  onChange={handleInputNewChordQualityVoicing}
+                  checked={newChordQualityVoicing.isANoteOmitted}
+                ></input>
+                isANoteOmitted
+              </label>
+              <label className="mx-5">
+                <input
+                  type="checkbox"
+                  name="isMovable"
+                  onChange={handleInputNewChordQualityVoicing}
+                  checked={newChordQualityVoicing.isMovable}
+                ></input>
+                isMovable
+              </label>
+
+              <label>
+                Chord Quality
+                <select
+                  name="chordQualityId"
+                  value={newChordQualityVoicing.chordQualityId}
+                  onChange={handleInputNewChordQualityVoicing}
+                >
+                  {allChordQuality.map((e) => (
+                    <option key={e.id} value={e.id}>
+                      id: {e.id}
+                      name: {e.qualityName}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button>submit</button>
+            </form>
+          </div>
+          <div>
+            <h3 className="is-size-4">All chord quality voicings</h3>
+            <div>
+              {allChordQualityVoicing.map((e) => (
+                <div key={e.id} className="is-flex">
+                  <p>
+                    Name: {e.name} Root String: {e.rootString}
+                  </p>
+                  <form
+                    className="mx-3"
+                    onSubmit={(event) => {
+                      handleChordQualityVoicingDelete(event, e.id)
+                    }}
+                  >
+                    <button className="button is-danger is-small">
+                      delete
+                    </button>
+                  </form>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </div>

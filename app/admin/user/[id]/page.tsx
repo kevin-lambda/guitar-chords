@@ -24,6 +24,12 @@ export default function SingleUser({ params }) {
       <h2>single user page</h2>
       <p>user id: {singleUser.id}</p>
       <p>user email: {singleUser.email}</p>
+
+      <div>
+        <p>
+          <a href="/admin">back to admin page</a>
+        </p>
+      </div>
     </div>
   )
 }

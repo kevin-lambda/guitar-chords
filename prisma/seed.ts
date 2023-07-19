@@ -24,7 +24,7 @@ const chordQualityBank = [
   {
     qualityName: "Minor",
     qualityFormula: ["1", "b3", "5"],
-    optionalNote: ["null"],
+    optionalNote: [""],
     primaryQuality: "Minor",
     isTriad: true,
     isSeventh: false,

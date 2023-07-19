@@ -16,7 +16,11 @@ API
 admin UI
 [x] CRUD users
 [x] CRUD chord quality
+
 [] CRUD chord quality voicing
+[x] get all, create, delete
+[] update, get one
+
 [] crud chord page
 [] crud chord
 
