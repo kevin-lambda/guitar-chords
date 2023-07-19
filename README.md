@@ -1,3 +1,11 @@
+// Lessons learned
+
+- scaling, useState
+- what schema data type, and where do we want to do the parsing work.
+  - schema data s/b in the most clear way to work with. used. array vs string
+- state, function, ui
+- once scaling up, object sizes become hard to keep all in head, therefore typescript
+
 //////////write up sections
 
 - prisma model basics

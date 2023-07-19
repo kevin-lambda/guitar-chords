@@ -31,7 +31,7 @@ export default function Admin() {
     rootString: "",
     isANoteOmitted: false,
     isMovable: false,
-    chordQualityId: 0,
+    chordQualityId: 1,
   }
   const [newChordQualityVoicing, setNewChordQualityVoicing] = useState(
     newChordQualityVoicingInit
@@ -40,10 +40,24 @@ export default function Admin() {
   const [allChordPages, setAllChordPages] = useState([])
   const [newChordPage, setNewChordPage] = useState({
     name: "",
-    ownerId: "",
+    ownerId: "1",
     // chordsByNote: null,
     // chordsByQuality: null,
   })
+
+  // chords
+
+  const [allChords, setAllChords] = useState([])
+  const [newChord, setNewChord] = useState({
+    name: "",
+    noteFormula: [""],
+    rootNote: "",
+    rootNoteStrings: [""],
+    chordQualityId: 1,
+  })
+
+  // ===================== end of state
+  // ===================== end of state
 
   async function getAllUsers() {
     const res = await fetch("/api/user", {
@@ -83,16 +97,6 @@ export default function Admin() {
     const parseRes = await res.json()
     getAllUsers()
   }
-
-  // e.target.name is from the input, and MATCHES an existing property in the object. name must exactly match the obj property
-  // then as the onchange happens, we get a new value. e.target.value
-
-  // onchange we set a new state, this state is the previous state in spread syntax.
-  // BUT with a new property. In this case e.target.name matches an existing property and will overwrite the old prop value
-
-  // so we update just that state
-
-  // key things: name property in input, controlled input component with value prop, onChange handler with spread and additional syntax
 
   async function getAllChordQuality() {
     const res = await fetch("/api/chord-quality", { method: "GET" })
@@ -242,6 +246,7 @@ export default function Admin() {
   }
 
   async function handlePageDelete(event, id) {
+    event.preventDefault()
     const res = await fetch(`/api/chord-page/${id}`, { method: "DELETE" })
     getAllChordPages()
   }
@@ -274,11 +279,69 @@ export default function Admin() {
     getAllChordPages()
   }
 
+  // chords
+  // chords
+  // chords
+  // chords
+
+  async function getAllChords() {
+    const res = await fetch(`/api/chord`, { method: "GET" })
+    const parseRes = await res.json()
+
+    setAllChords(parseRes)
+  }
+
+  async function handleNewChord(event) {
+    if (
+      event.target.name === "noteFormula" ||
+      event.target.name === "rootNoteStrings"
+    ) {
+      const parseString = event.target.value.split(",")
+      setNewChord({
+        ...newChord,
+        [event.target.name]: parseString,
+      })
+    } else if (event.target.name === "chordQualityId") {
+      // wants an int
+      // drop downs, is... e.target.value...? yes
+
+      const parseId = parseInt(event.target.value)
+
+      setNewChord({
+        ...newChord,
+        [event.target.name]: parseId,
+      })
+    } else {
+      setNewChord({
+        ...newChord,
+        [event.target.name]: event.target.value,
+      })
+    }
+
+    console.log(newChord)
+  }
+
+  async function handleNewChordSubmit(event) {
+    event.preventDefault()
+    const res = await fetch("/api/chord/", {
+      method: "POST",
+      body: JSON.stringify(newChord),
+    })
+    getAllChords()
+  }
+
+  async function handleChordDelete(event, id) {
+    event.preventDefault()
+    const res = await fetch(`/api/chord/${id}`, { method: "DELETE" })
+    getAllChords()
+  }
+
   useEffect(() => {
     getAllUsers()
     getAllChordQuality()
     getAllChordQualityVoicing()
     getAllChordPages()
+    getAllChords()
   }, [])
 
   return (
@@ -615,6 +678,92 @@ export default function Admin() {
                   }}
                 >
                   <button className="button mx-5 is-danger is-small">
+                    delete
+                  </button>
+                </form>
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* CRUD */}
+      <section className="section">
+        <div className="has-background-grey-lighter">
+          <h2 className="is-size-2">Chords</h2>
+          <h3>create chord:</h3>
+
+          <form onSubmit={handleNewChordSubmit}>
+            <label>
+              name:
+              <input
+                type="text"
+                name="name"
+                value={newChord.name}
+                onChange={handleNewChord}
+                placeholder="Am"
+              ></input>
+            </label>
+            <label>
+              note Formula:
+              <input
+                type="text"
+                name="noteFormula"
+                value={newChord.noteFormula}
+                onChange={handleNewChord}
+                placeholder="A,C,E"
+              ></input>
+            </label>
+            <label>
+              rootNote:
+              <input
+                type="text"
+                name="rootNote"
+                value={newChord.rootNote}
+                onChange={handleNewChord}
+                placeholder="A"
+              ></input>
+            </label>
+            <label>
+              rootNoteStrings:
+              <input
+                type="text"
+                name="rootNoteStrings"
+                value={newChord.rootNoteStrings}
+                onChange={handleNewChord}
+                placeholder="5,0,7,2,10,5"
+              ></input>
+            </label>
+            <select
+              name="chordQualityId"
+              value={newChord.chordQualityId}
+              onChange={handleNewChord}
+            >
+              {allChordQuality.map((e) => {
+                return (
+                  <option key={e.id} value={e.id}>
+                    Id: {e.id} , Name: {e.qualityName}
+                  </option>
+                )
+              })}
+            </select>
+
+            <button>submit</button>
+          </form>
+
+          <br></br>
+          <h3 className="is-size-4">All chords</h3>
+          {allChords.map((e) => {
+            return (
+              <div key={e.id} className="is-flex">
+                <a href={`/admin/chord/${e.id}`}>NAME: {e.name}</a>, note
+                formula: {e.noteFormula.toString()}
+                <form
+                  onSubmit={(event) => {
+                    handleChordDelete(event, e.id)
+                  }}
+                >
+                  <button className="button is-danger is-small mx-3">
                     delete
                   </button>
                 </form>

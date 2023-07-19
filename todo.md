@@ -1,10 +1,14 @@
 x sunday - api
 x monday - admin crud pt1
 tuesday - admin crud finish
-wednesday - home page + chord page + page add chord quality
+wednesday - home is chord page + page add chord quality, clean up, document
 thursday - render chord quality voicing on page
 friday - finish up for MVP of showing quality voicings on page
 saturday - add to portfolio & resume. start applying again
+
+bugs:
+
+- dropdown doesnt register if no change
 
 API
 [x] CRUD users
@@ -22,9 +26,14 @@ admin UI
 [x] update, get one
 
 [x] crud chord page
-[] api to connect chord quality to page
+[x] crud chord
 
-[] crud chord
+[] api to connect chord quality, or chord to page
+[] get all chords and chord qualities of a page. probaly just an includes
+
+[] LATER: api to connect page to user. get all pages of a user
+
+[] edit api to fetch all voicings from a chord quality, might as well get pages and basechords?
 
 site ui
 [] home page
