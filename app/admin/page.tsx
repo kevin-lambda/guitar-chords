@@ -11,7 +11,7 @@ export default function Admin() {
   const [editUserEmail, setEditUserEmail] = useState("")
 
   const [allChordQuality, setAllChordQuality] = useState([])
-  const [newChordQuality, setNewChordQuality] = useState({
+  const newChordQualityInit = {
     qualityName: "",
     qualityFormula: [],
     optionalNote: [],
@@ -19,18 +19,23 @@ export default function Admin() {
     isTriad: false,
     isSeventh: false,
     isExtended: false,
-  })
+  }
+  const [newChordQuality, setNewChordQuality] = useState(newChordQualityInit)
 
   const [allChordQualityVoicing, setAllChordQualityVoicing] = useState([])
-  const [newChordQualityVoicing, setNewChordQualityVoicing] = useState({
+
+  const newChordQualityVoicingInit = {
     name: "",
     frets: [],
     fretTones: [],
-    rootString: 0,
+    rootString: "",
     isANoteOmitted: false,
     isMovable: false,
     chordQualityId: 0,
-  })
+  }
+  const [newChordQualityVoicing, setNewChordQualityVoicing] = useState(
+    newChordQualityVoicingInit
+  )
 
   async function getAllUsers() {
     const res = await fetch("/api/user", {
@@ -172,8 +177,8 @@ export default function Admin() {
   }
 
   function handleInputNewChordQualityVoicing(e) {
-    console.log(e.target.value)
-    console.log(e.target.name)
+    // console.log(e.target.value)
+    // console.log(e.target.name)
 
     let value = e.target.value
     let name = e.target.name
@@ -204,7 +209,7 @@ export default function Admin() {
 
   async function handleNewChordQualityVoicing(e) {
     e.preventDefault()
-    console.log(newChordQualityVoicing)
+    // console.log(newChordQualityVoicing)
 
     const res = await fetch(`/api/chord-quality-voicing`, {
       method: "POST",
@@ -212,6 +217,8 @@ export default function Admin() {
     })
     const parseRes = await res.json()
     getAllChordQualityVoicing()
+
+    setNewChordQualityVoicing(newChordQualityVoicingInit)
   }
 
   useEffect(() => {
@@ -488,7 +495,9 @@ export default function Admin() {
               {allChordQualityVoicing.map((e) => (
                 <div key={e.id} className="is-flex">
                   <p>
-                    Name: {e.name} Root String: {e.rootString}
+                    <a href={`/admin/chord-quality-voicing/${e.id}`}>
+                      Name: {e.name} Root String: {e.rootString}
+                    </a>
                   </p>
                   <form
                     className="mx-3"
