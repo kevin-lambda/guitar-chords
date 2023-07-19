@@ -98,8 +98,6 @@ const chordQualityVoicingBank = [
 
 // each chord can go anywhere
 
-// todo make rootNoteStrings a table
-
 const chordBank = [
   {
     name: "Am",

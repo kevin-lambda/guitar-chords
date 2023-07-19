@@ -37,6 +37,14 @@ export default function Admin() {
     newChordQualityVoicingInit
   )
 
+  const [allChordPages, setAllChordPages] = useState([])
+  const [newChordPage, setNewChordPage] = useState({
+    name: "",
+    ownerId: "",
+    // chordsByNote: null,
+    // chordsByQuality: null,
+  })
+
   async function getAllUsers() {
     const res = await fetch("/api/user", {
       method: "GET",
@@ -221,10 +229,56 @@ export default function Admin() {
     setNewChordQualityVoicing(newChordQualityVoicingInit)
   }
 
+  // CHORD PAGE
+  // CHORD PAGE
+  // CHORD PAGE
+  // CHORD PAGE
+  // CHORD PAGE
+
+  async function getAllChordPages() {
+    const res = await fetch("/api/chord-page", { method: "GET" })
+    const parseRes = await res.json()
+    setAllChordPages(parseRes)
+  }
+
+  async function handlePageDelete(event, id) {
+    const res = await fetch(`/api/chord-page/${id}`, { method: "DELETE" })
+    getAllChordPages()
+  }
+
+  function handleNewChordPage(event) {
+    console.log(event.target.name)
+    console.log(event.target.value)
+
+    if (event.target.name === "ownerId") {
+      setNewChordPage({
+        ...newChordPage,
+        [event.target.name]: parseInt(event.target.value),
+      })
+    } else {
+      setNewChordPage({
+        ...newChordPage,
+        [event.target.name]: event.target.value,
+      })
+    }
+
+    console.log(newChordPage)
+  }
+
+  async function handleNewChordPageSubmit(event) {
+    event.preventDefault()
+    const res = await fetch(`/api/chord-page`, {
+      method: "POST",
+      body: JSON.stringify(newChordPage),
+    })
+    getAllChordPages()
+  }
+
   useEffect(() => {
     getAllUsers()
     getAllChordQuality()
     getAllChordQualityVoicing()
+    getAllChordPages()
   }, [])
 
   return (
@@ -513,6 +567,60 @@ export default function Admin() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="has-background-grey-lighter">
+          <h2 className="is-size-2">Chord Pages</h2>
+
+          <div>
+            <h2>create page</h2>
+
+            <form onSubmit={handleNewChordPageSubmit}>
+              <label>
+                name:
+                <input
+                  type="text"
+                  value={newChordPage.name}
+                  name="name"
+                  placeholder="my chord page 1"
+                  onChange={handleNewChordPage}
+                ></input>
+              </label>
+              <label>
+                owner ID:
+                <select name="ownerId" onChange={handleNewChordPage}>
+                  {allUsers.map((e) => {
+                    return (
+                      <option value={e.id} key={e.id}>
+                        {e.email}
+                      </option>
+                    )
+                  })}
+                </select>
+              </label>
+              <button>submit</button>
+            </form>
+          </div>
+
+          <br></br>
+          {allChordPages.map((e) => {
+            return (
+              <div key={e.id} className="is-flex">
+                <a href={`/admin/chord-page/${e.id}`}>{e.name}</a>
+                <form
+                  onSubmit={(event) => {
+                    handlePageDelete(event, e.id)
+                  }}
+                >
+                  <button className="button mx-5 is-danger is-small">
+                    delete
+                  </button>
+                </form>
+              </div>
+            )
+          })}
         </div>
       </section>
     </div>

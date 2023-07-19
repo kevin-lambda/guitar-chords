@@ -21,7 +21,9 @@ admin UI
 [x] get all, create, delete
 [x] update, get one
 
-[] crud chord page
+[x] crud chord page
+[] api to connect chord quality to page
+
 [] crud chord
 
 site ui
