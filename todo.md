@@ -28,6 +28,15 @@ admin UI
 [x] crud chord page
 [x] crud chord
 
+API
+user, include pages
+chord, include pages, chord quality
+chord quality, inlcude basechords, pages, voicing
+chord quality voicing, include chord quality
+page, include chords by note, chordby quality, owner
+
+page, add connection to chord by note, chord by quality
+
 [] api to connect chord quality, or chord to page
 [] get all chords and chord qualities of a page. probaly just an includes
 
