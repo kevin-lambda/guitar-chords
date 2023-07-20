@@ -4,3 +4,7 @@
   - vs client components dont need the full url?
 - using connect
 - using include
+
+fix:
+
+- my chords same choice input
