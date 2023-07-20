@@ -1,14 +1,10 @@
 x sunday - api
 x monday - admin crud pt1
-tuesday - admin crud finish
+x tuesday - admin crud finish
 wednesday - home is chord page + page add chord quality, clean up, document
 thursday - render chord quality voicing on page
 friday - finish up for MVP of showing quality voicings on page
 saturday - add to portfolio & resume. start applying again
-
-bugs:
-
-- dropdown doesnt register if no change
 
 API
 [x] CRUD users
@@ -52,11 +48,13 @@ site ui
 user ui
 [] make a page
 [] add chord quality from list
+[] toggle certain strings
 
 render chord voicing
 [] from quality. use that library?
+https://github.com/omnibrain/svguitar
 [] + from base chord
 
-auth
+LATER: auth
 [] user create
 [] user log in

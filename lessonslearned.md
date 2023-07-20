@@ -9,6 +9,7 @@
 
 - a cleaner way to seed data, probably use the nested create method
 - cleaner form data
+- figure out drop down menu best UX patterns, default value or instruction
 
 ### commit messages organization
 
@@ -355,3 +356,12 @@ function handleInput(event){
 ```
 
 == notes - this is still kinda messy, probably could use refactoring.
+
+### form UI select, default value for select
+
+- if select options is a controlled component, via `value={state}`
+- and we want to set a default value for the select, because if the user is on the first option and wants that option, then submits without changing. No event is triggered due to onChange prop.
+- so we probably want a default value matching the first option
+- to set a default value, go back to the state initialize and set the default select value there.
+
+- this probably is not best practice. figure out drop down menu best UX patterns.
