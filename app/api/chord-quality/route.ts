@@ -12,7 +12,13 @@ import { NextResponse } from "next/server"
 // get all, create
 // by dynamic route id: get, delete, update
 export async function GET() {
-  const allRecords = await prisma.chordQuality.findMany()
+  const allRecords = await prisma.chordQuality.findMany({
+    include: {
+      baseChord: true,
+      pages: true,
+      chordQualityVoicing: true,
+    },
+  })
   return NextResponse.json(allRecords)
 }
 

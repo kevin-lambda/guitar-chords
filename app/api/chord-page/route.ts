@@ -7,7 +7,9 @@ import { NextResponse } from "next/server"
 // id, get, update, delete
 
 export async function GET() {
-  const allRecords = await prisma.chordPage.findMany()
+  const allRecords = await prisma.chordPage.findMany({
+    include: { chordsByNote: true, chordsByQuality: true },
+  })
   return NextResponse.json(allRecords)
 }
 

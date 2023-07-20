@@ -33,8 +33,8 @@ page, include chords by note, chordby quality, owner
 
 page, add connection to chord by note, chord by quality
 
-[] api to connect chord quality, or chord to page
-[] get all chords and chord qualities of a page. probaly just an includes
+[x] api to connect chord quality, or chord to page
+[x] get all chords and chord qualities of a page. probaly just an includes
 
 [] LATER: api to connect page to user. get all pages of a user
 
