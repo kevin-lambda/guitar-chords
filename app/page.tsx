@@ -3,6 +3,7 @@
 "use client"
 import React, { useState, useEffect } from "react"
 import { render } from "react-dom"
+import { SvgChord } from "@/components"
 
 export default function Home() {
   const [chordQualityBank, setChordQualityBank] = useState([])
@@ -41,11 +42,34 @@ export default function Home() {
     return getElement
   }
 
+  // todo get tones to work, by editing original library. need to change the forked libray and then install that forked library as a npm package. remove the old package
   function renderChord(obj) {
-    if (obj === undefined) {
-      return "i am undefined"
+    if (obj) {
+      // format data
+      // put into object
+      // return component
+
+      const { frets } = obj
+      const newArray = []
+
+      for (const elem of frets) {
+        newArray.push(parseInt(elem))
+      }
+
+      console.log(obj)
+      console.log(newArray)
+
+      const sendObject = {
+        frets: newArray,
+        tones: ["", "", "", "", "", ""],
+        bar: [],
+        baseFret: 0,
+        includeBaseFret: false,
+      }
+
+      return <SvgChord data={sendObject} />
     } else {
-      return obj.frets.toString()
+      return "i am undefined"
     }
   }
 
@@ -89,8 +113,8 @@ export default function Home() {
         <div>
           {currentChords.map((e) => {
             return (
-              <div key={e.id} className="columns">
-                <div className="column">
+              <div key={e.id} className="columns box">
+                <div className="column box">
                   {e.qualityName}, {e.qualityFormula}
                 </div>
                 <div className="column">

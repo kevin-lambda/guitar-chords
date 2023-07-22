@@ -38,17 +38,17 @@ page, add connection to chord by note, chord by quality
 
 [] LATER: api to connect page to user. get all pages of a user
 
-[] edit api to fetch all voicings from a chord quality, might as well get pages and basechords?
+[] LATER edit api to fetch all voicings from a chord quality, might as well get pages and basechords?
 
 site ui
-[] home page
+[x] home page
 [] chord page
-[] + user profile
+[] LATER user profile
 
 user ui
 [] make a page
-[] add chord quality from list
-[] toggle certain strings
+[x] add chord quality from list
+[x] toggle certain strings
 
 render chord voicing
 [] from quality. use that library?
