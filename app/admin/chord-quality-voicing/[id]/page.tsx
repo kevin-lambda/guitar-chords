@@ -14,7 +14,7 @@ export default function SingleChordQualityVoicing({ params }) {
     rootString: "",
     isANoteOmitted: false,
     isMovable: false,
-    chordQualityId: 0,
+    chordQualityId: 1,
   })
 
   const [editSingleChordQualityVoicing, setEditSingleChordQualityVoicing] =
@@ -25,7 +25,7 @@ export default function SingleChordQualityVoicing({ params }) {
       rootString: "",
       isANoteOmitted: false,
       isMovable: false,
-      chordQualityId: 0,
+      chordQualityId: 1,
     })
 
   const [chordQuality, setChordQuality] = useState({

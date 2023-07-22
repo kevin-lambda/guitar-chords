@@ -18,8 +18,8 @@ export default function SvgChord(props) {
     } else {
       chord = {
         frets: frets,
-        fingers: tones,
-        barres: bar,
+        // fingers: tones,
+        // barres: bar,
         capo: false,
       }
     }
@@ -32,7 +32,7 @@ export default function SvgChord(props) {
         standard: ["", "", "", "", "", ""], //per string notes
       },
     }
-    const lite = false // defaults to false if omitted
+    const lite = true // defaults to false if omitted
     return <Chord chord={chord} instrument={instrument} lite={lite} />
   }
   return <MyChord />

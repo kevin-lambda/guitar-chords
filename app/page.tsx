@@ -10,6 +10,15 @@ export default function Home() {
   const [currentChords, setCurrentChords] = useState([])
   const [selectChordQuality, setSelectChordQuality] = useState(1)
 
+  const [isShapeByStringVisible, setIsShapeByStringVisible] = useState({
+    showString6: true,
+    showString5: true,
+    showString4: false,
+    showString3: false,
+    showString2: false,
+    showString1: false,
+  })
+
   async function getChordAllQuality() {
     const res = await fetch("http://localhost:3000/api/chord-quality/")
     const parseRes = await res.json()
@@ -73,6 +82,14 @@ export default function Home() {
     }
   }
 
+  function handleVisibleChords(event) {
+    console.log(event.target.checked)
+    setIsShapeByStringVisible({
+      ...isShapeByStringVisible,
+      [event.target.name]: event.target.checked,
+    })
+  }
+
   useEffect(() => {
     getChordAllQuality()
   }, [])
@@ -104,6 +121,71 @@ export default function Home() {
             })}
           </select>
         </div>
+        <div>
+          checkboxes:
+          <form>
+            <label>
+              <input
+                type="checkbox"
+                name="showString6"
+                onChange={handleVisibleChords}
+                value={isShapeByStringVisible.showString6}
+                defaultChecked={isShapeByStringVisible.showString6}
+              />{" "}
+              String 6{" "}
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="showString5"
+                onChange={handleVisibleChords}
+                value={isShapeByStringVisible.showString5}
+                defaultChecked={isShapeByStringVisible.showString5}
+              />{" "}
+              String 5{" "}
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="showString4"
+                onChange={handleVisibleChords}
+                value={isShapeByStringVisible.showString4}
+                defaultChecked={isShapeByStringVisible.showString4}
+              />{" "}
+              String 4{" "}
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="showString3"
+                onChange={handleVisibleChords}
+                value={isShapeByStringVisible.showString3}
+                defaultChecked={isShapeByStringVisible.showString3}
+              />{" "}
+              String 3{" "}
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="showString2"
+                onChange={handleVisibleChords}
+                value={isShapeByStringVisible.showString2}
+                defaultChecked={isShapeByStringVisible.showString2}
+              />{" "}
+              String 2{" "}
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                name="showString1"
+                onChange={handleVisibleChords}
+                value={isShapeByStringVisible.showString1}
+                defaultChecked={isShapeByStringVisible.showString1}
+              />{" "}
+              String 1{" "}
+            </label>
+          </form>
+        </div>
       </section>
 
       <section className="section">
@@ -117,24 +199,36 @@ export default function Home() {
                 <div className="column box">
                   {e.qualityName}, {e.qualityFormula}
                 </div>
-                <div className="column">
-                  string6: {renderChord(e.formattedVoicings.string6)}
-                </div>
-                <div className="column">
-                  string5: {renderChord(e.formattedVoicings.string5)}
-                </div>
-                <div className="column">
-                  string4: {renderChord(e.formattedVoicings.string4)}
-                </div>
-                <div className="column">
-                  string3: {renderChord(e.formattedVoicings.string3)}
-                </div>
-                <div className="column">
-                  string2: {renderChord(e.formattedVoicings.string2)}
-                </div>
-                <div className="column">
-                  string1: {renderChord(e.formattedVoicings.string1)}
-                </div>
+                {isShapeByStringVisible.showString6 ? (
+                  <div className="column">
+                    string6: {renderChord(e.formattedVoicings.string6)}
+                  </div>
+                ) : null}
+                {isShapeByStringVisible.showString5 ? (
+                  <div className="column">
+                    string5: {renderChord(e.formattedVoicings.string5)}
+                  </div>
+                ) : null}
+                {isShapeByStringVisible.showString4 ? (
+                  <div className="column">
+                    string4: {renderChord(e.formattedVoicings.string4)}
+                  </div>
+                ) : null}
+                {isShapeByStringVisible.showString3 ? (
+                  <div className="column">
+                    string3: {renderChord(e.formattedVoicings.string3)}
+                  </div>
+                ) : null}
+                {isShapeByStringVisible.showString2 ? (
+                  <div className="column">
+                    string2: {renderChord(e.formattedVoicings.string2)}
+                  </div>
+                ) : null}
+                {isShapeByStringVisible.showString1 ? (
+                  <div className="column">
+                    string1: {renderChord(e.formattedVoicings.string1)}
+                  </div>
+                ) : null}
               </div>
             )
           })}
