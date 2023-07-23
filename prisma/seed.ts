@@ -15,7 +15,7 @@ const chordQualityBank = [
   {
     qualityName: "Major",
     qualityFormula: ["1", "3", "5"],
-    optionalNote: ["null"],
+    optionalNote: [""],
     primaryQuality: "Major",
     isTriad: true,
     isSeventh: false,
@@ -69,8 +69,8 @@ const chordQualityVoicingBank = [
   },
   {
     name: "Major, 5th string, standard",
-    frets: ["X", "1", "3", "3", "3", "1"],
-    fretTones: ["X", "1", "5", "1", "3", "1"],
+    frets: ["-1", "1", "3", "3", "3", "1"],
+    fretTones: ["-1", "1", "5", "1", "3", "1"],
     rootString: 5,
     isANoteOmitted: false,
     isMovable: true,
@@ -87,8 +87,8 @@ const chordQualityVoicingBank = [
   },
   {
     name: "Minor, 5th string, standard",
-    frets: ["X", "1", "3", "3", "2", "1"],
-    fretTones: ["X", "1", "5", "1", "b3", "1"],
+    frets: ["-1", "1", "3", "3", "2", "1"],
+    fretTones: ["-1", "1", "5", "1", "b3", "1"],
     rootString: 5,
     isANoteOmitted: false,
     isMovable: true,

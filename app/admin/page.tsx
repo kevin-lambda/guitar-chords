@@ -346,9 +346,85 @@ export default function Admin() {
 
   return (
     <div className="has-background-light">
-      <p>
-        <a href="/">back to home</a>
-      </p>
+      <section className="hero" id="admin-hero-background">
+        <div className="hero-body">
+          <p className="title">ADMIN</p>
+        </div>
+      </section>
+      <nav class="level pt-5">
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Users</p>
+            <p class="title">{allUsers.length}</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Chord Qualities</p>
+            <p class="title">{allChordQuality.length}</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Chord Voicings</p>
+            <p class="title">{allChordQualityVoicing.length}</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Chord Pages</p>
+            <p class="title">{allChordPages.length}</p>
+          </div>
+        </div>
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Chords</p>
+            <p class="title">{allChords.length}</p>
+          </div>
+        </div>
+      </nav>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>email</th>
+            <th>delete</th>
+            <th>edit</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th>1</th>
+            <td>
+              <a
+                href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
+                title="Leicester City F.C."
+              >
+                Leicester City
+              </a>{" "}
+              <strong>(C)</strong>
+            </td>
+            <td>38</td>
+            <td>38</td>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td>
+              <a
+                href="https://en.wikipedia.org/wiki/Leicester_City_F.C."
+                title="Leicester City F.C."
+              >
+                Leicester City
+              </a>{" "}
+              <strong>(C)</strong>
+            </td>
+            <td>38</td>
+            <td>38</td>
+          </tr>
+        </tbody>
+      </table>
 
       <section className="section">
         <div className="has-background-grey-lighter">
@@ -378,6 +454,7 @@ export default function Admin() {
             <button>submit</button>
           </form>
           <br></br>
+
           <h3 className="is-size-5">All Users:</h3>
           <div className="">
             {allUsers.map((e) => (
