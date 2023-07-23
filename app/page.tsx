@@ -78,7 +78,7 @@ export default function Home() {
 
       return <SvgChord data={sendObject} />
     } else {
-      return "i am undefined"
+      return "No chord shape available"
     }
   }
 
@@ -95,7 +95,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="container is-max-desktop has-background-light">
+    <main className="container is-max-desktop">
       <section className="section mb-0 pb-0">
         <h1 className="title is-family-secondary">Quality Chord Shapes</h1>
         <h2 className="subtitle">
@@ -194,73 +194,79 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section pt-0 has-background-grey-light px-5">
-        <h2 className="is-size-3 has-text-centered pb-5">my chords</h2>
+      <section className="section pt-0 px-5 box">
+        <h2 className="is-size-3 has-text-centered pb-5">My chords</h2>
 
         {/* hide on mobile view */}
-        <div className="columns box has-text-centered py-0 ">
-          <div className="column">Chord Quality</div>
-          {isShapeByStringVisible.showString6 ? (
-            <div className="column">Root 6th String</div>
-          ) : null}
-          {isShapeByStringVisible.showString5 ? (
-            <div className="column">Root 5th String</div>
-          ) : null}
-          {isShapeByStringVisible.showString4 ? (
-            <div className="column">Root 4th String</div>
-          ) : null}
-          {isShapeByStringVisible.showString3 ? (
-            <div className="column">Root 3rd String</div>
-          ) : null}
-          {isShapeByStringVisible.showString2 ? (
-            <div className="column">Root 2nd String</div>
-          ) : null}
-          {isShapeByStringVisible.showString1 ? (
-            <div className="column">Root 1st String</div>
-          ) : null}
-        </div>
+        <div className="">
+          <div
+            className="columns has-text-centered py-0 "
+            id="chord-page-heading"
+          >
+            <div className="column">Chord Quality</div>
+            {isShapeByStringVisible.showString6 ? (
+              <div className="column">Root 6th String</div>
+            ) : null}
+            {isShapeByStringVisible.showString5 ? (
+              <div className="column">Root 5th String</div>
+            ) : null}
+            {isShapeByStringVisible.showString4 ? (
+              <div className="column">Root 4th String</div>
+            ) : null}
+            {isShapeByStringVisible.showString3 ? (
+              <div className="column">Root 3rd String</div>
+            ) : null}
+            {isShapeByStringVisible.showString2 ? (
+              <div className="column">Root 2nd String</div>
+            ) : null}
+            {isShapeByStringVisible.showString1 ? (
+              <div className="column">Root 1st String</div>
+            ) : null}
+          </div>
 
-        <div>
-          {currentChords.map((e) => {
-            return (
-              <div key={e.id} className="columns has-text-centered py-3 box">
-                <div className="column has-text-left is-size-5">
-                  <p>{e.qualityName}</p>
-                  <p>{e.qualityFormula}</p>
+          <div>
+            {currentChords.map((e) => {
+              return (
+                <div key={e.id} className="columns has-text-centered py-3">
+                  <div className="column has-text-left is-size-5">
+                    <p>{e.qualityName}</p>
+                    {/* <p>{e.qualityFormula}</p> */}
+                    {/* hide quality formula for now */}
+                  </div>
+                  {isShapeByStringVisible.showString6 ? (
+                    <div className="column">
+                      {renderChord(e.formattedVoicings.string6)}
+                    </div>
+                  ) : null}
+                  {isShapeByStringVisible.showString5 ? (
+                    <div className="column">
+                      {renderChord(e.formattedVoicings.string5)}
+                    </div>
+                  ) : null}
+                  {isShapeByStringVisible.showString4 ? (
+                    <div className="column">
+                      {renderChord(e.formattedVoicings.string4)}
+                    </div>
+                  ) : null}
+                  {isShapeByStringVisible.showString3 ? (
+                    <div className="column">
+                      {renderChord(e.formattedVoicings.string3)}
+                    </div>
+                  ) : null}
+                  {isShapeByStringVisible.showString2 ? (
+                    <div className="column">
+                      {renderChord(e.formattedVoicings.string2)}
+                    </div>
+                  ) : null}
+                  {isShapeByStringVisible.showString1 ? (
+                    <div className="column">
+                      {renderChord(e.formattedVoicings.string1)}
+                    </div>
+                  ) : null}
                 </div>
-                {isShapeByStringVisible.showString6 ? (
-                  <div className="column">
-                    {renderChord(e.formattedVoicings.string6)}
-                  </div>
-                ) : null}
-                {isShapeByStringVisible.showString5 ? (
-                  <div className="column">
-                    {renderChord(e.formattedVoicings.string5)}
-                  </div>
-                ) : null}
-                {isShapeByStringVisible.showString4 ? (
-                  <div className="column">
-                    {renderChord(e.formattedVoicings.string4)}
-                  </div>
-                ) : null}
-                {isShapeByStringVisible.showString3 ? (
-                  <div className="column">
-                    {renderChord(e.formattedVoicings.string3)}
-                  </div>
-                ) : null}
-                {isShapeByStringVisible.showString2 ? (
-                  <div className="column">
-                    {renderChord(e.formattedVoicings.string2)}
-                  </div>
-                ) : null}
-                {isShapeByStringVisible.showString1 ? (
-                  <div className="column">
-                    {renderChord(e.formattedVoicings.string1)}
-                  </div>
-                ) : null}
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       </section>
     </main>
