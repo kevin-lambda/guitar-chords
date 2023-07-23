@@ -1,0 +1,5 @@
+/* prettier-ignore */
+@use "bulma" 
+  with(
+     $primary: rgb(152, 50, 248),
+  );

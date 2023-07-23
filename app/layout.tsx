@@ -1,5 +1,4 @@
-import "bulma/css/bulma.min.css"
-import "./globals.css"
+import "@/styles/index.scss"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {

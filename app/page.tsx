@@ -95,34 +95,16 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="">
-      <h2 className="title">main section</h2>
-
+    <main className="container is-max-desktop has-background-light">
       <section className="section">
-        controls
+        <h1 className="title">Quality Chord Shapes</h1>
+        <h2 className="subtitle">
+          Make a page for your chord shapes, in any root note string
+        </h2>
+      </section>
+
+      <section className="section is-flex is-justify-content-space-between is-flex-direction-row">
         <div>
-          <form onSubmit={handleAddChord}>
-            <button className="button">add chord</button>
-          </form>
-        </div>
-        <div>
-          <select
-            name="chordQualitySelect"
-            onChange={(e) => {
-              setSelectChordQuality(e.target.value)
-            }}
-          >
-            {chordQualityBank.map((e) => {
-              return (
-                <option value={e.id} key={e.id}>
-                  {e.id} {e.qualityName}
-                </option>
-              )
-            })}
-          </select>
-        </div>
-        <div>
-          checkboxes:
           <form>
             <label>
               <input
@@ -186,12 +168,37 @@ export default function Home() {
             </label>
           </form>
         </div>
+
+        <div className="is-flex">
+          <div>
+            <div>
+              <select
+                name="chordQualitySelect"
+                onChange={(e) => {
+                  setSelectChordQuality(e.target.value)
+                }}
+              >
+                {chordQualityBank.map((e) => {
+                  return (
+                    <option value={e.id} key={e.id}>
+                      {e.id} {e.qualityName}
+                    </option>
+                  )
+                })}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <form onSubmit={handleAddChord}>
+              <button className="button">add chord</button>
+            </form>
+          </div>
+        </div>
       </section>
 
       <section className="section">
         <h2 className="is-size-3">my chords</h2>
-
-        {/* use the classname is-hidden based on a checkbox trigger to toggle strings */}
         <div>
           {currentChords.map((e) => {
             return (
