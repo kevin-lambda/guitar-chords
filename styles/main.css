@@ -1,17 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=Albert+Sans&family=Barlow&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Barlow&family=Sura&display=swap");
 
 :root {
-  --font-impact: "Albert Sans", sans-serif;
+  --font-impact: "Sura", serif;
   --font-text: "Barlow", sans-serif;
 }
 
-body {
+* {
   border: 1px solid black;
 }
 
 /* font-family: 'Albert Sans', sans-serif;
 font-family: 'Barlow', sans-serif; */
 .main-section {
-  margin: 0 auto 0 auto;
-  max-width: 1000px;
+  /* margin: 0 auto 0 auto;
+  max-width: 1000px; */
 }

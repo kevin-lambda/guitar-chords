@@ -4,7 +4,7 @@ x tuesday - admin crud finish
 x wednesday - home is chord page + page add chord quality, clean up, document
 x thursday - render chord quality voicing on page
 x friday - finish up for MVP of showing quality voicings on page
-saturday - CLEAN UP and STYLE
+[ ] saturday - CLEAN UP and STYLE, then add data
 sunday - add to portfolio & resume. start applying again
 
 API
@@ -24,6 +24,8 @@ admin UI
 
 [x] crud chord page
 [x] crud chord
+
+FE
 
 API
 user, include pages

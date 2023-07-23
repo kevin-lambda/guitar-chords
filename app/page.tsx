@@ -96,16 +96,18 @@ export default function Home() {
 
   return (
     <main className="container is-max-desktop has-background-light">
-      <section className="section">
-        <h1 className="title">Quality Chord Shapes</h1>
+      <section className="section mb-0 pb-0">
+        <h1 className="title is-family-secondary">Quality Chord Shapes</h1>
         <h2 className="subtitle">
-          Make a page for your chord shapes, in any root note string
+          Make a page for your <i>movable</i> chord shapes, in any root note
+          string
         </h2>
       </section>
 
-      <section className="section is-flex is-justify-content-space-between is-flex-direction-row">
+      <section className="section pt-5 pb-2 is-flex is-justify-content-space-between is-flex-direction-row">
         <div>
-          <form>
+          <h3>Show chord shape for string</h3>
+          <form className="is-flex is-justify-content-space-between">
             <label>
               <input
                 type="checkbox"
@@ -114,7 +116,7 @@ export default function Home() {
                 value={isShapeByStringVisible.showString6}
                 defaultChecked={isShapeByStringVisible.showString6}
               />{" "}
-              String 6{" "}
+              6{" "}
             </label>
             <label>
               <input
@@ -124,7 +126,7 @@ export default function Home() {
                 value={isShapeByStringVisible.showString5}
                 defaultChecked={isShapeByStringVisible.showString5}
               />{" "}
-              String 5{" "}
+              5{" "}
             </label>
             <label>
               <input
@@ -134,7 +136,7 @@ export default function Home() {
                 value={isShapeByStringVisible.showString4}
                 defaultChecked={isShapeByStringVisible.showString4}
               />{" "}
-              String 4{" "}
+              4{" "}
             </label>
             <label>
               <input
@@ -144,7 +146,7 @@ export default function Home() {
                 value={isShapeByStringVisible.showString3}
                 defaultChecked={isShapeByStringVisible.showString3}
               />{" "}
-              String 3{" "}
+              3{" "}
             </label>
             <label>
               <input
@@ -154,7 +156,7 @@ export default function Home() {
                 value={isShapeByStringVisible.showString2}
                 defaultChecked={isShapeByStringVisible.showString2}
               />{" "}
-              String 2{" "}
+              2{" "}
             </label>
             <label>
               <input
@@ -164,76 +166,96 @@ export default function Home() {
                 value={isShapeByStringVisible.showString1}
                 defaultChecked={isShapeByStringVisible.showString1}
               />{" "}
-              String 1{" "}
+              1{" "}
             </label>
           </form>
         </div>
 
         <div className="is-flex">
-          <div>
-            <div>
-              <select
-                name="chordQualitySelect"
-                onChange={(e) => {
-                  setSelectChordQuality(e.target.value)
-                }}
-              >
-                {chordQualityBank.map((e) => {
-                  return (
-                    <option value={e.id} key={e.id}>
-                      {e.id} {e.qualityName}
-                    </option>
-                  )
-                })}
-              </select>
-            </div>
+          <div className="select px-2">
+            <select
+              name="chordQualitySelect"
+              onChange={(e) => {
+                setSelectChordQuality(e.target.value)
+              }}
+            >
+              {chordQualityBank.map((e) => {
+                return (
+                  <option value={e.id} key={e.id}>
+                    {e.qualityName}
+                  </option>
+                )
+              })}
+            </select>
           </div>
-
-          <div>
-            <form onSubmit={handleAddChord}>
-              <button className="button">add chord</button>
-            </form>
-          </div>
+          <form className="px-2" onSubmit={handleAddChord}>
+            <button className="button has-background-success">add chord</button>
+          </form>
         </div>
       </section>
 
-      <section className="section">
-        <h2 className="is-size-3">my chords</h2>
+      <section className="section pt-0 has-background-grey-light px-5">
+        <h2 className="is-size-3 has-text-centered pb-5">my chords</h2>
+
+        {/* hide on mobile view */}
+        <div className="columns box has-text-centered py-0 ">
+          <div className="column">Chord Quality</div>
+          {isShapeByStringVisible.showString6 ? (
+            <div className="column">Root 6th String</div>
+          ) : null}
+          {isShapeByStringVisible.showString5 ? (
+            <div className="column">Root 5th String</div>
+          ) : null}
+          {isShapeByStringVisible.showString4 ? (
+            <div className="column">Root 4th String</div>
+          ) : null}
+          {isShapeByStringVisible.showString3 ? (
+            <div className="column">Root 3rd String</div>
+          ) : null}
+          {isShapeByStringVisible.showString2 ? (
+            <div className="column">Root 2nd String</div>
+          ) : null}
+          {isShapeByStringVisible.showString1 ? (
+            <div className="column">Root 1st String</div>
+          ) : null}
+        </div>
+
         <div>
           {currentChords.map((e) => {
             return (
-              <div key={e.id} className="columns box">
-                <div className="column box">
-                  {e.qualityName}, {e.qualityFormula}
+              <div key={e.id} className="columns has-text-centered py-3 box">
+                <div className="column has-text-left is-size-5">
+                  <p>{e.qualityName}</p>
+                  <p>{e.qualityFormula}</p>
                 </div>
                 {isShapeByStringVisible.showString6 ? (
                   <div className="column">
-                    string6: {renderChord(e.formattedVoicings.string6)}
+                    {renderChord(e.formattedVoicings.string6)}
                   </div>
                 ) : null}
                 {isShapeByStringVisible.showString5 ? (
                   <div className="column">
-                    string5: {renderChord(e.formattedVoicings.string5)}
+                    {renderChord(e.formattedVoicings.string5)}
                   </div>
                 ) : null}
                 {isShapeByStringVisible.showString4 ? (
                   <div className="column">
-                    string4: {renderChord(e.formattedVoicings.string4)}
+                    {renderChord(e.formattedVoicings.string4)}
                   </div>
                 ) : null}
                 {isShapeByStringVisible.showString3 ? (
                   <div className="column">
-                    string3: {renderChord(e.formattedVoicings.string3)}
+                    {renderChord(e.formattedVoicings.string3)}
                   </div>
                 ) : null}
                 {isShapeByStringVisible.showString2 ? (
                   <div className="column">
-                    string2: {renderChord(e.formattedVoicings.string2)}
+                    {renderChord(e.formattedVoicings.string2)}
                   </div>
                 ) : null}
                 {isShapeByStringVisible.showString1 ? (
                   <div className="column">
-                    string1: {renderChord(e.formattedVoicings.string1)}
+                    {renderChord(e.formattedVoicings.string1)}
                   </div>
                 ) : null}
               </div>
