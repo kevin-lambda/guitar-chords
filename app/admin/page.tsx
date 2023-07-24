@@ -11,7 +11,7 @@ export default function Admin() {
   const [allChordQuality, setAllChordQuality] = useState([])
   const newChordQualityInit = {
     qualityName: "",
-    qualityFormula: [],
+    qualityFormula: [""],
     optionalNote: [],
     primaryQuality: "",
     isTriad: false,
@@ -277,11 +277,7 @@ export default function Admin() {
         [event.target.name]: parseString,
       })
     } else if (event.target.name === "chordQualityId") {
-      // wants an int
-      // drop downs, is... e.target.value...? yes
-
       const parseId = parseInt(event.target.value)
-
       setNewChord({
         ...newChord,
         [event.target.name]: parseId,
@@ -360,137 +356,133 @@ export default function Admin() {
         </nav>
 
         <section className="section box">
-          <div className="">
-            <h2 className="title">CHORD QUALITY</h2>
-            <h3 className="is-size-5">Create chord</h3>
-            <form onSubmit={handleNewChordQuality}>
-              <p>
-                <label className="mr-5">
-                  Quality Name:
-                  <input
-                    className="ml-2"
-                    type="text"
-                    placeholder="Major 7th"
-                    name="qualityName"
-                    value={newChordQuality.qualityName}
-                    onChange={handleInputNewChordQuality}
-                  ></input>
-                </label>
+          <h2 className="title">CHORD QUALITY</h2>
+          <h3 className="is-size-5">Create chord</h3>
+          <form onSubmit={handleNewChordQuality}>
+            <p>
+              <label className="mr-5">
+                Quality Name:
+                <input
+                  className="ml-2"
+                  type="text"
+                  placeholder="Major 7th"
+                  name="qualityName"
+                  value={newChordQuality.qualityName}
+                  onChange={handleInputNewChordQuality}
+                ></input>
+              </label>
 
-                <label>
-                  Quality Formula:
-                  <input
-                    className="ml-2"
-                    type="text"
-                    placeholder="1,3,5,7"
-                    name="qualityFormula"
-                    value={newChordQuality.qualityFormula}
-                    onChange={handleInputNewChordQuality}
-                  ></input>
-                </label>
-              </p>
+              <label>
+                Quality Formula:
+                <input
+                  className="ml-2"
+                  type="text"
+                  placeholder="1,3,5,7"
+                  name="qualityFormula"
+                  value={newChordQuality.qualityFormula}
+                  onChange={handleInputNewChordQuality}
+                ></input>
+              </label>
+            </p>
 
-              <p>
-                <label className="mr-5">
-                  Optional Note:
-                  <input
-                    className="ml-1"
-                    type="text"
-                    placeholder="5,9"
-                    name="optionalNote"
-                    value={newChordQuality.optionalNote}
-                    onChange={handleInputNewChordQuality}
-                  ></input>
-                </label>
-                <label>
-                  Primary Quality:
-                  <input
-                    className="ml-2"
-                    type="text"
-                    placeholder="Major"
-                    name="primaryQuality"
-                    value={newChordQuality.primaryQuality}
-                    onChange={handleInputNewChordQuality}
-                  ></input>
-                </label>
-              </p>
+            <p>
+              <label className="mr-5">
+                Optional Note:
+                <input
+                  className="ml-1"
+                  type="text"
+                  placeholder="5,9"
+                  name="optionalNote"
+                  value={newChordQuality.optionalNote}
+                  onChange={handleInputNewChordQuality}
+                ></input>
+              </label>
+              <label>
+                Primary Quality:
+                <input
+                  className="ml-2"
+                  type="text"
+                  placeholder="Major"
+                  name="primaryQuality"
+                  value={newChordQuality.primaryQuality}
+                  onChange={handleInputNewChordQuality}
+                ></input>
+              </label>
+            </p>
 
-              <div className="control my-2">
-                <label className="radio">
-                  <input
-                    type="radio"
-                    value="triad"
-                    name="chordSize"
-                    onChange={handleInputNewChordQuality}
-                  ></input>
-                  Triad
-                </label>
-                <label className="radio">
-                  <input
-                    type="radio"
-                    value="seventh"
-                    name="chordSize"
-                    onChange={handleInputNewChordQuality}
-                  ></input>
-                  Seventh
-                </label>
-                <label className="radio">
-                  <input
-                    type="radio"
-                    value="extended"
-                    name="chordSize"
-                    onChange={handleInputNewChordQuality}
-                  ></input>
-                  Extended
-                </label>
-              </div>
+            <div className="control my-2">
+              <label className="radio">
+                <input
+                  type="radio"
+                  value="triad"
+                  name="chordSize"
+                  onChange={handleInputNewChordQuality}
+                ></input>
+                Triad
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  value="seventh"
+                  name="chordSize"
+                  onChange={handleInputNewChordQuality}
+                ></input>
+                Seventh
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  value="extended"
+                  name="chordSize"
+                  onChange={handleInputNewChordQuality}
+                ></input>
+                Extended
+              </label>
+            </div>
 
-              <button className="button is-small is-success is-light">
-                Submit
-              </button>
-            </form>
+            <button className="button is-small is-success is-light">
+              Submit
+            </button>
+          </form>
 
-            <table className="table mt-5">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Formula</th>
-                  <th>Optional Note</th>
-                  <th>Primary Quality</th>
-                  <th>Length</th>
-                  <th>Delete</th>
+          <table className="table mt-5">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Formula</th>
+                <th>Optional Note</th>
+                <th>Primary Quality</th>
+                <th>Length</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allChordQuality.map((e) => (
+                <tr key={e.id} className="">
+                  <th>{e.id}</th>
+                  <td>
+                    <a href={`/admin/chord-quality/${e.id}`}>{e.qualityName}</a>
+                  </td>
+                  <td> {e.qualityFormula.toString()} </td>
+                  <td>{e.optionalNote.toString()}</td>
+                  <td>{e.primaryQuality}</td>
+                  <td>{getChordLengthName(e)}</td>
+                  <td>
+                    <form
+                      onSubmit={(event) => {
+                        handleChordQualityDelete(event, e.id)
+                      }}
+                    >
+                      <button className="button is-small is-danger is-light">
+                        Delete
+                      </button>
+                    </form>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {allChordQuality.map((e) => (
-                  <tr key={e.id} className="">
-                    <th>{e.id}</th>
-                    <td>
-                      <a href={`/admin/chord-quality/${e.id}`}>
-                        {e.qualityName}
-                      </a>
-                    </td>
-                    <td> {e.qualityFormula.toString()} </td>
-                    <td>{e.optionalNote.toString()}</td>
-                    <td>{e.primaryQuality}</td>
-                    <td>{getChordLengthName(e)}</td>
-                    <td>
-                      <form
-                        onSubmit={(event) => {
-                          handleChordQualityDelete(event, e.id)
-                        }}
-                      >
-                        <button className="button is-small is-danger is-light">
-                          Delete
-                        </button>
-                      </form>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </section>
 
         <section className="section box">
@@ -792,15 +784,17 @@ export default function Admin() {
 
           <table className="table">
             <thead>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Note Formula</th>
-              <th>Root Note</th>
-              <th>Root Note Strings</th>
-              <th>
-                <abbr title="Chord Quality ID">Chord Qual ID</abbr>
-              </th>
-              <th>Delete</th>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Note Formula</th>
+                <th>Root Note</th>
+                <th>Root Note Strings</th>
+                <th>
+                  <abbr title="Chord Quality ID">Chord Qual ID</abbr>
+                </th>
+                <th>Delete</th>
+              </tr>
             </thead>
             <tbody>
               {allChords.map((e) => {
@@ -834,8 +828,8 @@ export default function Admin() {
 
         <section className="section box">
           <h2 className="title">USERS</h2>
+          <h3 className="is-size-5">Create user</h3>
           <form onSubmit={handleNewUserSubmit}>
-            <h3 className="is-size-5">Create user</h3>
             <label>
               Email:{" "}
               <input
