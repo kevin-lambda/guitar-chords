@@ -99,8 +99,7 @@ export default function Home() {
       <section className="section mb-0 pb-0">
         <h1 className="title is-family-secondary">Quality Chord Shapes</h1>
         <h2 className="subtitle">
-          Make a page for your <i>movable</i> chord shapes, in any root note
-          string
+          For <i>movable</i> chord shapes
         </h2>
       </section>
 
@@ -200,7 +199,7 @@ export default function Home() {
         {/* hide on mobile view */}
         <div className="">
           <div
-            className="columns has-text-centered py-0 "
+            className="columns has-text-centered py-0 is-size-5"
             id="chord-page-heading"
           >
             <div className="column">Chord Quality</div>
@@ -227,7 +226,11 @@ export default function Home() {
           <div>
             {currentChords.map((e) => {
               return (
-                <div key={e.id} className="columns has-text-centered py-3">
+                <div
+                  key={e.id}
+                  className="columns has-text-centered py-3"
+                  id="chord-view-row"
+                >
                   <div className="column has-text-left is-size-5">
                     <p>{e.qualityName}</p>
                     {/* <p>{e.qualityFormula}</p> */}

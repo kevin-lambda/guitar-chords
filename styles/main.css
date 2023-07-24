@@ -5,6 +5,7 @@
   --font-text: "Barlow", sans-serif;
 
   --border-main: 1px solid black;
+  --border-thick: 3px solid black;
 }
 
 * {
@@ -12,7 +13,7 @@
 }
 
 #chord-page-heading {
-  border-bottom: var(--border-main);
+  border-bottom: var(--border-thick);
 }
 
 #admin-hero-background {
@@ -23,4 +24,8 @@
     rgba(158, 158, 233, 1) 31%,
     rgba(0, 212, 255, 1) 97%
   );
+}
+
+#chord-view-row {
+  border-bottom: var(--border-main);
 }
