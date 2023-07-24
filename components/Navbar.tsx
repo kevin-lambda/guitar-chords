@@ -16,7 +16,7 @@ export default function Navbar() {
           href="/"
           className="navbar-item is-size-3 p-1 is-family-secondary has-text-weight-normal"
         >
-          QCS
+          QC
         </a>
         <a
           onClick={() => {

@@ -1,16 +1,20 @@
 MONDAY:
 
-- add 6,5,4,1 chords
-  [x] admin password, input
-- print function
+[x] add 6,5,4 chords
+[x] admin password, input
+
+[] upgrade print function
+
 - how to save db data???
 
-- pictures
-- deploy
+x pictures
+
 - write up
 
 - add to portfolio
 - update resume, with human colors
+
+- deploy
 
 API
 user, include pages

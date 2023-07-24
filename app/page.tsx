@@ -46,8 +46,6 @@ export default function Home() {
       tempObj[`string${i}`] = curString
     }
     getElement.formattedVoicings = tempObj
-
-    console.log(getElement)
     return getElement
   }
 
@@ -64,9 +62,6 @@ export default function Home() {
       for (const elem of frets) {
         newArray.push(parseInt(elem))
       }
-
-      console.log(obj)
-      console.log(newArray)
 
       const sendObject = {
         frets: newArray,
@@ -90,6 +85,11 @@ export default function Home() {
     })
   }
 
+  function handlePrintPage(e) {
+    e.preventDefault()
+    window.print()
+  }
+
   useEffect(() => {
     getChordAllQuality()
   }, [])
@@ -97,10 +97,8 @@ export default function Home() {
   return (
     <main className="container is-max-desktop">
       <section className="section mb-0 pb-0">
-        <h1 className="title is-family-secondary">Quality Chord Shapes</h1>
-        <h2 className="subtitle">
-          For <i>movable</i> chord shapes
-        </h2>
+        <h1 className="title is-family-secondary">Quality Chords</h1>
+        <h2 className="subtitle">For movable guitar chord shapes</h2>
       </section>
 
       <section className="section pt-5 pb-2 is-flex is-justify-content-space-between is-flex-direction-row">
@@ -276,6 +274,13 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* upgrade to only chords element */}
+      <form onSubmit={handlePrintPage}>
+        <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
+          Print Page
+        </button>
+      </form>
     </main>
   )
 }
