@@ -1,32 +1,16 @@
-x sunday - api
-x monday - admin crud pt1
-x tuesday - admin crud finish
-x wednesday - home is chord page + page add chord quality, clean up, document
-x thursday - render chord quality voicing on page
-x friday - finish up for MVP of showing quality voicings on page
-x saturday - CLEAN UP and STYLE,
-[ ] then add data
-sunday - add to portfolio & resume. start applying again
+MONDAY:
 
-API
-[x] CRUD users
-[x] CRUD chord quality
-[x] CRUD chord quality voicing
-[x] crud chord page
-[x] crud chord
+- add 6,5,4,1 chords
+  [x] admin password, input
+- print function
+- how to save db data???
 
-admin UI
-[x] CRUD users
-[x] CRUD chord quality
+- pictures
+- deploy
+- write up
 
-[x] CRUD chord quality voicing
-[x] get all, create, delete
-[x] update, get one
-
-[x] crud chord page
-[x] crud chord
-
-FE
+- add to portfolio
+- update resume, with human colors
 
 API
 user, include pages
@@ -36,9 +20,6 @@ chord quality voicing, include chord quality
 page, include chords by note, chordby quality, owner
 
 page, add connection to chord by note, chord by quality
-
-[x] api to connect chord quality, or chord to page
-[x] get all chords and chord qualities of a page. probaly just an includes
 
 [] LATER: api to connect page to user. get all pages of a user
 
@@ -56,8 +37,6 @@ user ui
 [x] toggle certain strings
 
 render chord voicing
-[x] from quality. use that library?
-https://github.com/omnibrain/svguitar
 [] + from base chord
 
 LATER: auth

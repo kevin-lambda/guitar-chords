@@ -8,7 +8,7 @@ import { SvgChord } from "@/components"
 export default function Home() {
   const [chordQualityBank, setChordQualityBank] = useState([])
   const [currentChords, setCurrentChords] = useState([])
-  const [selectChordQuality, setSelectChordQuality] = useState(1)
+  const [selectChordQuality, setSelectChordQuality] = useState("")
 
   const [isShapeByStringVisible, setIsShapeByStringVisible] = useState({
     showString6: true,
@@ -177,7 +177,11 @@ export default function Home() {
               onChange={(e) => {
                 setSelectChordQuality(e.target.value)
               }}
+              defaultValue={"prompt"}
             >
+              <option value={"prompt"} disabled hidden>
+                Chord Quality
+              </option>
               {chordQualityBank.map((e) => {
                 return (
                   <option value={e.id} key={e.id}>
