@@ -36,13 +36,13 @@ export default function Navbar() {
       <div className={`navbar-menu is-size-6 ${isActive ? "is-active" : ""}`}>
         <div className="navbar-end">
           <div className="navbar-item">
-            <a href="/">Help</a>
+            <a href="/help">Help</a>
           </div>
           <div className="navbar-item">
-            <a href="/">About</a>
+            <a href="/help">About</a>
           </div>
           <div className="navbar-item">
-            <a href="/">Contact</a>
+            <a href="/help">Contact</a>
           </div>
 
           {/* <div className="navbar-item">
@@ -52,19 +52,19 @@ export default function Navbar() {
           {isActive ? (
             <div className="navbar-end">
               <div className="navbar-item">
-                <a href="/">Sign up</a>
+                <a href="/help">Sign up</a>
               </div>
               <div className="navbar-item">
-                <a href="/">Log in</a>
+                <a href="/help">Log in</a>
               </div>
             </div>
           ) : (
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button is-grey-lighter is-size-6" href="/">
+                <a className="button is-grey-lighter is-size-6" href="/help">
                   Sign up
                 </a>
-                <a className="button is-size-6" href="/">
+                <a className="button is-size-6" href="/help">
                   <strong>Log in</strong>
                 </a>
               </div>
