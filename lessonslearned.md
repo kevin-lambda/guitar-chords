@@ -1,23 +1,23 @@
-## lessons learned topics
+#### lessons learned topics
 
 - scaling, useState
 - schemas, choosing data type and where to do the formatting (closer to where it is happening, not in the db api)
 - workflow pattern, state to function to ui
 - scaling, when larger project, harder keep all the data in head. so let typescript handle
 
-## to look into
+#### to look into
 
 - a cleaner way to seed data, probably use the nested create method
 - cleaner form data
 - figure out drop down menu best UX patterns, default value or instruction
 
-### commit messages organization
+**commit messages organization**
 
 feat: //feature done
 fix: //bug fix
 mile: //milestone
 
-### prisma modeling basics
+**prisma modeling basics**
 
 common types:
 
@@ -55,7 +55,7 @@ RELATIONS:
 1:m = User{Post[]} ; Post{User @relation(fields:[], references:[])}
 m:m = Post{Category[]} ; Category{Post[]}
 
-### prisma client common queries
+**prisma client common queries**
 
 BASIC OPERATIONS:
 
@@ -108,7 +108,7 @@ const user = await prisma.profile.create({
 })
 ```
 
-### seeding data
+**seeding data**
 
 CLI:
 
@@ -174,7 +174,7 @@ using an example owner and pet model for this section. `1 owner : m pets`
   })
   ```
 
-### API reference, from backend to frontend
+**API reference, from backend to frontend**
 
 BACKEND:
 
@@ -191,7 +191,7 @@ FRONTEND:
 - `setstate` as needed
 - `useEffect` as needed
 
-### STAR: DATA TYPES vs inputs
+**STAR: DATA TYPES vs inputs**
 
 problem:
 
@@ -204,7 +204,7 @@ resolve:
 - keep database data in as "workable" format as possible. In the code format the data as needed.
 - so I kept the model type as array of strings, then parsed the string into an array of strings in the code.
 
-### STAR: SCALING FRONTEND CRUD UI
+**STAR: SCALING FRONTEND CRUD UI**
 
 problem: state and handlers. making a crud ui with many models with many inputs. if use separate setStates and event handlers to read those inputs would have like **30 setstates and event handlers**. Needed a better **scaling** solution for input state
 
@@ -357,7 +357,7 @@ function handleInput(event){
 
 == notes - this is still kinda messy, probably could use refactoring.
 
-### form UI select, default value for select
+**form UI select, default value for select**
 
 - if select options is a controlled component, via `value={state}`
 - and we want to set a default value for the select, because if the user is on the first option and wants that option, then submits without changing. No event is triggered due to onChange prop.

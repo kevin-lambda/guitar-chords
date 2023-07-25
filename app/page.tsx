@@ -2,7 +2,6 @@
 
 "use client"
 import React, { useState, useEffect } from "react"
-import { render } from "react-dom"
 import { SvgChord } from "@/components"
 
 export default function Home() {
@@ -78,7 +77,6 @@ export default function Home() {
   }
 
   function handleVisibleChords(event) {
-    console.log(event.target.checked)
     setIsShapeByStringVisible({
       ...isShapeByStringVisible,
       [event.target.name]: event.target.checked,
