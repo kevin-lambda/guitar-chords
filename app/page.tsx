@@ -5,6 +5,8 @@ import React, { useState, useEffect } from "react"
 import { SvgChord } from "@/components"
 
 export default function Home() {
+  const DOMAIN_LINK = "https://quality-chords.vercel.app/"
+
   const [chordQualityBank, setChordQualityBank] = useState([])
   const [currentChords, setCurrentChords] = useState([])
   const [selectChordQuality, setSelectChordQuality] = useState("")
@@ -19,7 +21,7 @@ export default function Home() {
   })
 
   async function getChordAllQuality() {
-    const res = await fetch("http://localhost:3000/api/chord-quality/")
+    const res = await fetch(`${DOMAIN_LINK}/api/chord-quality/`)
     const parseRes = await res.json()
     setChordQualityBank(parseRes)
   }
