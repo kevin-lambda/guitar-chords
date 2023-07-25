@@ -178,7 +178,7 @@ export default function Home() {
               defaultValue={"prompt"}
             >
               <option value={"prompt"} disabled hidden>
-                Chord Quality
+                Choose Chord Quality
               </option>
               {chordQualityBank.map((e) => {
                 return (
