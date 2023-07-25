@@ -1,6 +1,7 @@
 import "@/styles/index.scss"
 import { Navbar } from "@/components"
 import type { Metadata } from "next"
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
   title: "Quality chords",
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className="">
         <Navbar />
         {children}
+        <Analytics />
       </body>
     </html>
   )
