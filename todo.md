@@ -1,57 +1,21 @@
-MONDAY:
+[] Supplemental pages for: Help about contact
+[] chord page title naming
 
-[x] add 6,5,4 chords
-[x] admin password, input
+[] chord diagram tones >>> forking svg chord library, manually configuring to allow tones
+[] chord diagram remove nut
 
-[] upgrade print function
+[] User authentication log in, sign up
+[] User profile page
+[] Save chord page to user
 
-- how to save db data???
+[] Alternate same chord root voicing carousel
+[] add alternate same chord root voicings
 
-x pictures
+[] Remove, reorder shown chords via drag and drop? else buttons
 
-- write up
+[] Upgrade print functionality, only show chord page
+[] Clean up admin CRUD UX/UI
 
-- add to portfolio
-- update resume, with human colors
-
-- deploy
-
-API
-user, include pages
-chord, include pages, chord quality
-chord quality, inlcude basechords, pages, voicing
-chord quality voicing, include chord quality
-page, include chords by note, chordby quality, owner
-
-page, add connection to chord by note, chord by quality
-
-[] LATER: api to connect page to user. get all pages of a user
-
-[] LATER edit api to fetch all voicings from a chord quality, might as well get pages and basechords?
-
-site ui
-
-[x] home page
-[] chord page
-[] LATER user profile
-
-user ui
-[] make a page
-[x] add chord quality from list
-[x] toggle certain strings
-
-render chord voicing
-[] + from base chord
-
-LATER: auth
-[] user create
-[] user log in
-
-MISC FIXES:
-[] on chord page, remove row
-[] on chord page, move row
-[] on chord page, scaling issue, make chord scale smaller when not many shapes. column size thing.
-
-- if certain number chords showing, change column size.
-- try something like if 2 chords, smake size one-third
-  []
+[] optimize functions  
+[] add TS  
+[] add unit tests
