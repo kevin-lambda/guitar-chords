@@ -36,7 +36,7 @@ export default function Navbar() {
       <div className={`navbar-menu is-size-6 ${isActive ? "is-active" : ""}`}>
         <div className="navbar-end">
           <div className="navbar-item">
-            <a href="/help">Help</a>
+            <a href="/guide">Guide</a>
           </div>
           <div className="navbar-item">
             <a href="/help">About</a>
