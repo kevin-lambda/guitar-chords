@@ -45,14 +45,24 @@ export default function Help() {
         </p>
         <div className="mt-5 has-text-centered">
           <Image
-            src={"/g6.png"}
+            src={"/shape_root_6.png"}
             width={350}
             height={300}
             alt="diagram"
             id="image-border"
           />
-          <Image src={"/g5.png"} width={350} height={300} alt="diagram" />
-          <Image src={"/g1.png"} width={350} height={300} alt="diagram" />
+          <Image
+            src={"/shape_root_5.png"}
+            width={350}
+            height={300}
+            alt="diagram"
+          />
+          <Image
+            src={"/shape_root_1.png"}
+            width={350}
+            height={300}
+            alt="diagram"
+          />
         </div>
       </section>
       <section className="section pt-5">
@@ -65,10 +75,10 @@ export default function Help() {
         <p className="pt-3">
           This means you can <strong>learn one</strong> chord quality shape like
           the major chord, and you can now <strong>play all</strong> the major
-          quality for all root notes. Like F#maj, Amaj, or C#maj. For that root
-          string, such as the 6th string, you keep the same shape, and just move
-          up or down the neck. That's why chords are defined by chord quality
-          and not specific root note chords.
+          quality for all root notes. Like F#maj, Amaj, or C#maj. For a root
+          string such as the 6th string, you can keep the same shape and move up
+          or down the neck. That's why chords are defined by chord quality and
+          not specific root note chords.
         </p>
 
         <div className="mt-5 has-text-centered">
