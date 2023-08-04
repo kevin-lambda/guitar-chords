@@ -39,10 +39,15 @@ export default function Navbar() {
             <a href="/guide">Guide</a>
           </div>
           <div className="navbar-item">
-            <a href="/help">About</a>
+            <a href="/about">About</a>
           </div>
           <div className="navbar-item">
-            <a href="/help">Contact</a>
+            <a
+              target="_blank"
+              href="mailto:kq.lambda.consulting+quality.chords@gmail.com"
+            >
+              Contact
+            </a>
           </div>
 
           {/* <div className="navbar-item">
@@ -52,19 +57,19 @@ export default function Navbar() {
           {isActive ? (
             <div className="navbar-end">
               <div className="navbar-item">
-                <a href="/help">Sign up</a>
+                <a href="/signup">Sign up</a>
               </div>
               <div className="navbar-item">
-                <a href="/help">Log in</a>
+                <a href="/login">Log in</a>
               </div>
             </div>
           ) : (
             <div className="navbar-item">
               <div className="buttons">
-                <a className="button is-grey-lighter is-size-6" href="/help">
+                <a className="button is-grey-lighter is-size-6" href="/signup">
                   Sign up
                 </a>
-                <a className="button is-size-6" href="/help">
+                <a className="button is-size-6" href="/login">
                   <strong>Log in</strong>
                 </a>
               </div>
