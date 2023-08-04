@@ -29,3 +29,7 @@
 #chord-view-row {
   border-bottom: var(--border-main);
 }
+
+#image-border {
+  /* border: 1px solid black; */
+}
