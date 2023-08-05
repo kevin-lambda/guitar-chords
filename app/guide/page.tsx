@@ -20,7 +20,12 @@ export default function Help() {
           checkboxes to choose which root string you want the chord shapes for.
         </p>
         <div className="mt-3 has-text-centered">
-          <Image src={"/howto.jpg"} width={700} height={600} alt="howto" />
+          <Image
+            src={"/guide/howto.jpg"}
+            width={700}
+            height={600}
+            alt="howto"
+          />
         </div>
       </section>
       <section className="section pt-5">
@@ -45,19 +50,19 @@ export default function Help() {
         </p>
         <div className="mt-5 has-text-centered">
           <Image
-            src={"/read_root_6.png"}
+            src={"/guide/read_root_6.png"}
             width={350}
             height={300}
             alt="diagram"
           />
           <Image
-            src={"/read_root_5.png"}
+            src={"/guide/read_root_5.png"}
             width={350}
             height={300}
             alt="diagram"
           />
           <Image
-            src={"/read_root_1.png"}
+            src={"/guide/read_root_1.png"}
             width={350}
             height={300}
             alt="diagram"
@@ -80,15 +85,20 @@ export default function Help() {
         </p>
 
         <div className="mt-5 has-text-centered">
-          <Image src={"/notes.png"} width={350} height={300} alt="diagram" />
           <Image
-            src={"/6_root_majors.png"}
+            src={"/guide/notes.png"}
             width={350}
             height={300}
             alt="diagram"
           />
           <Image
-            src={"/5_root_majors.png"}
+            src={"/guide/6_root_majors.png"}
+            width={350}
+            height={300}
+            alt="diagram"
+          />
+          <Image
+            src={"/guide/5_root_majors.png"}
             width={350}
             height={300}
             alt="diagram"
@@ -115,13 +125,13 @@ export default function Help() {
 
         <div className="mt-5 has-text-centered">
           <Image
-            src={"/F_to_Csharp_1.png"}
+            src={"/guide/F_to_Csharp_1.png"}
             width={350}
             height={300}
             alt="diagram"
           />
           <Image
-            src={"/F_to_Csharp_3.png"}
+            src={"/guide/F_to_Csharp_3.png"}
             width={350}
             height={300}
             alt="diagram"
