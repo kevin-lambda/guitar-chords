@@ -23,8 +23,14 @@ Questions:
 - prisma env(), how does this work? does it know .env from env.development.local?
 - how to easily switch between dev and prod db environments
 
+LOG
+8/4/2023
+
+- looked at everything for refactoring. main page could be refactored, but its mostly fine. Admin page is very messy, and needs cleaning. But would need to learn how to break it apart. Its dealing with fetch calls, state, UI, forms all at once. How to do all that but modularize it.
+- otherwise, everything else looks okay!
+
 TO DO LIST
-[] Supplemental pages for: Help about contact (try google forms?)
+[X] Supplemental pages for: Help about contact (try google forms?)
 [] chord page title naming
 
 [] chord diagram tones >>> forking svg chord library, manually configuring to allow tones

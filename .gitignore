@@ -29,6 +29,13 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+# .env*.local will ignore
+# .env.development.local
+# .env.production.local
+# .env.testing.local
+
+# .env gives defaults. aka if variables not defined, it will default to whatever is in .env
+# .env.local will take preference over the defaults
 .env*.local
 .env
 
