@@ -30,30 +30,6 @@ const chordQualityBank = [
     isSeventh: false,
     isExtended: false,
   },
-  //   {
-  //     qualityName: "Dominant 7th",
-  //     qualityFormula: ["1", "3", "5", "b7"],
-  //     optionalNote: ["5"],
-  //     primaryQuality: "Dominant",
-  //     isSeventh: true,
-  //     isExtended: false,
-  //   },
-  //   {
-  //     qualityName: "Major 7th",
-  //     qualityFormula: ["1", "3", "5", "7"],
-  //     optionalNote: ["5"],
-  //     primaryQuality: "Major",
-  //     isSeventh: true,
-  //     isExtended: false,
-  //   },
-  //   {
-  //     qualityName: "Minor 7th",
-  //     qualityFormula: ["1", "b3", "5", "b7"],
-  //     optionalNote: ["5"],
-  //     primaryQuality: "Minor",
-  //     isSeventh: true,
-  //     isExtended: false,
-  //   },
 ]
 
 // fretting relative to root. where 1 is root across
@@ -113,10 +89,7 @@ const chordBank = [
     rootNoteStrings: ["7", "2", "9", "4", "0", "7"],
     chordQualityId: 1,
   },
-  //   { name: "C7", noteFormula: ["C", "E", "G", "Bb"] },
-  //   { name: "Dm7", noteFormula: ["D", "F", "A", "C"] },
-  //   { name: "Emaj7", noteFormula: ["E", "G#", "B", "D#"] },
-  //   { name: "F7", noteFormula: ["F", "A", "C", "Eb"] },
+
   {
     name: "G",
     noteFormula: ["G", "B", "D"],
@@ -136,22 +109,18 @@ const userSeed = [
 const chordPageBank = [
   {
     name: "my chord page 1. Am, B",
-    // chords: [chordBank[0], chordBank[1]],
     ownerId: 1,
   },
   {
     name: "my chord page 2. Am, B",
-    // chords: [chordBank[0], chordBank[1]],
     ownerId: 1,
   },
   {
     name: "my chord page 3, B, G",
-    // chords: [chordBank[1], chordBank[2]],
     ownerId: 2,
   },
   {
     name: "my chord page 4, Am, G",
-    // chords: [chordBank[0], chordBank[2]],
     ownerId: 2,
   },
 ]

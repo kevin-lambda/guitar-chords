@@ -2,8 +2,8 @@
 
 Database of guitar chord shapes by quality generated as chord diagrams.
 
-![cover-page](./public/cover.jpg)
-![admin](./public/admin.jpg)
+![cover-page](./public/readme/cover.jpg)
+![admin](./public/readme/admin.jpg)
 
 ## About
 

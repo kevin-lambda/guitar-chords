@@ -5,8 +5,8 @@ import React, { useState, useEffect } from "react"
 import { SvgChord } from "@/components"
 
 export default function Home() {
-  const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
-  // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
+  // const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
+  const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
 
   const [chordQualityBank, setChordQualityBank] = useState([])
   const [currentChords, setCurrentChords] = useState([])
@@ -54,10 +54,6 @@ export default function Home() {
   // todo get tones to work, by editing original library. need to change the forked libray and then install that forked library as a npm package. remove the old package
   function renderChord(obj) {
     if (obj) {
-      // format data
-      // put into object
-      // return component
-
       const { frets } = obj
       const newArray = []
 
@@ -276,7 +272,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* upgrade to only chords element */}
+      {/* TODO: upgrade to only chords element */}
       <form onSubmit={handlePrintPage}>
         <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
           Print Page
