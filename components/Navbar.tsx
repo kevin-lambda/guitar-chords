@@ -1,9 +1,12 @@
 // @ts-nocheck
 "use client"
 import React, { useState } from "react"
+import { UserButton } from "@clerk/nextjs"
+import { useAuth } from "@clerk/nextjs"
 
 export default function Navbar() {
   const [isActive, setisActive] = useState(false)
+  const { isLoaded, userId, sessionId, getToken } = useAuth()
 
   return (
     <nav
@@ -56,22 +59,39 @@ export default function Navbar() {
 
           {isActive ? (
             <div className="navbar-end">
-              <div className="navbar-item">
-                <a href="/signup">Sign up</a>
-              </div>
-              <div className="navbar-item">
-                <a href="/login">Log in</a>
-              </div>
+              {userId ? (
+                <div>
+                  <UserButton afterSignOutUrl="/" />
+                </div>
+              ) : (
+                <>
+                  <div className="navbar-item">
+                    <a href="/signup">Sign up</a>
+                  </div>
+                  <div className="navbar-item">
+                    <a href="/login">Log in</a>
+                  </div>
+                </>
+              )}
             </div>
           ) : (
             <div className="navbar-item">
-              <div className="buttons">
-                <a className="button is-grey-lighter is-size-6" href="/signup">
-                  Sign up
-                </a>
-                <a className="button is-size-6" href="/login">
-                  <strong>Log in</strong>
-                </a>
+              <div className="buttons mb-0">
+                {userId ? (
+                  <UserButton afterSignOutUrl="/" />
+                ) : (
+                  <>
+                    <a
+                      className="button is-grey-lighter is-size-6"
+                      href="/signup"
+                    >
+                      Sign up
+                    </a>
+                    <a className="button is-size-6" href="/login">
+                      <strong>Log in</strong>
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           )}
