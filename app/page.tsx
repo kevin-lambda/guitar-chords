@@ -3,6 +3,7 @@
 "use client"
 import React, { useState, useEffect } from "react"
 import { SvgChord } from "@/components"
+import { useAuth } from "@clerk/nextjs"
 
 export default function Home() {
   // const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
@@ -12,6 +13,8 @@ export default function Home() {
   const [currentChords, setCurrentChords] = useState([])
   const [selectChordQuality, setSelectChordQuality] = useState("")
 
+  const { isLoaded, userId, isSignedIn, sessionId, getToken } = useAuth()
+
   const [isShapeByStringVisible, setIsShapeByStringVisible] = useState({
     showString6: true,
     showString5: true,
@@ -20,6 +23,10 @@ export default function Home() {
     showString2: false,
     showString1: false,
   })
+
+  console.log("============")
+  console.log("userId: ", userId)
+  console.log("isSignedIn: ", isSignedIn)
 
   async function getChordAllQuality() {
     const res = await fetch(`${DOMAIN_LINK}/api/chord-quality/`)
