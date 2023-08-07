@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react"
 import { SvgChord } from "@/components"
 import { useAuth } from "@clerk/nextjs"
+import { useUser } from "@clerk/clerk-react"
 
 export default function Home() {
   // const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
@@ -14,6 +15,7 @@ export default function Home() {
   const [selectChordQuality, setSelectChordQuality] = useState("")
 
   const { isLoaded, userId, isSignedIn, sessionId, getToken } = useAuth()
+  const { user } = useUser()
 
   const [isShapeByStringVisible, setIsShapeByStringVisible] = useState({
     showString6: true,
@@ -24,9 +26,37 @@ export default function Home() {
     showString1: false,
   })
 
-  console.log("============")
-  console.log("userId: ", userId)
-  console.log("isSignedIn: ", isSignedIn)
+  // on sign in, page reloads, useeffect runs again
+
+  // on user clerk user signedin, check if user email exists in DB via prisma query
+  // if yes, load user data. prisma include pages
+  // if no (prisma returns null), create user with email and password... as clerk user id
+
+  // later... create logged in user UI only. with ability to save pages, view pages
+  checkUserAuthToDatabase()
+
+  async function checkUserAuthToDatabase() {
+    if (isSignedIn) {
+      const userEmail = user?.primaryEmailAddress?.emailAddress
+
+      const res = await fetch(`${DOMAIN_LINK}/api/clerkUser/${userEmail}`)
+      const parseRes = await res.json()
+
+      const newUserObj = { email: userEmail, password: user?.id }
+
+      if (parseRes === null) {
+        try {
+          const res = await fetch(`${DOMAIN_LINK}/api/clerkUser`, {
+            method: "POST",
+            body: JSON.stringify(newUserObj),
+          })
+          const parseRes = await res.json()
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    }
+  }
 
   async function getChordAllQuality() {
     const res = await fetch(`${DOMAIN_LINK}/api/chord-quality/`)
@@ -95,6 +125,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    // checkUserAuthToDatabase()
     getChordAllQuality()
   }, [])
 
@@ -280,6 +311,14 @@ export default function Home() {
       </section>
 
       {/* TODO: upgrade to only chords element */}
+
+      {isSignedIn ? (
+        <form>
+          <button className="button mb-6 mr-5 has-background-success is-pulled-right">
+            Save chord page
+          </button>
+        </form>
+      ) : null}
       <form onSubmit={handlePrintPage}>
         <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
           Print Page

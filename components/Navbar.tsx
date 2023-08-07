@@ -6,7 +6,9 @@ import { useAuth } from "@clerk/nextjs"
 
 export default function Navbar() {
   const [isActive, setisActive] = useState(false)
-  const { isLoaded, userId, sessionId, getToken } = useAuth()
+  const { isLoaded, userId, isSignedIn } = useAuth()
+
+  console.log("navbar, issignedin", isSignedIn)
 
   return (
     <nav
@@ -38,6 +40,12 @@ export default function Navbar() {
       </div>
       <div className={`navbar-menu is-size-6 ${isActive ? "is-active" : ""}`}>
         <div className="navbar-end">
+          {isSignedIn ? (
+            <div className="navbar-item">
+              <a href="/">Chord Pages</a>
+            </div>
+          ) : null}
+
           <div className="navbar-item">
             <a href="/guide">Guide</a>
           </div>
