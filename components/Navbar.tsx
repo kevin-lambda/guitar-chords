@@ -9,11 +9,7 @@ export default function Navbar() {
   const [isActive, setisActive] = useState(false)
   const { isLoaded, userId, isSignedIn } = useAuth()
   const { user } = useUser()
-
   const userEmail = user?.primaryEmailAddress?.emailAddress
-
-  console.log("navbar, issignedin", isSignedIn)
-
   return (
     <nav
       className="navbar p-2 has-text-weight-semibold"
@@ -46,7 +42,7 @@ export default function Navbar() {
         <div className="navbar-end">
           {isSignedIn ? (
             <div className="navbar-item">
-              <a href={`/user-chord-pages/${userEmail}`}>Chord Pages</a>
+              <a href={`/user-chord-pages`}>Chord Pages</a>
             </div>
           ) : null}
 

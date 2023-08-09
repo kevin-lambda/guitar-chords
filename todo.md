@@ -1,5 +1,11 @@
 MEGA reminder:
 
+SWITCH BACK
+
+- app/chordpage/id/page
+- app/page
+- prisma/schema.prisma
+
 - WHILE in dev mode
   - schema.prisma datasource db is toggled to use env("DATABASE_URL"), while is DEV mode postgres db. local
   - app/page.tsx is fetching localhost domain_link
@@ -29,6 +35,11 @@ LOG
 - looked at everything for refactoring. main page could be refactored, but its mostly fine. Admin page is very messy, and needs cleaning. But would need to learn how to break it apart. Its dealing with fetch calls, state, UI, forms all at once. How to do all that but modularize it.
 - otherwise, everything else looks okay!
 
+8/9/2023
+
+- auth user working. but it's not very performant. page flashing while it is loading. probably need to make a whole user signed in only page.
+- chord pages working, and showing chord qualities. but not rendering yet. either, probably just wait until pages can be saved as a pdf, then load those pdf files. and or render the chords again. but wait until a refactor so the rendering function can be used easily.
+
 TO DO LIST
 [X] Supplemental pages for: Help about contact (try google forms?)
 [] chord page title naming
@@ -39,10 +50,13 @@ TO DO LIST
 [x] User authentication log in, sign up
 [x] Save chord page to user
 
+8/9/2023
+
 [x] user page, that shows chord pages
-[] on user chord page click
-[] make dynamic route chord pages
-[] render chords sheet on individual chord pages
+[x] on user chord page click
+[x] make dynamic route chord pages
+[x] show chords sheet on individual chord pages
+[] stretch: render chords per chord page, wait for refactor though
 
 [] Alternate same chord root voicing carousel
 [] add alternate same chord root voicings
