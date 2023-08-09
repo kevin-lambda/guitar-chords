@@ -13,6 +13,7 @@ export default function Home() {
   const [chordQualityBank, setChordQualityBank] = useState([])
   const [currentChords, setCurrentChords] = useState([])
   const [selectChordQuality, setSelectChordQuality] = useState("")
+  const [currentUserId, setCurrentUserId] = useState(0)
 
   const { isLoaded, userId, isSignedIn, sessionId, getToken } = useAuth()
   const { user } = useUser()
@@ -26,13 +27,47 @@ export default function Home() {
     showString1: false,
   })
 
-  // on sign in, page reloads, useeffect runs again
+  async function handleNewChordPage(e) {
+    e.preventDefault()
+    console.log("===== handle new chord page =======")
+    const userEmail = user?.primaryEmailAddress?.emailAddress
 
-  // on user clerk user signedin, check if user email exists in DB via prisma query
-  // if yes, load user data. prisma include pages
-  // if no (prisma returns null), create user with email and password... as clerk user id
+    const placeholderTitle = "new chord page x"
+    const placeholderOwner = 1
+    const placeholderObject = {
+      name: placeholderTitle,
+      ownerId: placeholderOwner,
+    }
+
+    const resChordPage = await fetch(`${DOMAIN_LINK}/api/chord-page`, {
+      method: "POST",
+      body: JSON.stringify(placeholderObject),
+    })
+
+    const parseResChordPage = await resChordPage.json()
+    const newChordPageId = parseResChordPage.id
+
+    const currentChordIds = []
+    for (const elem of currentChords) {
+      currentChordIds.push({ id: elem.id })
+    }
+
+    const resConnectChordPage = await fetch(
+      `${DOMAIN_LINK}/api/chord-page/${newChordPageId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(currentChordIds),
+      }
+    )
+
+    const resUser = await fetch(`${DOMAIN_LINK}/api/clerkUser/${userEmail}`, {
+      method: "PUT",
+      body: JSON.stringify({ newChordPageId }),
+    })
+  }
 
   // later... create logged in user UI only. with ability to save pages, view pages
+
   checkUserAuthToDatabase()
 
   async function checkUserAuthToDatabase() {
@@ -55,6 +90,13 @@ export default function Home() {
           console.log(error)
         }
       }
+
+      const getUserDatabaseId = await fetch(
+        `${DOMAIN_LINK}/api/clerkUser/${userEmail}`
+      )
+      const parseUser = await getUserDatabaseId.json()
+      const userDatabaseId = parseUser.id
+      setCurrentUserId(userDatabaseId)
     }
   }
 
@@ -313,7 +355,7 @@ export default function Home() {
       {/* TODO: upgrade to only chords element */}
 
       {isSignedIn ? (
-        <form>
+        <form onSubmit={handleNewChordPage}>
           <button className="button mb-6 mr-5 has-background-success is-pulled-right">
             Save chord page
           </button>

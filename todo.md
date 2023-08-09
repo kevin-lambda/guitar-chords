@@ -36,9 +36,13 @@ TO DO LIST
 [] chord diagram tones >>> forking svg chord library, manually configuring to allow tones
 [] chord diagram remove nut
 
-[] User authentication log in, sign up
-[] User profile page
-[] Save chord page to user
+[x] User authentication log in, sign up
+[x] Save chord page to user
+
+[x] user page, that shows chord pages
+[] on user chord page click
+[] make dynamic route chord pages
+[] render chords sheet on individual chord pages
 
 [] Alternate same chord root voicing carousel
 [] add alternate same chord root voicings

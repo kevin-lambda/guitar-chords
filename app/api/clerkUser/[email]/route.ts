@@ -1,5 +1,6 @@
 // @ts-nocheck
 
+import ChordPage from "@/app/chord-page/page"
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 
@@ -15,4 +16,29 @@ export async function GET(request, { params }) {
     },
   })
   return NextResponse.json(singleUser)
+}
+
+// create a chord page
+// and connect it to user
+export async function PUT(request, { params }) {
+  console.log("====== cleark user PUT =======")
+  const userEmail = params.email
+
+  const parseReq = await request.json()
+  console.log("parseReq", parseReq)
+
+  const theNumber = parseReq.newChordPageId
+
+  const updateUser = await prisma.user.update({
+    where: { email: userEmail },
+    data: {
+      pages: {
+        connect: {
+          id: theNumber,
+        },
+      },
+    },
+  })
+
+  return NextResponse.json(updateUser)
 }

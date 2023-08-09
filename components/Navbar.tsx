@@ -3,10 +3,14 @@
 import React, { useState } from "react"
 import { UserButton } from "@clerk/nextjs"
 import { useAuth } from "@clerk/nextjs"
+import { useUser } from "@clerk/clerk-react"
 
 export default function Navbar() {
   const [isActive, setisActive] = useState(false)
   const { isLoaded, userId, isSignedIn } = useAuth()
+  const { user } = useUser()
+
+  const userEmail = user?.primaryEmailAddress?.emailAddress
 
   console.log("navbar, issignedin", isSignedIn)
 
@@ -42,7 +46,7 @@ export default function Navbar() {
         <div className="navbar-end">
           {isSignedIn ? (
             <div className="navbar-item">
-              <a href="/">Chord Pages</a>
+              <a href={`/user-chord-pages/${userEmail}`}>Chord Pages</a>
             </div>
           ) : null}
 
