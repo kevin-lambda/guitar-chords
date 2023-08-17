@@ -7,8 +7,8 @@ import { useAuth } from "@clerk/nextjs"
 import { useUser } from "@clerk/clerk-react"
 
 export default function Home() {
-  // const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
-  const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
+  // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
+  const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
 
   const [chordQualityBank, setChordQualityBank] = useState([])
   const [currentChords, setCurrentChords] = useState([])

@@ -8,8 +8,8 @@ export default async function SingleChordPage({ params }) {
   const parseParams = parseInt(params.id)
 
   async function getChordData() {
-    const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
-    // const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
+    // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
+    const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
 
     const res = await fetch(`${DOMAIN_LINK}/api/chord-page/${parseParams}`)
     const parseRes = await res.json()

@@ -40,12 +40,7 @@ LOG
 - auth user working. but it's not very performant. page flashing while it is loading. probably need to make a whole user signed in only page.
 - chord pages working, and showing chord qualities. but not rendering yet. either, probably just wait until pages can be saved as a pdf, then load those pdf files. and or render the chords again. but wait until a refactor so the rendering function can be used easily.
 
-TO DO LIST
 [X] Supplemental pages for: Help about contact (try google forms?)
-[] chord page title naming
-
-[] chord diagram tones >>> forking svg chord library, manually configuring to allow tones
-[] chord diagram remove nut
 
 [x] User authentication log in, sign up
 [x] Save chord page to user
@@ -56,16 +51,28 @@ TO DO LIST
 [x] on user chord page click
 [x] make dynamic route chord pages
 [x] show chords sheet on individual chord pages
-[] stretch: render chords per chord page, wait for refactor though
 
+NEXT:
+
+TO DO LIST
+Major:
 [] Alternate same chord root voicing carousel
-[] add alternate same chord root voicings
-
 [] Remove, reorder shown chords via drag and drop? else buttons
 
-[] Upgrade print functionality, only show chord page
-[] Clean up admin CRUD UX/UI
+[] chord diagram tones >>> forking svg chord library, manually configuring to allow tones
+[] chord diagram remove nut
 
-[] optimize functions  
+Minor:
+[] chord page title naming
+[] UI confirm on logged in user page save
+
+[] Upgrade print functionality, only show chord page
+[] stretch: render chords per chord page, wait for refactor though
+
+Clean up:
+[] Clean up admin CRUD UX/UI
+[] optimize functions
+
+Dev ops:
 [] add TS  
 [] add unit tests
