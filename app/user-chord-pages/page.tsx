@@ -5,8 +5,8 @@ import { useUser } from "@clerk/clerk-react"
 import { useState, useEffect } from "react"
 
 export default function UserChordPages() {
-  // const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
-  const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
+  const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
+  // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
 
   const [userData, setUserData] = useState({})
 

@@ -2,6 +2,7 @@ MEGA reminder:
 
 SWITCH BACK
 
+- app/user-chord-pages/page
 - app/chordpage/id/page
 - app/page
 - prisma/schema.prisma
