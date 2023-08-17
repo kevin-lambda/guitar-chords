@@ -101,9 +101,13 @@ export default function Home() {
   }
 
   async function getChordAllQuality() {
-    const res = await fetch(`${DOMAIN_LINK}/api/chord-quality/`)
-    const parseRes = await res.json()
-    setChordQualityBank(parseRes)
+    try {
+      const res = await fetch(`${DOMAIN_LINK}/api/chord-quality/`)
+      const parseRes = await res.json()
+      setChordQualityBank(parseRes)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   function handleAddChord(event) {
