@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react"
 import { SvgChord } from "@/components"
 import { useAuth } from "@clerk/nextjs"
 import { useUser } from "@clerk/clerk-react"
+import CookieConsent from "react-cookie-consent"
 
 export default function Home() {
   // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
@@ -370,6 +371,9 @@ export default function Home() {
           Print Page
         </button>
       </form>
+      <CookieConsent>
+        This website uses cookies to enhance the user experience.
+      </CookieConsent>
     </main>
   )
 }
