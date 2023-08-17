@@ -1,7 +1,8 @@
 import React from "react"
+import { SignIn } from "@clerk/nextjs"
 
 function Login() {
-  return <div>under construction</div>
+  return <SignIn />
 }
 
 export default Login

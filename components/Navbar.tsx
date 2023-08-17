@@ -1,10 +1,15 @@
 // @ts-nocheck
 "use client"
 import React, { useState } from "react"
+import { UserButton } from "@clerk/nextjs"
+import { useAuth } from "@clerk/nextjs"
+import { useUser } from "@clerk/clerk-react"
 
 export default function Navbar() {
   const [isActive, setisActive] = useState(false)
-
+  const { isLoaded, userId, isSignedIn } = useAuth()
+  const { user } = useUser()
+  const userEmail = user?.primaryEmailAddress?.emailAddress
   return (
     <nav
       className="navbar p-2 has-text-weight-semibold"
@@ -35,6 +40,12 @@ export default function Navbar() {
       </div>
       <div className={`navbar-menu is-size-6 ${isActive ? "is-active" : ""}`}>
         <div className="navbar-end">
+          {isSignedIn ? (
+            <div className="navbar-item">
+              <a href={`/user-chord-pages`}>Chord Pages</a>
+            </div>
+          ) : null}
+
           <div className="navbar-item">
             <a href="/guide">Guide</a>
           </div>
@@ -56,22 +67,39 @@ export default function Navbar() {
 
           {isActive ? (
             <div className="navbar-end">
-              <div className="navbar-item">
-                <a href="/signup">Sign up</a>
-              </div>
-              <div className="navbar-item">
-                <a href="/login">Log in</a>
-              </div>
+              {userId ? (
+                <div>
+                  <UserButton afterSignOutUrl="/" />
+                </div>
+              ) : (
+                <>
+                  <div className="navbar-item">
+                    <a href="/signup">Sign up</a>
+                  </div>
+                  <div className="navbar-item">
+                    <a href="/login">Log in</a>
+                  </div>
+                </>
+              )}
             </div>
           ) : (
             <div className="navbar-item">
-              <div className="buttons">
-                <a className="button is-grey-lighter is-size-6" href="/signup">
-                  Sign up
-                </a>
-                <a className="button is-size-6" href="/login">
-                  <strong>Log in</strong>
-                </a>
+              <div className="buttons mb-0">
+                {userId ? (
+                  <UserButton afterSignOutUrl="/" />
+                ) : (
+                  <>
+                    <a
+                      className="button is-grey-lighter is-size-6"
+                      href="/signup"
+                    >
+                      Sign up
+                    </a>
+                    <a className="button is-size-6" href="/login">
+                      <strong>Log in</strong>
+                    </a>
+                  </>
+                )}
               </div>
             </div>
           )}

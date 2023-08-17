@@ -9,6 +9,9 @@ export async function GET(request, { params }) {
   const parseId = parseInt(params.id)
   const singleRecord = await prisma.chordPage.findUnique({
     where: { id: parseId },
+    include: {
+      chordsByQuality: true,
+    },
   })
   return NextResponse.json(singleRecord)
 }
@@ -18,7 +21,11 @@ export async function PUT(request, { params }) {
   const parseBody = await request.json()
   const singleRecord = await prisma.chordPage.update({
     where: { id: parseId },
-    data: parseBody,
+    data: {
+      chordsByQuality: {
+        connect: parseBody,
+      },
+    },
   })
   return NextResponse.json(singleRecord)
 }

@@ -3,14 +3,20 @@
 "use client"
 import React, { useState, useEffect } from "react"
 import { SvgChord } from "@/components"
+import { useAuth } from "@clerk/nextjs"
+import { useUser } from "@clerk/clerk-react"
 
 export default function Home() {
-  const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
   // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
+  const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
 
   const [chordQualityBank, setChordQualityBank] = useState([])
   const [currentChords, setCurrentChords] = useState([])
   const [selectChordQuality, setSelectChordQuality] = useState("")
+  const [currentUserId, setCurrentUserId] = useState(0)
+
+  const { isLoaded, userId, isSignedIn, sessionId, getToken } = useAuth()
+  const { user } = useUser()
 
   const [isShapeByStringVisible, setIsShapeByStringVisible] = useState({
     showString6: true,
@@ -21,10 +27,87 @@ export default function Home() {
     showString1: false,
   })
 
+  async function handleNewChordPage(e) {
+    e.preventDefault()
+    console.log("===== handle new chord page =======")
+    const userEmail = user?.primaryEmailAddress?.emailAddress
+
+    const placeholderTitle = "new chord page x"
+    const placeholderOwner = 1
+    const placeholderObject = {
+      name: placeholderTitle,
+      ownerId: placeholderOwner,
+    }
+
+    const resChordPage = await fetch(`${DOMAIN_LINK}/api/chord-page`, {
+      method: "POST",
+      body: JSON.stringify(placeholderObject),
+    })
+
+    const parseResChordPage = await resChordPage.json()
+    const newChordPageId = parseResChordPage.id
+
+    const currentChordIds = []
+    for (const elem of currentChords) {
+      currentChordIds.push({ id: elem.id })
+    }
+
+    const resConnectChordPage = await fetch(
+      `${DOMAIN_LINK}/api/chord-page/${newChordPageId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(currentChordIds),
+      }
+    )
+
+    const resUser = await fetch(`${DOMAIN_LINK}/api/clerkUser/${userEmail}`, {
+      method: "PUT",
+      body: JSON.stringify({ newChordPageId }),
+    })
+  }
+
+  // later... create logged in user UI only. with ability to save pages, view pages
+
+  checkUserAuthToDatabase()
+
+  async function checkUserAuthToDatabase() {
+    if (isSignedIn) {
+      const userEmail = user?.primaryEmailAddress?.emailAddress
+
+      const res = await fetch(`${DOMAIN_LINK}/api/clerkUser/${userEmail}`)
+      const parseRes = await res.json()
+
+      const newUserObj = { email: userEmail, password: user?.id }
+
+      if (parseRes === null) {
+        try {
+          const res = await fetch(`${DOMAIN_LINK}/api/clerkUser`, {
+            method: "POST",
+            body: JSON.stringify(newUserObj),
+          })
+          const parseRes = await res.json()
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      const getUserDatabaseId = await fetch(
+        `${DOMAIN_LINK}/api/clerkUser/${userEmail}`
+      )
+      const parseUser = await getUserDatabaseId.json()
+      const userDatabaseId = parseUser.id
+      setCurrentUserId(userDatabaseId)
+    }
+  }
+
   async function getChordAllQuality() {
-    const res = await fetch(`${DOMAIN_LINK}/api/chord-quality/`)
-    const parseRes = await res.json()
-    setChordQualityBank(parseRes)
+    try {
+      const res = await fetch(`${DOMAIN_LINK}/api/chord-quality/`)
+      const parseRes = await res.json()
+      setChordQualityBank(parseRes)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   function handleAddChord(event) {
@@ -88,6 +171,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    // checkUserAuthToDatabase()
     getChordAllQuality()
   }, [])
 
@@ -273,6 +357,14 @@ export default function Home() {
       </section>
 
       {/* TODO: upgrade to only chords element */}
+
+      {isSignedIn ? (
+        <form onSubmit={handleNewChordPage}>
+          <button className="button mb-6 mr-5 has-background-success is-pulled-right">
+            Save chord page
+          </button>
+        </form>
+      ) : null}
       <form onSubmit={handlePrintPage}>
         <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
           Print Page
