@@ -13,7 +13,7 @@ x - app/page. domain
 - WHILE in dev mode
   - schema.prisma datasource db is toggled to use env("DATABASE_URL"), while is DEV mode postgres db. local
   - app/page.tsx is fetching localhost domain_link
-- SWITCH BOTH BACK BEFORE PUSHING
+- SWITCH BOTH BACK BEFORE PUSHING a
 - SWITCH BOTH BACK BEFORE PUSHING
 - SWITCH BOTH BACK BEFORE PUSHING
 - SWITCH BOTH BACK BEFORE PUSHING
