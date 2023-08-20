@@ -5,8 +5,9 @@ import { useUser } from "@clerk/clerk-react"
 import { useState, useEffect } from "react"
 
 export default function UserChordPages() {
-  const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
+  // const DOMAIN_LINK_CODE = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
   // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
+  const DOMAIN_LINK_CODE = process.env.NEXT_PUBLIC_DOMAIN_LINK
 
   const [userData, setUserData] = useState({})
 
@@ -14,7 +15,7 @@ export default function UserChordPages() {
   const userEmail = user?.primaryEmailAddress?.emailAddress
 
   async function getUserData() {
-    const res = await fetch(`${DOMAIN_LINK}/api/clerkUser/${userEmail}`)
+    const res = await fetch(`${DOMAIN_LINK_CODE}/api/clerkUser/${userEmail}`)
     const parseRes = await res.json()
     setUserData(parseRes)
   }
@@ -37,7 +38,7 @@ export default function UserChordPages() {
         {userData?.pages?.map((e) => (
           <div key={e.id}>
             <p>
-              <a href={`${DOMAIN_LINK}/chord-page/${e.id}`}>{e.name}</a>
+              <a href={`${DOMAIN_LINK_CODE}/chord-page/${e.id}`}>{e.name}</a>
             </p>
           </div>
         ))}

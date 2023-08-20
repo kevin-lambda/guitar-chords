@@ -8,8 +8,13 @@ import { useUser } from "@clerk/clerk-react"
 import CookieConsent from "react-cookie-consent"
 
 export default function Home() {
+  console.log("node env: ", process.env.NODE_ENV)
+  console.log("var test: ", process.env.VAR_TEST)
+  console.log("domain link: ", process.env.NEXT_PUBLIC_DOMAIN_LINK)
+
   // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
-  const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
+  // const DOMAIN_LINK_CODE = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
+  const DOMAIN_LINK_CODE = process.env.NEXT_PUBLIC_DOMAIN_LINK
 
   const [chordQualityBank, setChordQualityBank] = useState([])
   const [currentChords, setCurrentChords] = useState([])
@@ -40,7 +45,7 @@ export default function Home() {
       ownerId: placeholderOwner,
     }
 
-    const resChordPage = await fetch(`${DOMAIN_LINK}/api/chord-page`, {
+    const resChordPage = await fetch(`${DOMAIN_LINK_CODE}/api/chord-page`, {
       method: "POST",
       body: JSON.stringify(placeholderObject),
     })
@@ -54,17 +59,20 @@ export default function Home() {
     }
 
     const resConnectChordPage = await fetch(
-      `${DOMAIN_LINK}/api/chord-page/${newChordPageId}`,
+      `${DOMAIN_LINK_CODE}/api/chord-page/${newChordPageId}`,
       {
         method: "PUT",
         body: JSON.stringify(currentChordIds),
       }
     )
 
-    const resUser = await fetch(`${DOMAIN_LINK}/api/clerkUser/${userEmail}`, {
-      method: "PUT",
-      body: JSON.stringify({ newChordPageId }),
-    })
+    const resUser = await fetch(
+      `${DOMAIN_LINK_CODE}/api/clerkUser/${userEmail}`,
+      {
+        method: "PUT",
+        body: JSON.stringify({ newChordPageId }),
+      }
+    )
   }
 
   // later... create logged in user UI only. with ability to save pages, view pages
@@ -75,14 +83,14 @@ export default function Home() {
     if (isSignedIn) {
       const userEmail = user?.primaryEmailAddress?.emailAddress
 
-      const res = await fetch(`${DOMAIN_LINK}/api/clerkUser/${userEmail}`)
+      const res = await fetch(`${DOMAIN_LINK_CODE}/api/clerkUser/${userEmail}`)
       const parseRes = await res.json()
 
       const newUserObj = { email: userEmail, password: user?.id }
 
       if (parseRes === null) {
         try {
-          const res = await fetch(`${DOMAIN_LINK}/api/clerkUser`, {
+          const res = await fetch(`${DOMAIN_LINK_CODE}/api/clerkUser`, {
             method: "POST",
             body: JSON.stringify(newUserObj),
           })
@@ -93,7 +101,7 @@ export default function Home() {
       }
 
       const getUserDatabaseId = await fetch(
-        `${DOMAIN_LINK}/api/clerkUser/${userEmail}`
+        `${DOMAIN_LINK_CODE}/api/clerkUser/${userEmail}`
       )
       const parseUser = await getUserDatabaseId.json()
       const userDatabaseId = parseUser.id
@@ -103,7 +111,7 @@ export default function Home() {
 
   async function getChordAllQuality() {
     try {
-      const res = await fetch(`${DOMAIN_LINK}/api/chord-quality/`)
+      const res = await fetch(`${DOMAIN_LINK_CODE}/api/chord-quality/`)
       const parseRes = await res.json()
       setChordQualityBank(parseRes)
     } catch (error) {
