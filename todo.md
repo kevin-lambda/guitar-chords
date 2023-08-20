@@ -70,6 +70,8 @@ LOG
 - duh
 - process.env.NODE_ENV automatically reads which environment we are in. production or development. maybe test as well?
 
+- for environ variables in vercel, don't use quotes. quotes okay for local env variables
+
 [] fix: https://quality-chords.vercel.app/chord-page/1
 
 NEXT:
