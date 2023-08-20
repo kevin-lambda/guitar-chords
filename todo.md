@@ -54,7 +54,17 @@ LOG
 [x] make dynamic route chord pages
 [x] show chords sheet on individual chord pages
 
+8/17/2023
+
+- merged auth branch
+- added basic user cookie consent component
+- needed to add the public publishable key for clerk, see layout
+
 NEXT:
+
+- figure out prod, dev env variable switching
+- Change page title, allow input
+- refactor!
 
 TO DO LIST
 Major:
