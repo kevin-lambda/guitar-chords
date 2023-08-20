@@ -2,10 +2,13 @@ MEGA reminder:
 
 SWITCH BACK
 
-- app/user-chord-pages/page
-- app/chordpage/id/page
-- app/page
-- prisma/schema.prisma
+x - app/user-chord-pages/page. domain
+x - app/chordpage/id/page. domain
+x - app/page. domain
+
+!!!!!!! STILL NEED TO CHANGE DATADASE URL FOR NOW. OR FIGURE IT OUT
+
+- prisma/schema.prisma. database url
 
 - WHILE in dev mode
   - schema.prisma datasource db is toggled to use env("DATABASE_URL"), while is DEV mode postgres db. local
@@ -54,7 +57,24 @@ LOG
 [x] make dynamic route chord pages
 [x] show chords sheet on individual chord pages
 
+8/17/2023
+
+- merged auth branch
+- added basic user cookie consent component
+- needed to add the public publishable key for clerk, see layout
+
+8/20/2023
+
+- next run dev.... loads .env.development.local varialbles
+- next run start.... loads .env.production.local varialbles
+- duh
+- process.env.NODE_ENV automatically reads which environment we are in. production or development. maybe test as well?
+
 NEXT:
+
+- figure out prod, dev env variable switching
+- Change page title, allow input
+- refactor!
 
 TO DO LIST
 Major:

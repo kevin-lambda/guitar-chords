@@ -3,15 +3,15 @@
 // display chord page data by fetching from api chordpage/[id]
 
 // todo actually render the chords, but only after refactoring the main rendering page to be reusable
-
 export default async function SingleChordPage({ params }) {
   const parseParams = parseInt(params.id)
 
   async function getChordData() {
     // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
     const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
+    const DOMAIN_LINK_CODE = process.env.DOMAIN_LINK
 
-    const res = await fetch(`${DOMAIN_LINK}/api/chord-page/${parseParams}`)
+    const res = await fetch(`${DOMAIN_LINK_CODE}/api/chord-page/${parseParams}`)
     const parseRes = await res.json()
     return parseRes
   }
