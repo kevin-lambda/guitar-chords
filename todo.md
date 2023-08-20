@@ -70,6 +70,8 @@ LOG
 - duh
 - process.env.NODE_ENV automatically reads which environment we are in. production or development. maybe test as well?
 
+[] fix: https://quality-chords.vercel.app/chord-page/1
+
 NEXT:
 
 - figure out prod, dev env variable switching

@@ -8,7 +8,7 @@ export default async function SingleChordPage({ params }) {
 
   async function getChordData() {
     // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
-    const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
+    // const DOMAIN_LINK = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
     const DOMAIN_LINK_CODE = process.env.DOMAIN_LINK
 
     const res = await fetch(`${DOMAIN_LINK_CODE}/api/chord-page/${parseParams}`)
@@ -17,7 +17,7 @@ export default async function SingleChordPage({ params }) {
   }
 
   const chordData = await getChordData()
-  console.log(chordData)
+  // console.log(chordData)
 
   return (
     <div className="container">

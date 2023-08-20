@@ -8,10 +8,6 @@ import { useUser } from "@clerk/clerk-react"
 import CookieConsent from "react-cookie-consent"
 
 export default function Home() {
-  console.log("node env: ", process.env.NODE_ENV)
-  console.log("var test: ", process.env.VAR_TEST)
-  console.log("domain link: ", process.env.NEXT_PUBLIC_DOMAIN_LINK)
-
   // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
   // const DOMAIN_LINK_CODE = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
   const DOMAIN_LINK_CODE = process.env.NEXT_PUBLIC_DOMAIN_LINK
