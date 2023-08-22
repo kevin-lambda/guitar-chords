@@ -1,3 +1,45 @@
+REFACTOR CHECKLIST 8/22/23
+[] component/navbar dedicated signed in/out navbar. instead of conditional rendering. page flashing
+[] component/navbar misc unused items
+
+[] change app/user-chord-pages/page to server component, similar to chord-page
+
+app/page
+[] so many fetches, get put post
+
+[] handleNewChordPage placeholder items
+[] getchordfromarray clean up logic
+
+[] organize placement of helper functions
+
+[] map checkboxes
+[] map root xth string headings
+[] map chord renders
+[] give semantic names to sections
+
+admin
+[] organize all the state placements
+[] so many fetches
+[] give semantic naming
+
+api
+[] looks good, see if there is a good way to implement try catches
+
+TBD
+[] change functionality on admin page
+[] change functionality on admin dynamic id pages
+
+fetching
+
+- make modular fetching
+- go over all files for places to replace it with...
+
+minor to do
+[] center sign in and log in user auth components
+
+look into
+[] how to change prisma schema without deleting db data
+
 =====================================
 DEV vs PROD reminder:
 
@@ -5,6 +47,16 @@ DEV vs PROD reminder:
 
 =====================================
 8/22/23
+Main topics:
+
+- user auth, public clerk key
+- env variables
+- db wiping
+- cookies
+- user input page title
+- refactoring... TBD
+- project management. sprint, then review and document
+
 Detailed notes:
 
 - ERR_SSL_PROTOCOL_ERROR when trying to access localhost fetch http.

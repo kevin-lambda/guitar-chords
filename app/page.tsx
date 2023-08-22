@@ -8,8 +8,6 @@ import { useUser } from "@clerk/clerk-react"
 import CookieConsent from "react-cookie-consent"
 
 export default function Home() {
-  // const DOMAIN_LINK = "http://localhost:3000" // ! DEV MODE =============
-  // const DOMAIN_LINK_CODE = "https://quality-chords.vercel.app" // ! PRODUCTION MODE =============
   const DOMAIN_LINK_CODE = process.env.NEXT_PUBLIC_DOMAIN_LINK
 
   const [chordQualityBank, setChordQualityBank] = useState([])
@@ -292,7 +290,6 @@ export default function Home() {
             onChange={(e) => setPageTitle(e.target.value)}
           />
         </form>
-        {/* <h2 className="is-size-3 has-text-centered pb-5">My chords</h2> */}
 
         {/* hide on mobile view */}
         <div className="">

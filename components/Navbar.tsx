@@ -7,9 +7,10 @@ import { useUser } from "@clerk/clerk-react"
 
 export default function Navbar() {
   const [isActive, setisActive] = useState(false)
-  const { isLoaded, userId, isSignedIn } = useAuth()
+  const { userId, isSignedIn } = useAuth()
   const { user } = useUser()
   const userEmail = user?.primaryEmailAddress?.emailAddress
+
   return (
     <nav
       className="navbar p-2 has-text-weight-semibold"
