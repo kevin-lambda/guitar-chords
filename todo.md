@@ -78,9 +78,7 @@ NEXT:
 
 x - figure out prod, dev env variable switching
 
-- Change page title, allow input
-
-  - on hover, show box
+x- Change page title, allow input
 
 - refactor!
 
