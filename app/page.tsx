@@ -16,6 +16,7 @@ export default function Home() {
   const [currentChords, setCurrentChords] = useState([])
   const [selectChordQuality, setSelectChordQuality] = useState("")
   const [currentUserId, setCurrentUserId] = useState(0)
+  const [pageTitle, setPageTitle] = useState("My chords")
 
   const { isLoaded, userId, isSignedIn, sessionId, getToken } = useAuth()
   const { user } = useUser()
@@ -34,7 +35,7 @@ export default function Home() {
     console.log("===== handle new chord page =======")
     const userEmail = user?.primaryEmailAddress?.emailAddress
 
-    const placeholderTitle = "new chord page x"
+    const placeholderTitle = pageTitle
     const placeholderOwner = 1
     const placeholderObject = {
       name: placeholderTitle,
@@ -282,7 +283,16 @@ export default function Home() {
       </section>
 
       <section className="section pt-0 px-5 box">
-        <h2 className="is-size-3 has-text-centered pb-5">My chords</h2>
+        <form className="has-text-centered pb-5">
+          <input
+            className="chord-page-title "
+            type="text"
+            name="pageTitle"
+            value={pageTitle}
+            onChange={(e) => setPageTitle(e.target.value)}
+          />
+        </form>
+        {/* <h2 className="is-size-3 has-text-centered pb-5">My chords</h2> */}
 
         {/* hide on mobile view */}
         <div className="">

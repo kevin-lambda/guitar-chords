@@ -33,3 +33,15 @@
 #chord-view-row {
   border-bottom: var(--border-main);
 }
+
+.chord-page-title {
+  text-align: center;
+  border: 0;
+  font-size: 2.25rem;
+  border: 1px solid white;
+  transition: 0.2s;
+}
+.chord-page-title:hover {
+  border: 1px solid grey;
+  transition: 0.2s;
+}

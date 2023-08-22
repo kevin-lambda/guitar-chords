@@ -72,12 +72,14 @@ LOG
 
 - for environ variables in vercel, don't use quotes. quotes okay for local env variables
 
-[] fix: https://quality-chords.vercel.app/chord-page/1
+[x] fix: https://quality-chords.vercel.app/chord-page/1
 
 NEXT:
 
-- figure out prod, dev env variable switching
-- Change page title, allow input
+x - figure out prod, dev env variable switching
+
+x- Change page title, allow input
+
 - refactor!
 
 TO DO LIST
