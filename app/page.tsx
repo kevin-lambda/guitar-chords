@@ -1,6 +1,6 @@
 // @ts-nocheck
-
 "use client"
+
 import React, { useState, useEffect } from "react"
 import { SvgChord } from "@/components"
 import { useAuth } from "@clerk/nextjs"
@@ -8,19 +8,19 @@ import { useUser } from "@clerk/clerk-react"
 import CookieConsent from "react-cookie-consent"
 
 export default function Home() {
-  const DOMAIN_LINK_CODE = process.env.NEXT_PUBLIC_DOMAIN_LINK
+  const DOMAIN_URL = process.env.NEXT_PUBLIC_DOMAIN_LINK
   const STRING_NUMBERS = [6, 5, 4, 3, 2, 1]
 
   const { isLoaded, userId, isSignedIn, sessionId, getToken } = useAuth()
   const { user } = useUser()
 
-  const [chordQualityBank, setChordQualityBank] = useState([])
+  const [allChordQualities, setAllChordQualities] = useState([])
+  const [selectedChordQualities, setSelectedChordQualities] = useState("")
   const [currentChords, setCurrentChords] = useState([])
-  const [selectChordQuality, setSelectChordQuality] = useState("")
   const [currentUserId, setCurrentUserId] = useState(0)
   const [pageTitle, setPageTitle] = useState("My chords")
 
-  const [isShapeByStringVisible, setIsShapeByStringVisible] = useState({
+  const [stringVisibility, setStringVisibility] = useState({
     showString6: true,
     showString5: true,
     showString4: false,
@@ -29,116 +29,66 @@ export default function Home() {
     showString1: false,
   })
 
-  async function handleNewChordPage(e) {
-    e.preventDefault()
-    console.log("===== handle new chord page =======")
-    const userEmail = user?.primaryEmailAddress?.emailAddress
-
-    const placeholderTitle = pageTitle
-    const placeholderOwner = 1
-    const placeholderObject = {
-      name: placeholderTitle,
-      ownerId: placeholderOwner,
-    }
-
-    const resChordPage = await fetch(`${DOMAIN_LINK_CODE}/api/chord-page`, {
-      method: "POST",
-      body: JSON.stringify(placeholderObject),
-    })
-
-    const parseResChordPage = await resChordPage.json()
-    const newChordPageId = parseResChordPage.id
-
-    const currentChordIds = []
-    for (const elem of currentChords) {
-      currentChordIds.push({ id: elem.id })
-    }
-
-    const resConnectChordPage = await fetch(
-      `${DOMAIN_LINK_CODE}/api/chord-page/${newChordPageId}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(currentChordIds),
-      }
-    )
-
-    const resUser = await fetch(
-      `${DOMAIN_LINK_CODE}/api/clerkUser/${userEmail}`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ newChordPageId }),
-      }
-    )
-  }
-
-  // later... create logged in user UI only. with ability to save pages, view pages
-
-  checkUserAuthToDatabase()
-
-  async function checkUserAuthToDatabase() {
+  // * ==========================
+  // * === USER AUTH CHECK ======
+  // * ==========================
+  async function userCheckClerkToDatabase() {
     if (isSignedIn) {
       const userEmail = user?.primaryEmailAddress?.emailAddress
+      const res = await fetch(`${DOMAIN_URL}/api/clerkUser/${userEmail}`)
+      const isUserInDatabase = await res.json()
 
-      const res = await fetch(`${DOMAIN_LINK_CODE}/api/clerkUser/${userEmail}`)
-      const parseRes = await res.json()
-
-      const newUserObj = { email: userEmail, password: user?.id }
-
-      if (parseRes === null) {
+      // if user not found in database, create user
+      if (isUserInDatabase === null) {
         try {
-          const res = await fetch(`${DOMAIN_LINK_CODE}/api/clerkUser`, {
+          const newUserObj = { email: userEmail, password: user?.id }
+          const res = await fetch(`${DOMAIN_URL}/api/clerkUser`, {
             method: "POST",
             body: JSON.stringify(newUserObj),
           })
-          const parseRes = await res.json()
         } catch (error) {
           console.log(error)
         }
       }
 
       const getUserDatabaseId = await fetch(
-        `${DOMAIN_LINK_CODE}/api/clerkUser/${userEmail}`
+        `${DOMAIN_URL}/api/clerkUser/${userEmail}`
       )
       const parseUser = await getUserDatabaseId.json()
-      const userDatabaseId = parseUser.id
-      setCurrentUserId(userDatabaseId)
+      setCurrentUserId(parseUser.id)
     }
   }
 
-  async function getChordAllQuality() {
+  async function fetchAllChordQualities() {
     try {
-      const res = await fetch(`${DOMAIN_LINK_CODE}/api/chord-quality/`)
+      const res = await fetch(`${DOMAIN_URL}/api/chord-quality/`)
       const parseRes = await res.json()
-      setChordQualityBank(parseRes)
+      setAllChordQualities(parseRes)
     } catch (error) {
       console.log(error)
     }
   }
 
-  function handleAddChord(event) {
-    event.preventDefault()
-    const chord = getChordFromArray(selectChordQuality)
-    setCurrentChords([...currentChords, chord])
-  }
-
   function getChordFromArray(qualityId) {
     const parseId = parseInt(qualityId)
-    let getElement = chordQualityBank.find((e) => {
+    let getElement = allChordQualities.find((e) => {
       return e.id === parseId
     })
 
-    let tempObj = {}
-
+    let voicingsObj = {}
     for (let i = 1; i <= 6; i++) {
       let curString = getElement.chordQualityVoicing.find((e) => {
         return e.rootString === i
       })
-      tempObj[`string${i}`] = curString
+      voicingsObj[`string${i}`] = curString
     }
-    getElement.formattedVoicings = tempObj
+    getElement.formattedVoicings = voicingsObj
     return getElement
   }
 
+  // * ==========================
+  // * === RENDERING FUNCTION ===
+  // * ==========================
   // todo get tones to work, by editing original library. need to change the forked libray and then install that forked library as a npm package. remove the old package
   function renderChord(obj) {
     if (obj) {
@@ -163,9 +113,57 @@ export default function Home() {
     }
   }
 
+  // * ==========================
+  // * ==== event handlers ======
+  // * ==========================
+
+  async function handleNewChordPage(e) {
+    e.preventDefault()
+    const userEmail = user?.primaryEmailAddress?.emailAddress
+
+    const newChordPageData = {
+      name: pageTitle,
+      ownerId: currentUserId,
+    }
+
+    //  create new chord page
+    const resChordPage = await fetch(`${DOMAIN_URL}/api/chord-page`, {
+      method: "POST",
+      body: JSON.stringify(newChordPageData),
+    })
+    const newChordPage = await resChordPage.json()
+    const newChordPageId = newChordPage.id
+
+    const currentChordIds = []
+    for (const elem of currentChords) {
+      currentChordIds.push({ id: elem.id })
+    }
+
+    // connect current chords to newly created page
+    const resConnectChordPage = await fetch(
+      `${DOMAIN_URL}/api/chord-page/${newChordPageId}`,
+      {
+        method: "PUT",
+        body: JSON.stringify(currentChordIds),
+      }
+    )
+
+    // connect page with chords to current clerk user
+    const resUser = await fetch(`${DOMAIN_URL}/api/clerkUser/${userEmail}`, {
+      method: "PUT",
+      body: JSON.stringify({ newChordPageId }),
+    })
+  }
+
+  function handleAddChord(event) {
+    event.preventDefault()
+    const chord = getChordFromArray(selectedChordQualities)
+    setCurrentChords([...currentChords, chord])
+  }
+
   function handleVisibleChords(event) {
-    setIsShapeByStringVisible({
-      ...isShapeByStringVisible,
+    setStringVisibility({
+      ...stringVisibility,
       [event.target.name]: event.target.checked,
     })
   }
@@ -175,9 +173,9 @@ export default function Home() {
     window.print()
   }
 
+  userCheckClerkToDatabase()
   useEffect(() => {
-    // checkUserAuthToDatabase()
-    getChordAllQuality()
+    fetchAllChordQualities()
   }, [])
 
   return (
@@ -200,8 +198,8 @@ export default function Home() {
                   type="checkbox"
                   name={`showString${e}`}
                   onChange={handleVisibleChords}
-                  value={isShapeByStringVisible[`showString${e}`]}
-                  defaultChecked={isShapeByStringVisible[`showString${e}`]}
+                  value={stringVisibility[`showString${e}`]}
+                  defaultChecked={stringVisibility[`showString${e}`]}
                 />{" "}
                 {e}{" "}
               </label>
@@ -213,13 +211,13 @@ export default function Home() {
           <div className="select px-2">
             <select
               name="chordQualitySelect"
-              onChange={(e) => setSelectChordQuality(e.target.value)}
+              onChange={(e) => setSelectedChordQualities(e.target.value)}
               defaultValue={"prompt"}
             >
               <option value={"prompt"} disabled hidden>
                 Choose Chord Quality
               </option>
-              {chordQualityBank.map((e) => (
+              {allChordQualities.map((e) => (
                 <option value={e.id} key={e.id}>
                   {e.qualityName}
                 </option>
@@ -252,7 +250,7 @@ export default function Home() {
             <div className="column">Chord Quality</div>
             {STRING_NUMBERS.map((e) => (
               <>
-                {isShapeByStringVisible[`showString${e}`] ? (
+                {stringVisibility[`showString${e}`] ? (
                   <div className="column">Root {e}th String</div>
                 ) : null}
               </>
@@ -271,7 +269,7 @@ export default function Home() {
               </div>
               {STRING_NUMBERS.map((sub_e) => (
                 <>
-                  {isShapeByStringVisible[`showString${sub_e}`] ? (
+                  {stringVisibility[`showString${sub_e}`] ? (
                     <div className="column">
                       {renderChord(e.formattedVoicings[`string${sub_e}`])}
                     </div>

@@ -1,7 +1,6 @@
 // @ts-nocheck
 
 // display chord page data by fetching from api chordpage/[id]
-
 // todo actually render the chords, but only after refactoring the main rendering page to be reusable
 export default async function SingleChordPage({ params }) {
   const parseParams = parseInt(params.id)

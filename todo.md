@@ -7,15 +7,15 @@ REFACTOR CHECKLIST 8/22/23
 app/page
 [] so many fetches, get put post
 
-[] handleNewChordPage placeholder items
-[] getchordfromarray clean up logic
+[x] handleNewChordPage placeholder items
+[x] getchordfromarray clean up logic
 
-[] organize placement of helper functions
+[x] organize placement of helper functions
 
 [x] map checkboxes
 [x] map root xth string headings
 [x] map chord renders
-[] give semantic names to sections
+[x] give semantic names to sections
 
 admin
 [] organize all the state placements
