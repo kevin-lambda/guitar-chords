@@ -12,9 +12,9 @@ app/page
 
 [] organize placement of helper functions
 
-[] map checkboxes
-[] map root xth string headings
-[] map chord renders
+[x] map checkboxes
+[x] map root xth string headings
+[x] map chord renders
 [] give semantic names to sections
 
 admin
@@ -35,10 +35,11 @@ fetching
 - go over all files for places to replace it with...
 
 minor to do
-[] center sign in and log in user auth components
+[x] center sign in and log in user auth components
 
 look into
 [] how to change prisma schema without deleting db data
+[] modularized fetches
 
 =====================================
 DEV vs PROD reminder:
@@ -56,8 +57,13 @@ Main topics:
 - user input page title
 - refactoring... TBD
 - project management. sprint, then review and document
+- object property using bracket. but instead of using a full variable, using a template literal... so it seems like bracket uses the evaluated variable
 
-Detailed notes:
+misc
+
+- tried map within a map. it works!
+
+  Detailed notes:
 
 - ERR_SSL_PROTOCOL_ERROR when trying to access localhost fetch http.
 
