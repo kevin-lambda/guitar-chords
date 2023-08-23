@@ -8,11 +8,16 @@ export default function Admin() {
   const [adminAccess, setAdminAccess] = useState(false)
 
   const [allUsers, setAllUsers] = useState([])
+  const [allChordQuality, setAllChordQuality] = useState([])
+  const [allChordQualityVoicing, setAllChordQualityVoicing] = useState([])
+  const [allChordPages, setAllChordPages] = useState([])
+  const [allChords, setAllChords] = useState([])
+
   const [newUserEmail, setNewUserEmail] = useState("")
   const [newUserPassword, setNewUserPassword] = useState("")
   const [editUserEmail, setEditUserEmail] = useState("")
-  const [allChordQuality, setAllChordQuality] = useState([])
-  const newChordQualityInit = {
+
+  const [newChordQuality, setNewChordQuality] = useState({
     qualityName: "",
     qualityFormula: [""],
     optionalNote: [],
@@ -20,10 +25,8 @@ export default function Admin() {
     isTriad: false,
     isSeventh: false,
     isExtended: false,
-  }
-  const [newChordQuality, setNewChordQuality] = useState(newChordQualityInit)
-  const [allChordQualityVoicing, setAllChordQualityVoicing] = useState([])
-  const newChordQualityVoicingInit = {
+  })
+  const [newChordQualityVoicing, setNewChordQualityVoicing] = useState({
     name: "",
     frets: [],
     fretTones: [],
@@ -31,16 +34,11 @@ export default function Admin() {
     isANoteOmitted: false,
     isMovable: false,
     chordQualityId: 1,
-  }
-  const [newChordQualityVoicing, setNewChordQualityVoicing] = useState(
-    newChordQualityVoicingInit
-  )
-  const [allChordPages, setAllChordPages] = useState([])
+  })
   const [newChordPage, setNewChordPage] = useState({
     name: "",
     ownerId: "1",
   })
-  const [allChords, setAllChords] = useState([])
   const [newChord, setNewChord] = useState({
     name: "",
     noteFormula: [""],
@@ -48,6 +46,10 @@ export default function Admin() {
     rootNoteStrings: [""],
     chordQualityId: 1,
   })
+
+  // ==================
+  // ==== USERS =======
+  // ==================
 
   async function getAllUsers() {
     const res = await fetch("/api/user", {
@@ -87,11 +89,17 @@ export default function Admin() {
     const parseRes = await res.json()
     getAllUsers()
   }
+
+  // ==========================
+  // ==== CHORD QUALITY =======
+  // ==========================
+
   async function getAllChordQuality() {
     const res = await fetch("/api/chord-quality", { method: "GET" })
     const parseRes = await res.json()
     setAllChordQuality(parseRes)
   }
+
   function getChordLengthName(element) {
     if (element.isTriad) {
       return "Triad"
@@ -103,6 +111,7 @@ export default function Admin() {
       return "Other"
     }
   }
+
   async function handleNewChordQuality(e) {
     e.preventDefault()
     if (newChordQuality.optionalNote[0] === undefined) {
@@ -115,12 +124,14 @@ export default function Admin() {
     const parseRes = await res.json()
     getAllChordQuality()
   }
+
   async function handleChordQualityDelete(e, id) {
     e.preventDefault()
     const res = await fetch(`/api/chord-quality/${id}`, { method: "DELETE" })
     const parseRes = await res.json()
     getAllChordQuality()
   }
+
   function handleInputNewChordQuality(e) {
     let value = e.target.value
 
@@ -144,6 +155,7 @@ export default function Admin() {
       setNewChordQuality({ ...newChordQuality, [e.target.name]: value })
     }
   }
+
   function handleChordSizeChange(e) {
     let chordSize = {
       isTriad: false,
@@ -171,11 +183,17 @@ export default function Admin() {
     }
     return chordSize
   }
+
+  // ==================================
+  // ==== CHORD QUALITY VOICING =======
+  // ==================================
+
   async function getAllChordQualityVoicing() {
     const res = await fetch("/api/chord-quality-voicing")
     const parseRes = await res.json()
     setAllChordQualityVoicing(parseRes)
   }
+
   async function handleChordQualityVoicingDelete(e, id) {
     e.preventDefault()
     const res = await fetch(`/api/chord-quality-voicing/${id}`, {
@@ -184,10 +202,8 @@ export default function Admin() {
     const parseRes = await res.json()
     getAllChordQualityVoicing()
   }
-  function handleInputNewChordQualityVoicing(e) {
-    // console.log(e.target.value)
-    // console.log(e.target.name)
 
+  function handleInputNewChordQualityVoicing(e) {
     let value = e.target.value
     let name = e.target.name
 
@@ -214,6 +230,7 @@ export default function Admin() {
       setNewChordQualityVoicing({ ...newChordQualityVoicing, [name]: value })
     }
   }
+
   async function handleNewChordQualityVoicing(e) {
     e.preventDefault()
     // console.log(newChordQualityVoicing)
@@ -224,23 +241,26 @@ export default function Admin() {
     })
     const parseRes = await res.json()
     getAllChordQualityVoicing()
-
     setNewChordQualityVoicing(newChordQualityVoicingInit)
   }
+
+  // ==================================
+  // ============== CHORD PAGES =======
+  // ==================================
+
   async function getAllChordPages() {
     const res = await fetch("/api/chord-page", { method: "GET" })
     const parseRes = await res.json()
     setAllChordPages(parseRes)
   }
+
   async function handlePageDelete(event, id) {
     event.preventDefault()
     const res = await fetch(`/api/chord-page/${id}`, { method: "DELETE" })
     getAllChordPages()
   }
-  function handleNewChordPage(event) {
-    console.log(event.target.name)
-    console.log(event.target.value)
 
+  function handleNewChordPage(event) {
     if (event.target.name === "ownerId") {
       setNewChordPage({
         ...newChordPage,
@@ -252,9 +272,8 @@ export default function Admin() {
         [event.target.name]: event.target.value,
       })
     }
-
-    console.log(newChordPage)
   }
+
   async function handleNewChordPageSubmit(event) {
     event.preventDefault()
     const res = await fetch(`/api/chord-page`, {
@@ -263,12 +282,18 @@ export default function Admin() {
     })
     getAllChordPages()
   }
+
+  // ==================================
+  // ==== CHORD PAGES =================
+  // ==================================
+
   async function getAllChords() {
     const res = await fetch(`/api/chord`, { method: "GET" })
     const parseRes = await res.json()
 
     setAllChords(parseRes)
   }
+
   async function handleNewChord(event) {
     if (
       event.target.name === "noteFormula" ||
@@ -291,9 +316,8 @@ export default function Admin() {
         [event.target.name]: event.target.value,
       })
     }
-
-    console.log(newChord)
   }
+
   async function handleNewChordSubmit(event) {
     event.preventDefault()
     const res = await fetch("/api/chord/", {
@@ -302,11 +326,16 @@ export default function Admin() {
     })
     getAllChords()
   }
+
   async function handleChordDelete(event, id) {
     event.preventDefault()
     const res = await fetch(`/api/chord/${id}`, { method: "DELETE" })
     getAllChords()
   }
+
+  // ==================================
+  // ==== ADMIN ACEESS CHECK ==========
+  // ==================================
 
   function adminPassCheck(event) {
     event.preventDefault()
