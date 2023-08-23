@@ -193,7 +193,7 @@ export default function Home() {
           <h3>Show chord shape for string</h3>
           <form className="is-flex is-justify-content-space-between">
             {STRING_NUMBERS.map((e) => (
-              <label>
+              <label key={e}>
                 <input
                   type="checkbox"
                   name={`showString${e}`}
@@ -249,11 +249,11 @@ export default function Home() {
           >
             <div className="column">Chord Quality</div>
             {STRING_NUMBERS.map((e) => (
-              <>
+              <React.Fragment key={e}>
                 {stringVisibility[`showString${e}`] ? (
                   <div className="column">Root {e}th String</div>
                 ) : null}
-              </>
+              </React.Fragment>
             ))}
           </div>
           {currentChords.map((e) => (

@@ -5,8 +5,6 @@ REFACTOR CHECKLIST 8/22/23
 [] change app/user-chord-pages/page to server component, similar to chord-page
 
 app/page
-[] so many fetches, get put post
-
 [x] handleNewChordPage placeholder items
 [x] getchordfromarray clean up logic
 
@@ -22,17 +20,9 @@ admin
 [] so many fetches
 [] give semantic naming
 
-api
-[] looks good, see if there is a good way to implement try catches
-
 TBD
 [] change functionality on admin page
 [] change functionality on admin dynamic id pages
-
-fetching
-
-- make modular fetching
-- go over all files for places to replace it with...
 
 minor to do
 [x] center sign in and log in user auth components
@@ -40,6 +30,7 @@ minor to do
 look into
 [] how to change prisma schema without deleting db data
 [] modularized fetches
+[] api error scaled handling
 
 =====================================
 DEV vs PROD reminder:
