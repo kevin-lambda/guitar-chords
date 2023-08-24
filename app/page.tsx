@@ -1,3 +1,11 @@
+// copy ALL this into a component
+// import that new component into this non logged in page.tsx
+// make a new route and page for signed in users, import the same new component into that route page
+// ..... public non signed in layout. signed in layout....
+// further thinking...
+
+// ! nah do this later. want to do chord stuff first
+
 // @ts-nocheck
 "use client"
 
