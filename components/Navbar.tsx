@@ -1,15 +1,13 @@
 // @ts-nocheck
 "use client"
+
 import React, { useState } from "react"
 import { UserButton } from "@clerk/nextjs"
 import { useAuth } from "@clerk/nextjs"
-import { useUser } from "@clerk/clerk-react"
 
 export default function Navbar() {
   const [isActive, setisActive] = useState(false)
   const { userId, isSignedIn } = useAuth()
-  const { user } = useUser()
-  const userEmail = user?.primaryEmailAddress?.emailAddress
 
   return (
     <nav
@@ -39,6 +37,7 @@ export default function Navbar() {
           <span aria-hidden="true"></span>
         </a>
       </div>
+
       <div className={`navbar-menu is-size-6 ${isActive ? "is-active" : ""}`}>
         <div className="navbar-end">
           {isSignedIn ? (

@@ -1,8 +1,6 @@
 REFACTOR CHECKLIST 8/22/23
 [] component/navbar dedicated signed in/out navbar. instead of conditional rendering. page flashing
-[] component/navbar misc unused items
-
-[] change app/user-chord-pages/page to server component, similar to chord-page
+[x] component/navbar misc unused items
 
 app/page
 [x] handleNewChordPage placeholder items
@@ -15,12 +13,12 @@ app/page
 [x] map chord renders
 [x] give semantic names to sections
 
-admin
+x admin
 [] organize all the state placements
 [] so many fetches
 [] give semantic naming
 
-TBD
+x TBD
 [] change functionality on admin page
 [] change functionality on admin dynamic id pages
 
