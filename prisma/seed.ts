@@ -99,12 +99,6 @@ const chordBank = [
   },
 ]
 
-const userSeed = [
-  // { email: "apple@a.com", password: "1234" },
-  // { email: "banana@a.com", password: "1234" },
-  // { email: "carrot@a.com", password: "1234" },
-]
-
 // each page unique to one user
 const chordPageBank = [
   {
@@ -129,7 +123,7 @@ const seedData = {
   chordQualityBank,
   chordQualityVoicingBank,
   chordBank,
-  // userSeed,
+
   chordPageBank,
 }
 
@@ -158,14 +152,7 @@ async function seedDb(seedData) {
   } catch (error) {
     console.log(error)
   }
-  // try {
-  //   const users = await prisma.user.createMany({
-  //     data: seedData.userSeed,
-  //   })
-  //   console.log({ users })
-  // } catch (error) {
-  //   console.log(error)
-  // }
+
   try {
     const pages = await prisma.chordPage.createMany({
       data: seedData.chordPageBank,

@@ -1,4 +1,4 @@
-import "@/styles/index.scss"
+import "../styles/index.scss"
 import { Navbar } from "@/components"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/react"
