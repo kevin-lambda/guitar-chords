@@ -24,9 +24,12 @@ export default function Home() {
 
   const [allChordQualities, setAllChordQualities] = useState([])
   const [selectedChordQualities, setSelectedChordQualities] = useState("")
+
   const [currentChords, setCurrentChords] = useState([])
   const [currentUserId, setCurrentUserId] = useState(0)
   const [pageTitle, setPageTitle] = useState("My chords")
+
+  const [noteLabelSelect, setNoteLabelSelect] = useState("None")
 
   const [stringVisibility, setStringVisibility] = useState({
     showString6: true,
@@ -101,6 +104,11 @@ export default function Home() {
     if (chordDataObject) {
       const { frets } = chordDataObject
       const newArray = []
+      let isShowingTones = false
+
+      if (noteLabelSelect === "Tones") {
+        isShowingTones = true
+      }
 
       for (const elem of frets) {
         newArray.push(parseInt(elem))
@@ -112,6 +120,7 @@ export default function Home() {
         bar: [],
         baseFret: 1,
         includeBaseFret: true,
+        isShowingTones: isShowingTones,
       }
 
       return <SvgChord data={sendObject} />
@@ -196,22 +205,37 @@ export default function Home() {
         id="chord-page-controls"
         className="section pt-5 pb-2 is-flex is-justify-content-space-between is-flex-direction-row"
       >
-        <div>
-          <h3>Show chord shape for string</h3>
-          <form className="is-flex is-justify-content-space-between">
-            {STRING_NUMBERS.map((e) => (
-              <label key={e}>
-                <input
-                  type="checkbox"
-                  name={`showString${e}`}
-                  onChange={handleVisibleChords}
-                  value={stringVisibility[`showString${e}`]}
-                  defaultChecked={stringVisibility[`showString${e}`]}
-                />{" "}
-                {e}{" "}
-              </label>
-            ))}
-          </form>
+        <div className="is-flex is-flex-direction-row">
+          <div className="px-5">
+            <h3>Show chord shape for string</h3>
+            <form className="is-flex is-justify-content-space-between">
+              {STRING_NUMBERS.map((e) => (
+                <label key={e}>
+                  <input
+                    type="checkbox"
+                    name={`showString${e}`}
+                    onChange={handleVisibleChords}
+                    value={stringVisibility[`showString${e}`]}
+                    defaultChecked={stringVisibility[`showString${e}`]}
+                  />{" "}
+                  {e}{" "}
+                </label>
+              ))}
+            </form>
+          </div>
+          <div>
+            <h3>Note Label</h3>
+            <div className="select is-normal">
+              <select
+                name="noteLabelSelect"
+                onChange={(e) => setNoteLabelSelect(e.target.value)}
+                defaultValue={"None"}
+              >
+                <option value={"None"}>None</option>
+                <option value={"Tones"}>Tones</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="is-flex">
