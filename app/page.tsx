@@ -97,10 +97,9 @@ export default function Home() {
   // * ==========================
   // * === RENDERING FUNCTION ===
   // * ==========================
-  // todo get tones to work, by editing original library. need to change the forked libray and then install that forked library as a npm package. remove the old package
-  function renderChord(obj) {
-    if (obj) {
-      const { frets } = obj
+  function renderChord(chordDataObject) {
+    if (chordDataObject) {
+      const { frets } = chordDataObject
       const newArray = []
 
       for (const elem of frets) {
@@ -109,8 +108,7 @@ export default function Home() {
 
       const sendObject = {
         frets: newArray,
-        // !!!!! need to get tones from database
-        tones: ["1", "#3", "2", "4", "2", "1b"],
+        tones: chordDataObject.fretTones,
         bar: [],
         baseFret: 1,
         includeBaseFret: true,
