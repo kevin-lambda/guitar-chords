@@ -109,10 +109,11 @@ export default function Home() {
 
       const sendObject = {
         frets: newArray,
-        tones: ["", "", "", "", "", ""],
+        // !!!!! need to get tones from database
+        tones: ["1", "#3", "2", "4", "2", "1b"],
         bar: [],
-        baseFret: 0,
-        includeBaseFret: false,
+        baseFret: 1,
+        includeBaseFret: true,
       }
 
       return <SvgChord data={sendObject} />
@@ -276,13 +277,13 @@ export default function Home() {
                 {/* hide quality formula for now */}
               </div>
               {STRING_NUMBERS.map((sub_e) => (
-                <>
+                <React.Fragment key={sub_e}>
                   {stringVisibility[`showString${sub_e}`] ? (
                     <div className="column">
                       {renderChord(e.formattedVoicings[`string${sub_e}`])}
                     </div>
                   ) : null}
-                </>
+                </React.Fragment>
               ))}
             </div>
           ))}

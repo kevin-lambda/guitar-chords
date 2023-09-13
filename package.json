@@ -14,7 +14,7 @@
   "dependencies": {
     "@clerk/nextjs": "^4.23.2",
     "@prisma/client": "^5.0.0",
-    "@tombatossals/react-chords": "^0.2.10",
+    "@tombatossals/react-chords": "github:kevin-lambda/react-chords#main",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
