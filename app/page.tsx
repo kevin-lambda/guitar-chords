@@ -43,6 +43,8 @@ export default function Home() {
   // * ==========================
   // * === USER AUTH CHECK ======
   // * ==========================
+
+  // todo try attaching user signed in check to usecontext
   async function userCheckClerkToDatabase() {
     if (isSignedIn) {
       const userEmail = user?.primaryEmailAddress?.emailAddress
@@ -256,7 +258,7 @@ export default function Home() {
             </select>
           </div>
           <form className="px-2" onSubmit={handleAddChord}>
-            <button className="button has-background-success">add chord</button>
+            <button className="button has-background-success">Add chord</button>
           </form>
         </div>
       </section>

@@ -1,8 +1,15 @@
 !!!!!!
 9/12/2023 continue from
 
-- app/page line 113
-- svgchord line 37
+- test tone toggles in all situations
+
+9/12 DEV LOG
+
+- finally got npm package editting to work
+- figured out how to modify svg rendering
+- feat, removed nut
+- feat, note labeled with tones
+- feat: note label tone UI
 
 ===================================================
 
@@ -11,7 +18,7 @@
 - then make sure the custom local repo uploads to github
 - then figure out how to install that new updated github version as dependency. (might already be happening, see packagejson)
 
-9/12
+9/12 TECH NOTES
 
 - this seems to work for installing npm package as dep from github
   CLI: `npm install --save kevin-lambda/react-chords#main`
