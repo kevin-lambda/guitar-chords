@@ -4,7 +4,9 @@ import React from "react"
 import Chord from "@tombatossals/react-chords/lib/Chord"
 
 export default function SvgChord(props) {
-  const { frets, tones, bar, baseFret, includeBaseFret } = props.data
+  const { frets, tones, bar, baseFret, includeBaseFret, isShowingTones } =
+    props.data
+
   const MyChord = () => {
     let chord
     if (includeBaseFret) {
@@ -18,9 +20,9 @@ export default function SvgChord(props) {
     } else {
       chord = {
         frets: frets,
-        // fingers: tones,
+        fingers: tones,
         // barres: bar,
-        capo: false,
+        // capo: false,
       }
     }
     const instrument = {
@@ -32,7 +34,9 @@ export default function SvgChord(props) {
         standard: ["", "", "", "", "", ""], //per string notes
       },
     }
-    const lite = true // defaults to false if omitted
+
+    const lite = !isShowingTones // defaults to false if omitted
+
     return <Chord chord={chord} instrument={instrument} lite={lite} />
   }
   return <MyChord />
