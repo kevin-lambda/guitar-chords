@@ -9,11 +9,12 @@
 // @ts-nocheck
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { SvgChord } from "@/components"
 import { useAuth } from "@clerk/nextjs"
 import { useUser } from "@clerk/clerk-react"
 import CookieConsent from "react-cookie-consent"
+import ReactToPrint from "react-to-print"
 
 export default function Home() {
   const DOMAIN_URL = process.env.NEXT_PUBLIC_DOMAIN_LINK
@@ -39,6 +40,8 @@ export default function Home() {
     showString2: false,
     showString1: false,
   })
+
+  const printReference = useRef()
 
   // * ==========================
   // * === USER AUTH CHECK ======
@@ -263,7 +266,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="chord-page-render" className="section pt-0 px-5 box">
+      <section
+        id="chord-page-render"
+        className="section pt-3 px-5 box"
+        ref={printReference}
+      >
         <form className="has-text-centered pb-5">
           <input
             className="chord-page-title "
@@ -321,11 +328,19 @@ export default function Home() {
           </button>
         </form>
       ) : null}
-      <form onSubmit={handlePrintPage}>
+      {/* <form onSubmit={handlePrintPage}>
         <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
           Print Page
-        </button>
-      </form>
+        </button> */}
+      <ReactToPrint
+        trigger={() => (
+          <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
+            Print
+          </button>
+        )}
+        content={() => printReference.current}
+      />
+      {/* </form> */}
 
       <CookieConsent>
         This website uses cookies to enhance the user experience.
