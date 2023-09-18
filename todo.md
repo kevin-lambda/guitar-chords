@@ -7,8 +7,10 @@ learning.
 
 ????
 ? is there a different when using a state and function. should we be passing in the state as a function argument? Or just access the state directly like normal?
-=====================================
-DEV vs PROD reminder:
+
+- updated svg render with reduced padding
+
+  DEV vs PROD reminder:
 
 - change prisma/schema.prisma. database url
 
