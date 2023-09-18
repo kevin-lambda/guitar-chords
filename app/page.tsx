@@ -185,6 +185,7 @@ export default function Home() {
           <div>
             <SvgChord data={sendObject} />
             <button
+              value={"previous"}
               onClick={(e) =>
                 handleNextChordShape(
                   e,
@@ -196,7 +197,23 @@ export default function Home() {
                 )
               }
             >
-              Next chord of {FOR_UI_currentShapeNumber}/{numberOfShapes}
+              {"<"}
+            </button>{" "}
+            {FOR_UI_currentShapeNumber}/{numberOfShapes}{" "}
+            <button
+              value={"next"}
+              onClick={(e) =>
+                handleNextChordShape(
+                  e,
+                  currentQuality,
+                  currentString,
+                  numberOfShapes,
+                  currentShapeIndex,
+                  getCurrentChosenQualityShape
+                )
+              }
+            >
+              {">"}
             </button>
           </div>
         )
@@ -285,6 +302,15 @@ export default function Home() {
   ) {
     e.preventDefault()
 
+    console.log("value: ", e.target.value)
+
+    let stepDirection
+    if (e.target.value === "next") {
+      stepDirection = 1
+    } else {
+      stepDirection = -1
+    }
+
     console.log("========= clicked next chord shape")
     console.log({
       currentQuality,
@@ -297,8 +323,15 @@ export default function Home() {
     const updatedObject = { ...shapeVariationList }
 
     // restart shape cycle at index 0 if about to exceed max shapes
-    if (currentShapeIndex + 1 < numberOfShapes) {
-      updatedObject[`${currentQuality}`][`string${currentString}`] += 1
+    if (
+      currentShapeIndex + stepDirection < numberOfShapes &&
+      currentShapeIndex + stepDirection > -1
+    ) {
+      updatedObject[`${currentQuality}`][`string${currentString}`] +=
+        stepDirection
+    } else if (currentShapeIndex + stepDirection < 0) {
+      updatedObject[`${currentQuality}`][`string${currentString}`] =
+        numberOfShapes - 1
     } else {
       updatedObject[`${currentQuality}`][`string${currentString}`] = 0
     }
