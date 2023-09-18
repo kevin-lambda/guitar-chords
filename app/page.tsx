@@ -22,16 +22,14 @@ export default function Home() {
 
   const { isLoaded, userId, isSignedIn, sessionId, getToken } = useAuth()
   const { user } = useUser()
+  const printReference = useRef()
 
   const [allChordQualities, setAllChordQualities] = useState([])
   const [selectedChordQualities, setSelectedChordQualities] = useState("") // ID from drop down select
-
   const [currentChords, setCurrentChords] = useState([])
   const [currentUserId, setCurrentUserId] = useState(0)
   const [pageTitle, setPageTitle] = useState("My chords")
-
   const [noteLabelSelect, setNoteLabelSelect] = useState("None")
-
   const [stringVisibility, setStringVisibility] = useState({
     showString6: true,
     showString5: true,
@@ -40,8 +38,6 @@ export default function Home() {
     showString2: false,
     showString1: false,
   })
-
-  const printReference = useRef()
   const [shapeVariationList, setShapeVariationList] = useState({})
 
   // * ==========================
@@ -116,6 +112,8 @@ export default function Home() {
       curString
     )
 
+    console.log("shapeVariationList", shapeVariationList)
+
     let numberOfShapes = chordDataArray.length
 
     // Render Statements
@@ -129,7 +127,9 @@ export default function Home() {
       const numberOfShapes = chordDataArray?.length
 
       // ! button should change these values
-      const currentShapeNumber =
+
+      // * This is the count that pulls from the shapeVariation state chooses the index from an array of available shapes for the string and quality
+      const currentShapeIndex =
         shapeVariationList[`${currentQuality}`][`string${currentString}`]
       // ! button should change these values
       // ! make logic that says, for button presses, increase by one. but if count is greater than max shapes, reset to 0
@@ -143,15 +143,17 @@ export default function Home() {
         currentQuality,
         currentString,
         numberOfShapes,
-        currentShapeNumber
+        currentShapeIndex
       )
 
-      const filteredForCurrentQuality = chordDataArray.filter((e) => {
+      const filteredForCurrentQualityArray = chordDataArray.filter((e) => {
         return e.name == currentQuality
       })
 
+      // * USES the shape variation list as the index to select the chosen shape variation from the array of available shapes
       const getCurrentChosenQualityShape =
-        filteredForCurrentQuality[currentShapeNumber]
+        filteredForCurrentQualityArray[currentShapeIndex]
+
       const getCurrentQualityShapeFrets = getCurrentChosenQualityShape.frets
       const parsedFretArray = []
 
@@ -182,7 +184,18 @@ export default function Home() {
         return (
           <div>
             <SvgChord data={sendObject} />
-            <button onClick={handleNextChordShape}>
+            <button
+              onClick={(e) =>
+                handleNextChordShape(
+                  e,
+                  currentQuality,
+                  currentString,
+                  numberOfShapes,
+                  currentShapeIndex,
+                  getCurrentChosenQualityShape
+                )
+              }
+            >
               Next chord of {FOR_UI_currentShapeNumber}/{numberOfShapes}
             </button>
           </div>
@@ -263,10 +276,34 @@ export default function Home() {
     window.print()
   }
 
-  function handleNextChordShape(e) {
+  function handleNextChordShape(
+    e,
+    currentQuality,
+    currentString,
+    numberOfShapes,
+    currentShapeIndex
+  ) {
     e.preventDefault()
 
     console.log("========= clicked next chord shape")
+    console.log({
+      currentQuality,
+      currentString,
+      numberOfShapes,
+      currentShapeIndex,
+    })
+    console.log("shapeVariationList", shapeVariationList)
+
+    const updatedObject = { ...shapeVariationList }
+
+    // restart shape cycle at index 0 if about to exceed max shapes
+    if (currentShapeIndex + 1 < numberOfShapes) {
+      updatedObject[`${currentQuality}`][`string${currentString}`] += 1
+    } else {
+      updatedObject[`${currentQuality}`][`string${currentString}`] = 0
+    }
+
+    setShapeVariationList(updatedObject)
   }
 
   // * ==========================
