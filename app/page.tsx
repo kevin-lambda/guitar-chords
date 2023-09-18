@@ -24,7 +24,7 @@ export default function Home() {
   const { user } = useUser()
 
   const [allChordQualities, setAllChordQualities] = useState([])
-  const [selectedChordQualities, setSelectedChordQualities] = useState("")
+  const [selectedChordQualities, setSelectedChordQualities] = useState("") // ID from drop down select
 
   const [currentChords, setCurrentChords] = useState([])
   const [currentUserId, setCurrentUserId] = useState(0)
@@ -42,6 +42,7 @@ export default function Home() {
   })
 
   const printReference = useRef()
+  const [shapeVariationList, setShapeVariationList] = useState({})
 
   // * ==========================
   // * === USER AUTH CHECK ======
@@ -85,43 +86,90 @@ export default function Home() {
     }
   }
 
+  // ! look here
+  // formatted voicings is an object with properties string1...2...3
+  // property string 1...2...3... value is an object
+  // make that value an array of objects?
+
   function getChordFromArray(qualityId) {
     const parseId = parseInt(qualityId)
-    let getElement = allChordQualities.find((e) => {
+    let getMatchingChordQualityData = allChordQualities.find((e) => {
       return e.id === parseId
     })
 
     let voicingsObj = {}
+
     for (let i = 1; i <= 6; i++) {
-      let curString = getElement.chordQualityVoicing.find((e) => {
-        return e.rootString === i
-      })
-      voicingsObj[`string${i}`] = curString
+      let curStringArray =
+        getMatchingChordQualityData.chordQualityVoicing.filter((e) => {
+          return e.rootString === i
+        })
+      voicingsObj[`string${i}`] = curStringArray
     }
-    getElement.formattedVoicings = voicingsObj
-    return getElement
+    getMatchingChordQualityData.formattedVoicings = voicingsObj
+    return getMatchingChordQualityData
   }
 
   // * ==========================
   // * === RENDERING FUNCTION ===
   // * ==========================
-  function renderChord(chordDataObject) {
-    if (chordDataObject) {
-      const { frets } = chordDataObject
-      const newArray = []
+  function renderChord(chordDataArray) {
+    console.log(chordDataArray)
+
+    if (chordDataArray[0]) {
+      const currentQuality = chordDataArray[0].name
+      const currentString = chordDataArray[0].rootString
+      const numberOfShapes = chordDataArray?.length
+
+      // ! button should change these values
+      // ! button should change these values
+      // ! button should change these values
+      const currentShapeNumber =
+        shapeVariationList[`${currentQuality}`][`string${currentString}`]
+      // ! button should change these values
+      // ! button should change these values
+
+      // make logic that says, for button presses, increase by one. but if count is greater than max shapes, reset to 0
+
+      const FOR_UI_currentShapeNumber =
+        shapeVariationList[`${currentQuality}`][`string${currentString}`] + 1
+
+      // todo REMOVE ME
+      console.log(
+        "quality, string, number of shapes, current shape number",
+        currentQuality,
+        currentString,
+        numberOfShapes,
+        currentShapeNumber
+      )
+
+      const filteredForCurrentQuality = chordDataArray.filter((e) => {
+        return e.name == currentQuality
+      })
+
+      const getCurrentChosenQualityShape =
+        filteredForCurrentQuality[currentShapeNumber]
+
+      const getCurrentQualityShapeFrets = getCurrentChosenQualityShape.frets
+
+      const parsedFretArray = []
+
+      for (const elem of getCurrentQualityShapeFrets) {
+        parsedFretArray.push(parseInt(elem))
+      }
+
       let isShowingTones = false
 
       if (noteLabelSelect === "Tones") {
         isShowingTones = true
       }
 
-      for (const elem of frets) {
-        newArray.push(parseInt(elem))
-      }
+      console.log("isShowingTones", isShowingTones)
+      console.log(getCurrentChosenQualityShape)
 
       const sendObject = {
-        frets: newArray,
-        tones: chordDataObject.fretTones,
+        frets: parsedFretArray,
+        tones: getCurrentChosenQualityShape.fretTones,
         bar: [],
         baseFret: 1,
         includeBaseFret: true,
@@ -179,6 +227,18 @@ export default function Home() {
   function handleAddChord(event) {
     event.preventDefault()
     const chord = getChordFromArray(selectedChordQualities)
+
+    const toAdd = shapeVariationList
+    toAdd[`${chord.qualityName}`] = {
+      string6: 0,
+      string5: 0,
+      string4: 0,
+      string3: 0,
+      string2: 0,
+      string1: 0,
+    }
+
+    setShapeVariationList(toAdd)
     setCurrentChords([...currentChords, chord])
   }
 
@@ -197,6 +257,10 @@ export default function Home() {
   userCheckClerkToDatabase()
   useEffect(() => {
     fetchAllChordQualities()
+
+    // ! temporary
+    console.log("currentChords: ", currentChords)
+    console.log("allChordQualities: ", allChordQualities)
   }, [])
 
   return (

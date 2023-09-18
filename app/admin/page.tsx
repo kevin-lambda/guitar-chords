@@ -26,7 +26,8 @@ export default function Admin() {
     isSeventh: false,
     isExtended: false,
   })
-  const [newChordQualityVoicing, setNewChordQualityVoicing] = useState({
+
+  const newChordQualityVoicingInit = {
     name: "",
     frets: [],
     fretTones: [],
@@ -34,7 +35,10 @@ export default function Admin() {
     isANoteOmitted: false,
     isMovable: false,
     chordQualityId: 1,
-  })
+  }
+  const [newChordQualityVoicing, setNewChordQualityVoicing] = useState(
+    newChordQualityVoicingInit
+  )
   const [newChordPage, setNewChordPage] = useState({
     name: "",
     ownerId: "1",
