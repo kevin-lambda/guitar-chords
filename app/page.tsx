@@ -86,11 +86,6 @@ export default function Home() {
     }
   }
 
-  // ! look here
-  // formatted voicings is an object with properties string1...2...3
-  // property string 1...2...3... value is an object
-  // make that value an array of objects?
-
   function getChordFromArray(qualityId) {
     const parseId = parseInt(qualityId)
     let getMatchingChordQualityData = allChordQualities.find((e) => {
@@ -113,23 +108,29 @@ export default function Home() {
   // * ==========================
   // * === RENDERING FUNCTION ===
   // * ==========================
-  function renderChord(chordDataArray) {
-    console.log(chordDataArray)
+  function renderChord(chordDataArray, curString) {
+    console.log(
+      "========= chord data array: ",
+      chordDataArray,
+      "; current String: ",
+      curString
+    )
 
-    if (chordDataArray[0]) {
+    let numberOfShapes = chordDataArray.length
+
+    // Render based on number of chords. No chords, one chord, or many chords.
+    if (numberOfShapes === 0) {
+      return "No chord shape available"
+    } else {
       const currentQuality = chordDataArray[0].name
       const currentString = chordDataArray[0].rootString
       const numberOfShapes = chordDataArray?.length
 
       // ! button should change these values
-      // ! button should change these values
-      // ! button should change these values
       const currentShapeNumber =
         shapeVariationList[`${currentQuality}`][`string${currentString}`]
       // ! button should change these values
-      // ! button should change these values
-
-      // make logic that says, for button presses, increase by one. but if count is greater than max shapes, reset to 0
+      // ! make logic that says, for button presses, increase by one. but if count is greater than max shapes, reset to 0
 
       const FOR_UI_currentShapeNumber =
         shapeVariationList[`${currentQuality}`][`string${currentString}`] + 1
@@ -149,9 +150,7 @@ export default function Home() {
 
       const getCurrentChosenQualityShape =
         filteredForCurrentQuality[currentShapeNumber]
-
       const getCurrentQualityShapeFrets = getCurrentChosenQualityShape.frets
-
       const parsedFretArray = []
 
       for (const elem of getCurrentQualityShapeFrets) {
@@ -164,9 +163,6 @@ export default function Home() {
         isShowingTones = true
       }
 
-      console.log("isShowingTones", isShowingTones)
-      console.log(getCurrentChosenQualityShape)
-
       const sendObject = {
         frets: parsedFretArray,
         tones: getCurrentChosenQualityShape.fretTones,
@@ -176,9 +172,20 @@ export default function Home() {
         isShowingTones: isShowingTones,
       }
 
-      return <SvgChord data={sendObject} />
-    } else {
-      return "No chord shape available"
+      if (numberOfShapes === 1) {
+        // UI return here with count
+        return <SvgChord data={sendObject} />
+      } else if (numberOfShapes > 1) {
+        // UI return here w/ button and count?
+        return (
+          <div>
+            <SvgChord data={sendObject} />
+            <button>
+              Next chord of {FOR_UI_currentShapeNumber}/{numberOfShapes}
+            </button>
+          </div>
+        )
+      }
     }
   }
 
@@ -257,10 +264,6 @@ export default function Home() {
   userCheckClerkToDatabase()
   useEffect(() => {
     fetchAllChordQualities()
-
-    // ! temporary
-    console.log("currentChords: ", currentChords)
-    console.log("allChordQualities: ", allChordQualities)
   }, [])
 
   return (
@@ -375,7 +378,10 @@ export default function Home() {
                 <React.Fragment key={sub_e}>
                   {stringVisibility[`showString${sub_e}`] ? (
                     <div className="column">
-                      {renderChord(e.formattedVoicings[`string${sub_e}`])}
+                      {renderChord(
+                        e.formattedVoicings[`string${sub_e}`],
+                        sub_e
+                      )}
                     </div>
                   ) : null}
                 </React.Fragment>
