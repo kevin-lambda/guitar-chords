@@ -1,3 +1,8 @@
+learning.
+
+- functions and when to optimize or modularize. Does the name of the function do just that thing? Or does it do a bunch of other stuff? If a bunch of other stuff, maybe it's time to separate things.
+- so.... maybe optimize/modularize when: repeating a bunch of times, or when a block is doing many different intent things at once.
+
 =====================================
 DEV vs PROD reminder:
 

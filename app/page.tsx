@@ -118,10 +118,12 @@ export default function Home() {
 
     let numberOfShapes = chordDataArray.length
 
-    // Render based on number of chords. No chords, one chord, or many chords.
+    // Render Statements
+    // Based on number of chords. No chords, one chord, or many chords
     if (numberOfShapes === 0) {
       return "No chord shape available"
     } else {
+      // todo maybe separate all this parsing logic into it's own function, returning just the data object
       const currentQuality = chordDataArray[0].name
       const currentString = chordDataArray[0].rootString
       const numberOfShapes = chordDataArray?.length
@@ -180,7 +182,7 @@ export default function Home() {
         return (
           <div>
             <SvgChord data={sendObject} />
-            <button>
+            <button onClick={handleNextChordShape}>
               Next chord of {FOR_UI_currentShapeNumber}/{numberOfShapes}
             </button>
           </div>
@@ -260,6 +262,16 @@ export default function Home() {
     e.preventDefault()
     window.print()
   }
+
+  function handleNextChordShape(e) {
+    e.preventDefault()
+
+    console.log("========= clicked next chord shape")
+  }
+
+  // * ==========================
+  // * ======== effects =========
+  // * ==========================
 
   userCheckClerkToDatabase()
   useEffect(() => {
