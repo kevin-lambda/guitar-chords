@@ -27,6 +27,7 @@ export default function Home() {
   const [allChordQualities, setAllChordQualities] = useState([])
   const [selectedChordQualities, setSelectedChordQualities] = useState("") // ID from drop down select
   const [showAltChords, setShowAltChords] = useState("true")
+  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
 
   const [currentChords, setCurrentChords] = useState([])
   const [currentUserId, setCurrentUserId] = useState(0)
@@ -305,6 +306,12 @@ export default function Home() {
     setShowAltChords(e.target.value)
   }
 
+  function handleShowAdvancedOptions(e) {
+    setShowAdvancedOptions((previous) => {
+      return !previous
+    })
+  }
+
   function handleNextChordShape(
     e,
     currentQuality,
@@ -371,8 +378,8 @@ export default function Home() {
         id="chord-page-controls"
         className="section pt-5 pb-2 is-flex is-justify-content-space-between is-flex-direction-row"
       >
-        <div className="is-flex is-flex-direction-row">
-          <div className="px-3">
+        <div className="is-flex is-flex-direction-row" id="controls-left-side">
+          <div className="px-3" id="controls-show-string">
             <h3>Show chord shape for string</h3>
             <form className="is-flex is-justify-content-space-between">
               {STRING_NUMBERS.map((e) => (
@@ -389,50 +396,10 @@ export default function Home() {
               ))}
             </form>
           </div>
-
-          <div className="px-3">
-            <h3>Note Label</h3>
-            <div className="select is-normal">
-              <select
-                name="noteLabelSelect"
-                onChange={(e) => setNoteLabelSelect(e.target.value)}
-                defaultValue={"None"}
-              >
-                <option value={"None"}>None</option>
-                <option value={"Tones"}>Tones</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="px-3">
-            <h3>Choose Alt Chords</h3>
-            <div className="control">
-              <label className="radio">
-                <input
-                  type="radio"
-                  name="alternateControl"
-                  value="true"
-                  checked={showAltChords === "true"}
-                  onChange={handleAltControl}
-                ></input>
-                On
-              </label>
-              <label className="radio">
-                <input
-                  type="radio"
-                  name="alternateControl"
-                  value="false"
-                  checked={showAltChords === "false"}
-                  onChange={handleAltControl}
-                ></input>
-                Off
-              </label>
-            </div>
-          </div>
         </div>
 
-        <div className="is-flex">
-          <div className="select px-2">
+        <div className="is-flex" id="controls-right-side">
+          <div className="select px-2" id="controls-select-chord-qualities">
             <select
               name="chordQualitySelect"
               onChange={(e) => setSelectedChordQualities(e.target.value)}
@@ -448,9 +415,69 @@ export default function Home() {
               ))}
             </select>
           </div>
-          <form className="px-2" onSubmit={handleAddChord}>
+
+          <form
+            className="pl-2"
+            id="controls-submit-add-chord"
+            onSubmit={handleAddChord}
+          >
             <button className="button has-background-success">Add chord</button>
           </form>
+        </div>
+      </section>
+      <section className="section pt-0 pb-2 is-flex is-justify-content-space-between is-flex-direction-row">
+        <div className="is-flex is-flex-direction-row">
+          {showAdvancedOptions ? (
+            <>
+              <div className="px-3" id="controls-alternate-chords">
+                <h3>Choose Alt Chords</h3>
+                <div className="control">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="alternateControl"
+                      value="true"
+                      checked={showAltChords === "true"}
+                      onChange={handleAltControl}
+                    ></input>
+                    On
+                  </label>
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="alternateControl"
+                      value="false"
+                      checked={showAltChords === "false"}
+                      onChange={handleAltControl}
+                    ></input>
+                    Off
+                  </label>
+                </div>
+              </div>
+
+              <div className="px-3" id="controls-note-labels">
+                <h3>Note Label</h3>
+                <div className="select is-normal">
+                  <select
+                    name="noteLabelSelect"
+                    onChange={(e) => setNoteLabelSelect(e.target.value)}
+                    defaultValue={"None"}
+                  >
+                    <option value={"None"}>None</option>
+                    <option value={"Tones"}>Tones</option>
+                  </select>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div></div>
+          )}
+        </div>
+
+        <div>
+          <button className="button" onClick={handleShowAdvancedOptions}>
+            ⚙️
+          </button>
         </div>
       </section>
 
