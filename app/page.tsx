@@ -1,11 +1,3 @@
-// copy ALL this into a component
-// import that new component into this non logged in page.tsx
-// make a new route and page for signed in users, import the same new component into that route page
-// ..... public non signed in layout. signed in layout....
-// further thinking...
-
-// ! nah do this later. want to do chord stuff first
-
 // @ts-nocheck
 "use client"
 
@@ -24,14 +16,13 @@ export default function Home() {
   const { user } = useUser()
   const printReference = useRef()
 
+  // Fetches all chord qualities
   const [allChordQualities, setAllChordQualities] = useState([])
-  const [selectedChordQualities, setSelectedChordQualities] = useState("") // ID from drop down select
+
+  // Controls
+  const [selectedChordQualities, setSelectedChordQualities] = useState("")
   const [showAltChords, setShowAltChords] = useState("true")
   const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
-
-  const [currentChords, setCurrentChords] = useState([])
-  const [currentUserId, setCurrentUserId] = useState(0)
-  const [pageTitle, setPageTitle] = useState("My chords")
   const [noteLabelSelect, setNoteLabelSelect] = useState("None")
   const [stringVisibility, setStringVisibility] = useState({
     showString6: true,
@@ -41,6 +32,11 @@ export default function Home() {
     showString2: false,
     showString1: false,
   })
+
+  // Data for rendered chord page
+  const [currentChords, setCurrentChords] = useState([])
+  const [currentUserId, setCurrentUserId] = useState(0)
+  const [pageTitle, setPageTitle] = useState("My chords")
   const [shapeVariationList, setShapeVariationList] = useState({})
 
   // * ==========================
@@ -107,20 +103,10 @@ export default function Home() {
   // * ==========================
   // * === RENDERING FUNCTION ===
   // * ==========================
-  function renderChord(chordDataArray, curString) {
-    console.log(
-      "========= chord data array: ",
-      chordDataArray,
-      "; current String: ",
-      curString
-    )
-
-    console.log("shapeVariationList", shapeVariationList)
-
+  function renderChord(chordDataArray) {
     let numberOfShapes = chordDataArray.length
 
-    // Render Statements
-    // Based on number of chords. No chords, one chord, or many chords
+    // Render based on number of chords. No chords, one chord, or many chords
     if (numberOfShapes === 0) {
       return "No chord shape available"
     } else {
@@ -132,18 +118,8 @@ export default function Home() {
       // * This is the count that pulls from the shapeVariation state chooses the index from an array of available shapes for the string and quality
       const currentShapeIndex =
         shapeVariationList[`${currentQuality}`][`string${currentString}`]
-
       const FOR_UI_currentShapeNumber =
         shapeVariationList[`${currentQuality}`][`string${currentString}`] + 1
-
-      // todo REMOVE ME
-      console.log(
-        "quality, string, number of shapes, current shape number",
-        currentQuality,
-        currentString,
-        numberOfShapes,
-        currentShapeIndex
-      )
 
       const filteredForCurrentQualityArray = chordDataArray.filter((e) => {
         return e.name == currentQuality
@@ -176,12 +152,8 @@ export default function Home() {
       }
 
       if (showAltChords === "false") {
-        // UI controls to not show alt chords
         return <SvgChord data={sendObject} />
       } else {
-        // if (numberOfShapes >= 1) {
-        // UI return here w/ button and count?
-        // UI trigger show alt chords
         return (
           <div>
             <SvgChord data={sendObject} />
@@ -321,23 +293,12 @@ export default function Home() {
   ) {
     e.preventDefault()
 
-    console.log("value: ", e.target.value)
-
     let stepDirection
     if (e.target.value === "next") {
       stepDirection = 1
     } else {
       stepDirection = -1
     }
-
-    console.log("========= clicked next chord shape")
-    console.log({
-      currentQuality,
-      currentString,
-      numberOfShapes,
-      currentShapeIndex,
-    })
-    console.log("shapeVariationList", shapeVariationList)
 
     const updatedObject = { ...shapeVariationList }
 
@@ -371,7 +332,7 @@ export default function Home() {
     <main className="container is-max-desktop">
       <section id="chord-page-title" className="section mb-0 pb-0 ">
         <h1 className="title is-family-secondary">Quality Chords</h1>
-        <h2 className="subtitle">For movable guitar chord shapes</h2>
+        <h2 className="subtitle">Learn guitar with movable chord shapes</h2>
       </section>
 
       <section
@@ -483,7 +444,7 @@ export default function Home() {
 
       <section
         id="chord-page-render"
-        className="section pt-3 px-5 box"
+        className="section pt-5 px-5 box"
         ref={printReference}
       >
         <form className="has-text-centered pb-5">
@@ -546,10 +507,6 @@ export default function Home() {
           </button>
         </form>
       ) : null}
-      {/* <form onSubmit={handlePrintPage}>
-        <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
-          Print Page
-        </button> */}
       <ReactToPrint
         trigger={() => (
           <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
@@ -558,8 +515,6 @@ export default function Home() {
         )}
         content={() => printReference.current}
       />
-      {/* </form> */}
-
       <CookieConsent>
         This website uses cookies to enhance the user experience.
       </CookieConsent>
