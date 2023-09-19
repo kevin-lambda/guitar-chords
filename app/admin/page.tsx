@@ -455,6 +455,7 @@ export default function Admin() {
                   </label>
                 </p>
 
+                {/* FIX RADIO BUTTON CHECKED SELECTION. IT PROBABLY DOESN't WORK IF THE SELECTION CHANGES */}
                 <div className="control my-2">
                   <label className="radio">
                     <input

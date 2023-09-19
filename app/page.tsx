@@ -26,6 +26,8 @@ export default function Home() {
 
   const [allChordQualities, setAllChordQualities] = useState([])
   const [selectedChordQualities, setSelectedChordQualities] = useState("") // ID from drop down select
+  const [showAltChords, setShowAltChords] = useState("true")
+
   const [currentChords, setCurrentChords] = useState([])
   const [currentUserId, setCurrentUserId] = useState(0)
   const [pageTitle, setPageTitle] = useState("My chords")
@@ -126,13 +128,9 @@ export default function Home() {
       const currentString = chordDataArray[0].rootString
       const numberOfShapes = chordDataArray?.length
 
-      // ! button should change these values
-
       // * This is the count that pulls from the shapeVariation state chooses the index from an array of available shapes for the string and quality
       const currentShapeIndex =
         shapeVariationList[`${currentQuality}`][`string${currentString}`]
-      // ! button should change these values
-      // ! make logic that says, for button presses, increase by one. but if count is greater than max shapes, reset to 0
 
       const FOR_UI_currentShapeNumber =
         shapeVariationList[`${currentQuality}`][`string${currentString}`] + 1
@@ -176,45 +174,55 @@ export default function Home() {
         isShowingTones: isShowingTones,
       }
 
-      if (numberOfShapes === 1) {
-        // UI return here with count
+      if (showAltChords === "false") {
+        // UI controls to not show alt chords
         return <SvgChord data={sendObject} />
-      } else if (numberOfShapes > 1) {
+      } else {
+        // if (numberOfShapes >= 1) {
         // UI return here w/ button and count?
+        // UI trigger show alt chords
         return (
           <div>
             <SvgChord data={sendObject} />
-            <button
-              value={"previous"}
-              onClick={(e) =>
-                handleNextChordShape(
-                  e,
-                  currentQuality,
-                  currentString,
-                  numberOfShapes,
-                  currentShapeIndex,
-                  getCurrentChosenQualityShape
-                )
-              }
-            >
-              {"<"}
-            </button>{" "}
-            {FOR_UI_currentShapeNumber}/{numberOfShapes}{" "}
-            <button
-              value={"next"}
-              onClick={(e) =>
-                handleNextChordShape(
-                  e,
-                  currentQuality,
-                  currentString,
-                  numberOfShapes,
-                  currentShapeIndex,
-                  getCurrentChosenQualityShape
-                )
-              }
-            >
-              {">"}
-            </button>
+            <div className="columns is-centered is-gapless">
+              <button
+                id="alternate-chord-shape"
+                className="column is-one-fifth"
+                value={"previous"}
+                onClick={(e) =>
+                  handleNextChordShape(
+                    e,
+                    currentQuality,
+                    currentString,
+                    numberOfShapes,
+                    currentShapeIndex,
+                    getCurrentChosenQualityShape
+                  )
+                }
+              >
+                ◀
+              </button>{" "}
+              <div className="column is-two-fifths">
+                {FOR_UI_currentShapeNumber} of {numberOfShapes}{" "}
+              </div>
+              <button
+                className="column is-one-fifth"
+                id="alternate-chord-shape"
+                value={"next"}
+                onClick={(e) =>
+                  handleNextChordShape(
+                    e,
+                    currentQuality,
+                    currentString,
+                    numberOfShapes,
+                    currentShapeIndex,
+                    getCurrentChosenQualityShape
+                  )
+                }
+              >
+                ▶
+              </button>
+            </div>
           </div>
         )
       }
@@ -293,6 +301,10 @@ export default function Home() {
     window.print()
   }
 
+  function handleAltControl(e) {
+    setShowAltChords(e.target.value)
+  }
+
   function handleNextChordShape(
     e,
     currentQuality,
@@ -360,7 +372,7 @@ export default function Home() {
         className="section pt-5 pb-2 is-flex is-justify-content-space-between is-flex-direction-row"
       >
         <div className="is-flex is-flex-direction-row">
-          <div className="px-5">
+          <div className="px-3">
             <h3>Show chord shape for string</h3>
             <form className="is-flex is-justify-content-space-between">
               {STRING_NUMBERS.map((e) => (
@@ -377,7 +389,8 @@ export default function Home() {
               ))}
             </form>
           </div>
-          <div>
+
+          <div className="px-3">
             <h3>Note Label</h3>
             <div className="select is-normal">
               <select
@@ -388,6 +401,32 @@ export default function Home() {
                 <option value={"None"}>None</option>
                 <option value={"Tones"}>Tones</option>
               </select>
+            </div>
+          </div>
+
+          <div className="px-3">
+            <h3>Choose Alt Chords</h3>
+            <div className="control">
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="alternateControl"
+                  value="true"
+                  checked={showAltChords === "true"}
+                  onChange={handleAltControl}
+                ></input>
+                On
+              </label>
+              <label className="radio">
+                <input
+                  type="radio"
+                  name="alternateControl"
+                  value="false"
+                  checked={showAltChords === "false"}
+                  onChange={handleAltControl}
+                ></input>
+                Off
+              </label>
             </div>
           </div>
         </div>

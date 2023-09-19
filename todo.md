@@ -14,6 +14,10 @@ learning.
 
 - change prisma/schema.prisma. database url
 
+- radio button react. checked property.
+
+- todo. fix admin radio button select logic
+
 =====================================
 
 REFACTOR TODO LIST on 2nd pass

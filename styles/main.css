@@ -16,6 +16,10 @@
 /* ============ HOME PAGE ================= */
 /* ======================================== */
 
+/* #temporary-border {
+  border: 1px solid black;
+} */
+
 #chord-page-heading {
   border-bottom: var(--border-thick);
 }
@@ -32,6 +36,11 @@
 
 #chord-view-row {
   border-bottom: var(--border-main);
+}
+
+#alternate-chord-shape {
+  border: 0;
+  background-color: transparent;
 }
 
 .chord-page-title {
