@@ -21,7 +21,7 @@ export default function Help() {
         </p>
         <div className="mt-3 has-text-centered">
           <Image
-            src={"/guide/howto.jpg"}
+            src={"/guide/howto.png"}
             width={700}
             height={600}
             alt="howto"
