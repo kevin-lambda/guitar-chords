@@ -1,11 +1,3 @@
-// copy ALL this into a component
-// import that new component into this non logged in page.tsx
-// make a new route and page for signed in users, import the same new component into that route page
-// ..... public non signed in layout. signed in layout....
-// further thinking...
-
-// ! nah do this later. want to do chord stuff first
-
 // @ts-nocheck
 "use client"
 
@@ -22,16 +14,16 @@ export default function Home() {
 
   const { isLoaded, userId, isSignedIn, sessionId, getToken } = useAuth()
   const { user } = useUser()
+  const printReference = useRef()
 
+  // Fetches all chord qualities
   const [allChordQualities, setAllChordQualities] = useState([])
+
+  // Controls
   const [selectedChordQualities, setSelectedChordQualities] = useState("")
-
-  const [currentChords, setCurrentChords] = useState([])
-  const [currentUserId, setCurrentUserId] = useState(0)
-  const [pageTitle, setPageTitle] = useState("My chords")
-
+  const [showAltChords, setShowAltChords] = useState("true")
+  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false)
   const [noteLabelSelect, setNoteLabelSelect] = useState("None")
-
   const [stringVisibility, setStringVisibility] = useState({
     showString6: true,
     showString5: true,
@@ -41,7 +33,11 @@ export default function Home() {
     showString1: false,
   })
 
-  const printReference = useRef()
+  // Data for rendered chord page
+  const [currentChords, setCurrentChords] = useState([])
+  const [currentUserId, setCurrentUserId] = useState(0)
+  const [pageTitle, setPageTitle] = useState("My chords")
+  const [shapeVariationList, setShapeVariationList] = useState({})
 
   // * ==========================
   // * === USER AUTH CHECK ======
@@ -87,50 +83,122 @@ export default function Home() {
 
   function getChordFromArray(qualityId) {
     const parseId = parseInt(qualityId)
-    let getElement = allChordQualities.find((e) => {
+    let getMatchingChordQualityData = allChordQualities.find((e) => {
       return e.id === parseId
     })
 
     let voicingsObj = {}
+
     for (let i = 1; i <= 6; i++) {
-      let curString = getElement.chordQualityVoicing.find((e) => {
-        return e.rootString === i
-      })
-      voicingsObj[`string${i}`] = curString
+      let curStringArray =
+        getMatchingChordQualityData.chordQualityVoicing.filter((e) => {
+          return e.rootString === i
+        })
+      voicingsObj[`string${i}`] = curStringArray
     }
-    getElement.formattedVoicings = voicingsObj
-    return getElement
+    getMatchingChordQualityData.formattedVoicings = voicingsObj
+    return getMatchingChordQualityData
   }
 
   // * ==========================
   // * === RENDERING FUNCTION ===
   // * ==========================
-  function renderChord(chordDataObject) {
-    if (chordDataObject) {
-      const { frets } = chordDataObject
-      const newArray = []
+  function renderChord(chordDataArray) {
+    let numberOfShapes = chordDataArray.length
+
+    // Render based on number of chords. No chords, one chord, or many chords
+    if (numberOfShapes === 0) {
+      return "No chord shape available"
+    } else {
+      // todo maybe separate all this parsing logic into it's own function, returning just the data object
+      const currentQuality = chordDataArray[0].name
+      const currentString = chordDataArray[0].rootString
+      const numberOfShapes = chordDataArray?.length
+
+      // * This is the count that pulls from the shapeVariation state chooses the index from an array of available shapes for the string and quality
+      const currentShapeIndex =
+        shapeVariationList[`${currentQuality}`][`string${currentString}`]
+      const FOR_UI_currentShapeNumber =
+        shapeVariationList[`${currentQuality}`][`string${currentString}`] + 1
+
+      const filteredForCurrentQualityArray = chordDataArray.filter((e) => {
+        return e.name == currentQuality
+      })
+
+      // * USES the shape variation list as the index to select the chosen shape variation from the array of available shapes
+      const getCurrentChosenQualityShape =
+        filteredForCurrentQualityArray[currentShapeIndex]
+
+      const getCurrentQualityShapeFrets = getCurrentChosenQualityShape.frets
+      const parsedFretArray = []
+
+      for (const elem of getCurrentQualityShapeFrets) {
+        parsedFretArray.push(parseInt(elem))
+      }
+
       let isShowingTones = false
 
       if (noteLabelSelect === "Tones") {
         isShowingTones = true
       }
 
-      for (const elem of frets) {
-        newArray.push(parseInt(elem))
-      }
-
       const sendObject = {
-        frets: newArray,
-        tones: chordDataObject.fretTones,
+        frets: parsedFretArray,
+        tones: getCurrentChosenQualityShape.fretTones,
         bar: [],
         baseFret: 1,
         includeBaseFret: true,
         isShowingTones: isShowingTones,
       }
 
-      return <SvgChord data={sendObject} />
-    } else {
-      return "No chord shape available"
+      if (showAltChords === "false") {
+        return <SvgChord data={sendObject} />
+      } else {
+        return (
+          <div>
+            <SvgChord data={sendObject} />
+            <div className="columns is-centered is-gapless">
+              <button
+                id="alternate-chord-shape"
+                className="column is-one-fifth"
+                value={"previous"}
+                onClick={(e) =>
+                  handleNextChordShape(
+                    e,
+                    currentQuality,
+                    currentString,
+                    numberOfShapes,
+                    currentShapeIndex,
+                    getCurrentChosenQualityShape
+                  )
+                }
+              >
+                ◀
+              </button>{" "}
+              <div className="column is-two-fifths">
+                {FOR_UI_currentShapeNumber} of {numberOfShapes}{" "}
+              </div>
+              <button
+                className="column is-one-fifth"
+                id="alternate-chord-shape"
+                value={"next"}
+                onClick={(e) =>
+                  handleNextChordShape(
+                    e,
+                    currentQuality,
+                    currentString,
+                    numberOfShapes,
+                    currentShapeIndex,
+                    getCurrentChosenQualityShape
+                  )
+                }
+              >
+                ▶
+              </button>
+            </div>
+          </div>
+        )
+      }
     }
   }
 
@@ -179,6 +247,18 @@ export default function Home() {
   function handleAddChord(event) {
     event.preventDefault()
     const chord = getChordFromArray(selectedChordQualities)
+
+    const toAdd = shapeVariationList
+    toAdd[`${chord.qualityName}`] = {
+      string6: 0,
+      string5: 0,
+      string4: 0,
+      string3: 0,
+      string2: 0,
+      string1: 0,
+    }
+
+    setShapeVariationList(toAdd)
     setCurrentChords([...currentChords, chord])
   }
 
@@ -194,6 +274,55 @@ export default function Home() {
     window.print()
   }
 
+  function handleAltControl(e) {
+    setShowAltChords(e.target.value)
+  }
+
+  function handleShowAdvancedOptions(e) {
+    setShowAdvancedOptions((previous) => {
+      return !previous
+    })
+  }
+
+  function handleNextChordShape(
+    e,
+    currentQuality,
+    currentString,
+    numberOfShapes,
+    currentShapeIndex
+  ) {
+    e.preventDefault()
+
+    let stepDirection
+    if (e.target.value === "next") {
+      stepDirection = 1
+    } else {
+      stepDirection = -1
+    }
+
+    const updatedObject = { ...shapeVariationList }
+
+    // restart shape cycle at index 0 if about to exceed max shapes
+    if (
+      currentShapeIndex + stepDirection < numberOfShapes &&
+      currentShapeIndex + stepDirection > -1
+    ) {
+      updatedObject[`${currentQuality}`][`string${currentString}`] +=
+        stepDirection
+    } else if (currentShapeIndex + stepDirection < 0) {
+      updatedObject[`${currentQuality}`][`string${currentString}`] =
+        numberOfShapes - 1
+    } else {
+      updatedObject[`${currentQuality}`][`string${currentString}`] = 0
+    }
+
+    setShapeVariationList(updatedObject)
+  }
+
+  // * ==========================
+  // * ======== effects =========
+  // * ==========================
+
   userCheckClerkToDatabase()
   useEffect(() => {
     fetchAllChordQualities()
@@ -203,15 +332,15 @@ export default function Home() {
     <main className="container is-max-desktop">
       <section id="chord-page-title" className="section mb-0 pb-0 ">
         <h1 className="title is-family-secondary">Quality Chords</h1>
-        <h2 className="subtitle">For movable guitar chord shapes</h2>
+        <h2 className="subtitle">Learn guitar with movable chord shapes</h2>
       </section>
 
       <section
         id="chord-page-controls"
         className="section pt-5 pb-2 is-flex is-justify-content-space-between is-flex-direction-row"
       >
-        <div className="is-flex is-flex-direction-row">
-          <div className="px-5">
+        <div className="is-flex is-flex-direction-row" id="controls-left-side">
+          <div className="px-3" id="controls-show-string">
             <h3>Show chord shape for string</h3>
             <form className="is-flex is-justify-content-space-between">
               {STRING_NUMBERS.map((e) => (
@@ -228,23 +357,10 @@ export default function Home() {
               ))}
             </form>
           </div>
-          <div>
-            <h3>Note Label</h3>
-            <div className="select is-normal">
-              <select
-                name="noteLabelSelect"
-                onChange={(e) => setNoteLabelSelect(e.target.value)}
-                defaultValue={"None"}
-              >
-                <option value={"None"}>None</option>
-                <option value={"Tones"}>Tones</option>
-              </select>
-            </div>
-          </div>
         </div>
 
-        <div className="is-flex">
-          <div className="select px-2">
+        <div className="is-flex" id="controls-right-side">
+          <div className="select px-2" id="controls-select-chord-qualities">
             <select
               name="chordQualitySelect"
               onChange={(e) => setSelectedChordQualities(e.target.value)}
@@ -260,15 +376,75 @@ export default function Home() {
               ))}
             </select>
           </div>
-          <form className="px-2" onSubmit={handleAddChord}>
+
+          <form
+            className="pl-2"
+            id="controls-submit-add-chord"
+            onSubmit={handleAddChord}
+          >
             <button className="button has-background-success">Add chord</button>
           </form>
+        </div>
+      </section>
+      <section className="section pt-0 pb-2 is-flex is-justify-content-space-between is-flex-direction-row">
+        <div className="is-flex is-flex-direction-row">
+          {showAdvancedOptions ? (
+            <>
+              <div className="px-3" id="controls-alternate-chords">
+                <h3>Choose Alt Chords</h3>
+                <div className="control">
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="alternateControl"
+                      value="true"
+                      checked={showAltChords === "true"}
+                      onChange={handleAltControl}
+                    ></input>
+                    On
+                  </label>
+                  <label className="radio">
+                    <input
+                      type="radio"
+                      name="alternateControl"
+                      value="false"
+                      checked={showAltChords === "false"}
+                      onChange={handleAltControl}
+                    ></input>
+                    Off
+                  </label>
+                </div>
+              </div>
+
+              <div className="px-3" id="controls-note-labels">
+                <h3>Note Label</h3>
+                <div className="select is-normal">
+                  <select
+                    name="noteLabelSelect"
+                    onChange={(e) => setNoteLabelSelect(e.target.value)}
+                    defaultValue={"None"}
+                  >
+                    <option value={"None"}>None</option>
+                    <option value={"Tones"}>Tones</option>
+                  </select>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div></div>
+          )}
+        </div>
+
+        <div>
+          <button className="button" onClick={handleShowAdvancedOptions}>
+            ⚙️
+          </button>
         </div>
       </section>
 
       <section
         id="chord-page-render"
-        className="section pt-3 px-5 box"
+        className="section pt-5 px-5 box"
         ref={printReference}
       >
         <form className="has-text-centered pb-5">
@@ -311,7 +487,10 @@ export default function Home() {
                 <React.Fragment key={sub_e}>
                   {stringVisibility[`showString${sub_e}`] ? (
                     <div className="column">
-                      {renderChord(e.formattedVoicings[`string${sub_e}`])}
+                      {renderChord(
+                        e.formattedVoicings[`string${sub_e}`],
+                        sub_e
+                      )}
                     </div>
                   ) : null}
                 </React.Fragment>
@@ -328,10 +507,6 @@ export default function Home() {
           </button>
         </form>
       ) : null}
-      {/* <form onSubmit={handlePrintPage}>
-        <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
-          Print Page
-        </button> */}
       <ReactToPrint
         trigger={() => (
           <button className="button mb-6 mr-5 has-background-white-ter is-pulled-right">
@@ -340,8 +515,6 @@ export default function Home() {
         )}
         content={() => printReference.current}
       />
-      {/* </form> */}
-
       <CookieConsent>
         This website uses cookies to enhance the user experience.
       </CookieConsent>

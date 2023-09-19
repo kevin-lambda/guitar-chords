@@ -13,15 +13,15 @@ export default function Help() {
         <p>
           Choose a chord quality from the drop down menu. If you were looking
           for the chord B minor, choose the quality <strong>minor</strong> from
-          the list. Then use the add chord button.
-        </p>
-        <p>
-          Now with a quality added and chord shapes showing, use the string
-          checkboxes to choose which root string you want the chord shapes for.
+          the list. Then use the add chord button. Now with a quality added and
+          chord shapes showing, use the string checkboxes to choose which root
+          string you want the chord shapes for. Advanced settings can be shown
+          with the gear button. Where options are available for note labels and
+          alternate chord controls.
         </p>
         <div className="mt-3 has-text-centered">
           <Image
-            src={"/guide/howto.jpg"}
+            src={"/guide/howto.png"}
             width={700}
             height={600}
             alt="howto"

@@ -33,8 +33,8 @@ export default function Help() {
             </li>
           </ul>
           <p className="mt-3">
-            I leave it up to you to explore these questions. Or in the future,
-            I'll incorporate these concepts into a tool.
+            I'll leave it up to you to explore these questions. Contact me with
+            any feedback.
           </p>
         </div>
       </section>
@@ -59,11 +59,17 @@ export default function Help() {
 
         <div className="content">
           <ul>
-            <li>Nextjs</li>
-            <li>Bulma css</li>
-            <li>Prisma</li>
-            <li>Postgres</li>
+            <li>Framework: Nextjs</li>
+            <li>Styling: Bulma</li>
+            <li>ORM: Prisma</li>
+            <li>Database: Postgres</li>
             <li>
+              Chord Rendering: A
+              <a href="https://github.com/kevin-lambda/react-chords">
+                {" "}
+                customized fork{" "}
+              </a>
+              of
               <a href="https://github.com/tombatossals/react-chords">
                 @tombatossals/react-chords
               </a>

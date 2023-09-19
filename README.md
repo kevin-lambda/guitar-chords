@@ -44,6 +44,13 @@ _August 24 2023: version 0.2.0_
 - Saved chord pages data to user
 - Custom page titles saved
 
+_September 19 2023: version 0.3.0_
+
+- Alternate Chords carousel
+- Print function updated to print only chord page
+- Configured custom chord rendering library, adjusted chord grid and labels
+- Added UI controls for note labels and alternate chords toggle
+
 **ROAD MAP**  
 COMPLETED:  
 [x] 8/24 Supplemental pages for: Help about contact  
@@ -53,21 +60,18 @@ COMPLETED:
 [x] 8/24 User profile page  
 [x] 8/24 Save chord page to user
 
+[x] 9/13 chord diagram tones >>> forking svg chord library, manually configuring to allow tones  
+[x] 9/13 chord diagram remove nut
+[x] 9/13 Upgrade print functionality, only show chord page
+
+[x] 9/19 Alternate same chord root voicing carousel  
+[x] 9/19 Add alternate same chord root voicings
+
 FEATURES:  
-[] chord diagram tones >>> forking svg chord library, manually configuring to allow tones  
-[] chord diagram remove nut
-
-[] Alternate same chord root voicing carousel  
-[] add alternate same chord root voicings
-
-[] Upgrade print functionality, only show chord page
-
-[] dedicated signed in/out views, instead of conditional rendering >>> performance
-
+[] Dedicated signed in/out views, instead of conditional rendering >>> performance
 [] Remove, reorder shown chords via drag and drop? else buttons
-
 [] Clean up admin CRUD UX/UI and dynamic admin pages
 
 MISC:  
-[] add TS  
-[] add unit tests
+[] Add TS  
+[] Add unit tests
